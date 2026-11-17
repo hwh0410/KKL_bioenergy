@@ -67,7 +67,14 @@ const OSM_METER_Y=111195;
 function osmWorld(lon,lat){return new THREE.Vector3(px(OSM_ANCHOR.x)+(lon-OSM_ANCHOR.lon)*OSM_METER_X,0,py(OSM_ANCHOR.y)-(lat-OSM_ANCHOR.lat)*OSM_METER_Y)}
 function osmPixel(lon,lat){let w=osmWorld(lon,lat);return [w.x/METERS_PER_PIXEL+442,w.z/METERS_PER_PIXEL+386]}
 const ROAD_TYPES={secondary:14,secondary_link:10,tertiary:11,residential:7,service:6,track:4,footway:2.5,path:2.5};
-const buildingsGeo=await fetch('./data/existing-buildings.geojson').then(async r=>{if(!r.ok)throw Error('Building GeoJSON HTTP '+r.status);return r.json()});
+const buildingsGeo=await fetch('./data/existing-buildings.geojson').then(async r=>{
+ if(!r.ok)throw Error('建物資料無法載入 HTTP '+r.status);
+ return r.json();
+}).catch(error=>{
+ console.error('Building data load failed:',error);
+ document.getElementById('spatialQa').textContent='建物資料載入失敗：'+error.message+'（請檢查 GitHub Pages 的 data/ 檔案）';
+ return {features:[],metadata:{load_error:String(error)}};
+});
 const buildings=buildingsGeo.features.map(f=>{const p=f.properties,[x,y]=osmPixel(...p.center_wgs84);return [p.name,x,y,p.width_m_estimate/METERS_PER_PIXEL,p.depth_m_estimate/METERS_PER_PIXEL,p.height_m_estimate,p.rotation_degrees_estimate,p.category,p.roof]});
 // SAT narrow-phase: rotated building footprint, required clearance in reference pixels.
 const footprint=[];
@@ -221,7 +228,7 @@ function pickBuilding(name){
  document.getElementById('info').textContent=name+'：目前暫定中心位置 '+obj[1].toFixed(1)+', '+obj[2].toFixed(1)+'（內部像素座標）；可在右側輸入相對位移。';
 }
 picker.addEventListener('change',()=>pickBuilding(picker.value));
-picker.value=buildings[0][0];pickBuilding(picker.value);
+if(buildings.length){picker.value=buildings[0][0];pickBuilding(picker.value);}else{picker.disabled=true;editStatus.textContent='尚未載入任何建築；請確認資料檔部署成功。';}
 function syncGeometry(name){
  const b=buildingObjects.get(name);if(!b)return;
  const rec=b.record;b.group.position.set(px(rec[1]),0,py(rec[2]));b.group.rotation.y=-rec[6]*Math.PI/180;
