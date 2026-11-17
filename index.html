@@ -1,59 +1,77 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>金門酒廠金寧廠｜2D 高精度平面配置</title>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>金寧廠｜環評歷史配置向量圖 V0.9</title>
 <style>
-:root{color-scheme:light;font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;color:#24343b;background:#f2f5f3}*{box-sizing:border-box}body{margin:0}header{padding:22px max(18px,calc((100vw - 1500px)/2));background:#fff;border-bottom:1px solid #dfe6e2}header h1{margin:4px 0;font-size:clamp(22px,2.3vw,31px)}header p{margin:4px 0;color:#60716b;font-size:13px}.kicker{font-size:11px;letter-spacing:2px;font-weight:800;color:#277566}main{max-width:1530px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 288px;gap:14px;padding:16px}.panel{background:white;border:1px solid #dce6e1;border-radius:14px;overflow:hidden}.toolbar{padding:10px;display:flex;flex-wrap:wrap;align-items:center;gap:7px;border-bottom:1px solid #e7ece9}button,.link{font:inherit;font-size:13px;cursor:pointer;border:1px solid #d7e1db;border-radius:8px;background:#fff;padding:8px 11px;color:#294139;text-decoration:none}button:hover,.link:hover{background:#ecf6ee}button.primary{background:#26715f;color:white}#view{height:min(74vh,840px);min-height:470px;background:#fff;position:relative;overflow:hidden;cursor:grab;touch-action:none}#view.dragging{cursor:grabbing}#view svg{width:100%;height:100%;display:block;user-select:none}#notice{position:absolute;left:12px;bottom:11px;background:#fffffff0;border:1px solid #e1e9e3;border-radius:9px;padding:9px;color:#4e6157;font-size:12px;pointer-events:none;max-width:80%}aside{padding:18px}h2{font-size:17px;margin:0 0 15px}h3{font-size:13px;margin:22px 0 9px}.toggle{display:flex;gap:8px;align-items:center;padding:6px 0;font-size:14px;cursor:pointer}.toggle input{accent-color:#287663}.legend{display:flex;gap:9px;align-items:center;margin:9px 0;font-size:13px}.swatch{width:18px;height:16px;border:1px solid #d0ddd1;border-radius:3px;flex-shrink:0}.status{font-size:13px;line-height:1.8;padding:12px;background:#f1f6f2;border-radius:9px}.caution{font-size:12px;line-height:1.8;color:#705928;background:#fff8e8;padding:12px;border-radius:8px}footer{max-width:1530px;margin:auto;padding:4px 18px 28px;font-size:12px;color:#81918a}
-@media(max-width:850px){main{display:flex;flex-direction:column;padding:8px}#view{height:60vh;min-height:350px}aside{padding:14px}.toolbar button{font-size:12px;padding:7px}.legend{display:inline-flex;margin-right:12px}}
+:root{font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;color:#263c42;background:#f1f5f2}*{box-sizing:border-box}body{margin:0}
+header{background:#fff;border-bottom:1px solid #dce7e0;padding:23px max(16px,calc((100vw - 1440px)/2))}
+header h1{font-size:clamp(21px,2.6vw,30px);margin:4px 0}header p{margin:5px 0;color:#64786e;font-size:13px}
+.kicker{font-weight:800;color:#43826a;font-size:11px;letter-spacing:1.5px}
+main{max-width:1460px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:14px;padding:15px}
+.panel{background:#fff;border:1px solid #dce5df;border-radius:13px;overflow:hidden}
+.toolbar{border-bottom:1px solid #e3ebe5;padding:10px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+button,select,.download{font:inherit;font-size:13px;background:white;color:#29443d;border:1px solid #cddbd1;padding:9px;border-radius:8px;cursor:pointer;text-decoration:none}
+button:hover,.download:hover{background:#eaf5ee}.download{display:inline-block}.primary{background:#2f7663;color:white;border-color:#2f7663}
+#viewport{height:min(73vh,820px);min-height:460px;overflow:hidden;background:#fafcfb;position:relative;touch-action:none;cursor:grab}
+#viewport.drag{cursor:grabbing}#viewport svg{height:100%;width:100%;display:block}
+#hint{position:absolute;bottom:12px;left:12px;right:12px;max-width:750px;background:#ffffffed;padding:9px;border:1px solid #dde6df;border-radius:8px;color:#536960;font-size:12px;pointer-events:none}
+aside{padding:18px}h2{font-size:16px;margin:0 0 12px}h3{font-size:13px;margin:19px 0 8px}
+.layer{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:13px}.layer input{accent-color:#2b775f}
+.note{background:#f3f7f4;border-radius:9px;padding:12px;font-size:13px;line-height:1.85}
+.warn{background:#fff8e8;color:#785d2b;border-radius:9px;padding:12px;font-size:12px;line-height:1.7}
+.legend{display:flex;align-items:center;gap:8px;font-size:12px;margin:7px 0}.swatch{width:17px;height:14px;display:inline-block;border:1px solid #aec1bb;border-radius:2px}
+footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b8b85}
+@media(max-width:850px){main{display:flex;flex-direction:column;padding:8px}#viewport{height:61vh;min-height:340px}aside{padding:14px}}
 </style></head><body>
-<header><div class="kicker">KKL BIOENERGY · 2D SITE MASTER PLAN</div><h1>金門酒廠・金寧廠｜平面配置重建</h1><p>V0.8-R2 · 依原圖像素邊界重新擷取 · 本版不使用舊 3D 量體位置</p></header>
-<main><section class="panel"><div class="toolbar"><button id="fit" class="primary">完整配置</button><button id="zoomIn">＋ 放大</button><button id="zoomOut">－ 縮小</button><button id="north">北向朝上</button><a class="link" href="./plan/kinmen-jinning-2d.svg" download="KKL-Jinning-2D-plan.svg">下載 SVG</a></div><div id="view"><div id="notice">正在載入 2D 平面配置圖…</div></div></section>
-<aside class="panel"><h2>配置圖層</h2>
-<label class="toggle"><input type="checkbox" data-layer="roads" checked>道路</label>
-<label class="toggle"><input type="checkbox" data-layer="buildings" checked>建築</label>
-<label class="toggle"><input type="checkbox" data-layer="tanks" checked>白色圓形桶槽</label><label class="toggle"><input type="checkbox" data-layer="circular-facilities-unconfirmed" checked>棕色圓形設施（未定義）</label>
-<label class="toggle"><input type="checkbox" data-layer="trees" checked>路樹</label>
-<label class="toggle"><input type="checkbox" data-layer="annotations" checked>景點文字標籤</label>
-<h3>指定圖例</h3>
-<div class="legend"><span class="swatch" style="background:#FFFFFE"></span>白色方形建築</div>
-<div class="legend"><span class="swatch" style="background:#BA908C"></span>棕色方形建築</div>
-<div class="legend"><span class="swatch" style="background:#FFFFFE;border-radius:50%"></span>白色圓形桶槽</div>
-<div class="legend"><span class="swatch" style="background:#9DBA8A;border-radius:50%"></span>圓形路樹</div>
-<div class="legend"><span class="swatch" style="background:#EDF2EE"></span>道路</div>
-<h3>物件資訊</h3><div id="selected" class="status">點選建築或桶槽可查看物件編號與名稱。</div>
-<h3>目前繪圖範圍</h3><div class="status">白色建築區塊 19 個、棕色建築區塊 3 個<br>白色圓形設施 9 個<br>棕色圓形設施 12 個（待定義）<br>路樹／綠色圓點約 996 組<br>道路直接依原圖色塊輪廓擷取</div>
-<h3>比例資訊</h3><div class="caution">參考範圍：約 282,716.95 m²，周長約 2.41 km（來自先前地圖量測）。本圖依原始 887×475 圖片的顏色分區與像素外框擷取，未做地理配準，因此不提供可靠工程距離與單棟尺寸；基地示意範圍亦不應視為法定地籍線。</div></aside></main>
-<footer>KKL_bioenergy · 2D SVG vector plan · 顏色依使用者指定 · 舊 3D 原型保留於 GitHub Commit History</footer>
+<header><div class="kicker">KKL BIOENERGY · HISTORICAL EIA PLANS</div><h1>金門酒廠金寧廠｜工程配置圖數位化</h1><p>V0.9 · 依《金寧三廠整廠系統新建工程環境影響說明書》第四章 · 歷史設計參考圖，不是竣工現況</p></header>
+<main><section class="panel"><div class="toolbar">
+<select id="mapMode" aria-label="配置圖版本"><option value="existing">環評圖 4.2.2-1：既有廠區</option><option value="expansion">環評圖 4.2.2-2：擴建範圍</option><option value="legacy">早期彩色示意圖（僅供比較）</option></select>
+<button id="fit" class="primary">完整圖面</button><button id="zi">＋</button><button id="zo">－</button>
+<a id="download" class="download" href="./plan/eia-existing-v0.9.svg" download>下載本圖 SVG</a></div>
+<div id="viewport"><div id="hint">正在讀取向量圖…</div></div></section>
+<aside class="panel"><h2>圖面資訊與圖層</h2><div id="source" class="note">載入中…</div><div id="layerList"></div>
+<h3>設施資訊</h3><div id="selection" class="note">點選建築、規劃區或道路，檢視標示名稱。</div>
+<h3>環評基準</h3><div class="legend"><span class="swatch" style="background:#dfeddc"></span>計畫基地總面積 204,820 m²</div>
+<div class="legend"><span class="swatch" style="background:#45b968"></span>A 新增廠區用地</div><div class="legend"><span class="swatch" style="background:#a9b7bc"></span>B 既有廠區用地</div><div class="legend"><span class="swatch" style="background:#de9c86"></span>C 廠內擴建用地</div>
+<div class="warn">本次為環評 PDF 歷史圖面初步向量化：建築外框和道路位置尚待精細校對，圖示比例尺只是初步基準；表列用地面積不等於實際建築占地。請勿作工程測量、建廠淨距或用地認定。</div>
+<h3>建模規格</h3><a class="download" href="https://github.com/hwh0410/KKL_bioenergy/blob/main/docs/V0.9-EIA-modeling-baseline.md" target="_blank" rel="noopener">開啟 V0.9 建模規格</a>
+</aside></main><footer>資料依據：C04.PDF 第7、8、11、14頁｜描圖為獨立向量圖元｜不直接重製 PDF 圖面影像。</footer>
 <script>
-(async function(){
- const view=document.getElementById('view'),notice=document.getElementById('notice'),selected=document.getElementById('selected');
- try{
-  const resp=await fetch('./plan/kinmen-jinning-2d.svg',{cache:'no-cache'});if(!resp.ok)throw new Error('SVG HTTP '+resp.status);
-  const raw=await resp.text();const parsed=new DOMParser().parseFromString(raw,'image/svg+xml');
-  if(parsed.querySelector('parsererror'))throw new Error('SVG 格式錯誤');
-  const svg=document.importNode(parsed.documentElement,true);svg.setAttribute('id','planSvg');svg.setAttribute('preserveAspectRatio','xMidYMid meet');
-  view.prepend(svg);
-  let vb={x:0,y:0,w:887,h:475};
-  function apply(){svg.setAttribute('viewBox',[vb.x,vb.y,vb.w,vb.h].join(' '))}
-  function fit(){vb={x:0,y:0,w:887,h:475};apply()}
-  function zoom(factor){let cx=vb.x+vb.w/2,cy=vb.y+vb.h/2;vb.w=Math.max(90,Math.min(1400,vb.w*factor));vb.h=vb.w*475/887;vb.x=cx-vb.w/2;vb.y=cy-vb.h/2;apply()}
-  document.getElementById('fit').onclick=fit;document.getElementById('north').onclick=fit;document.getElementById('zoomIn').onclick=()=>zoom(.8);document.getElementById('zoomOut').onclick=()=>zoom(1.25);
-  const targetGroups={buildings:['buildings-white','buildings-brown']};
-  document.querySelectorAll('input[data-layer]').forEach(input=>{
-    const applyLayer=()=>{const ids=targetGroups[input.dataset.layer]||[input.dataset.layer];for(const id of ids){const layer=svg.querySelector('#'+id);if(layer)layer.style.display=input.checked?'':'none'}};
-    input.onchange=applyLayer;applyLayer();
-  });
-  let down=null;
-  view.addEventListener('pointerdown',e=>{if(e.button!==0)return;down={x:e.clientX,y:e.clientY,start:{...vb}};view.classList.add('dragging');view.setPointerCapture(e.pointerId)});
-  view.addEventListener('pointermove',e=>{if(!down)return;const r=svg.getBoundingClientRect();const scale=Math.min(r.width/887,r.height/475);vb.x=down.start.x-(e.clientX-down.x)*vb.w/(887*scale);vb.y=down.start.y-(e.clientY-down.y)*vb.h/(475*scale);apply()});
-  function done(){down=null;view.classList.remove('dragging')}view.addEventListener('pointerup',done);view.addEventListener('pointercancel',done);
-  view.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.1:1/1.1)},{passive:false});
-  svg.addEventListener('click',e=>{
-    const element=e.target.closest('g[id]');if(!element||!svg.contains(element))return;
-    const names={'buildings-white':'白色建築（原圖定位）','buildings-brown':'棕色建築（原圖定位）',
-    'roads':'道路及通道原圖外框','trees':'路樹／綠色圓點原圖位置',
-    'tanks':'白色圓形槽體','circular-facilities-unconfirmed':'棕色圓形設施（用途待確認）',
-    'land':'草地／綠化範圍','annotations':'原圖文字註記'};
-    selected.textContent=(names[element.id]||element.id)+'｜目前為平面像素位置，尚不代表實測尺寸。';
-  });
-  notice.textContent='拖曳平移 · 滾輪縮放 · 可開關圖層 · 向量 SVG 可編輯';
- }catch(error){notice.textContent='圖面載入失敗：'+error.message;console.error(error);}
+(async()=>{
+ const modes={
+ existing:{src:'./plan/eia-existing-v0.9.svg',view:[175,90,1125,730],description:'PDF 第7頁圖4.2.2-1，既有建築、內部通道及遊客景觀的初步向量描繪。',layers:[['boundary','基地範圍'],['roads','道路／動線'],['buildings','建築量體足跡'],['visitor-landmarks','遊客景觀與出入口'],['annotations','文字標示'],['scale','參考比例尺']]},
+ expansion:{src:'./plan/eia-expansion-v0.9.svg',view:[170,95,1160,765],description:'PDF 第8頁圖4.2.2-2，A/B/C 用地分類、擴建規劃區及歷史廠區位置。',layers:[['site-boundary','原圖廠區線'],['land-use-zones','A/B/C 分區'],['roads','歷史道路示意'],['planning-blocks','設施規劃區外框'],['annotations','文字標示']]},
+ legacy:{src:'./plan/kinmen-jinning-2d.svg',view:[0,0,887,475],description:'早期依彩色導覽圖描繪的相對配置，僅供比較，不作 V0.9 校正基準。',layers:[['site','基地'],['roads','道路'],['buildings','建築'],['tanks','桶槽'],['trees','路樹'],['annotations','景點標示']]}
+ };
+ const el=id=>document.getElementById(id),viewport=el('viewport'),hint=el('hint');
+ let svg,box,start,src;
+ function setView(){svg.setAttribute('viewBox',[box.x,box.y,box.w,box.h].join(' '))}
+ function zoom(k){if(!svg)return;const cx=box.x+box.w/2,cy=box.y+box.h/2;box.w=Math.max(100,Math.min(1800,box.w*k));box.h=box.w*src.view[3]/src.view[2];box.x=cx-box.w/2;box.y=cy-box.h/2;setView()}
+ async function load(key){
+  src=modes[key];el('source').textContent=src.description;
+  el('download').href=src.src;el('layerList').replaceChildren();viewport.querySelector('svg')?.remove();
+  hint.textContent='讀取 '+src.src+' 中…';svg=null;
+  try{
+   const resp=await fetch(src.src+'?cache=20261117b');if(!resp.ok)throw Error('HTTP '+resp.status);
+   const doc=new DOMParser().parseFromString(await resp.text(),'image/svg+xml');if(doc.querySelector('parsererror'))throw Error('SVG XML 格式錯誤');
+   svg=document.importNode(doc.documentElement,true);svg.setAttribute('preserveAspectRatio','xMidYMid meet');svg.setAttribute('id','mapSvg');viewport.prepend(svg);
+   box={x:src.view[0],y:src.view[1],w:src.view[2],h:src.view[3]};setView();
+   for(const [id,title] of src.layers){
+    const label=document.createElement('label');label.className='layer';const input=document.createElement('input');input.type='checkbox';input.checked=true;
+    const target=svg.querySelector('#'+id);input.disabled=!target;input.addEventListener('change',()=>{if(target)target.style.display=input.checked?'':'none'});
+    label.append(input,document.createTextNode(title));el('layerList').append(label)
+   }
+   svg.addEventListener('click',e=>{const n=e.target.closest('[data-name]');if(n)el('selection').textContent=(n.id||'')+'｜'+n.getAttribute('data-name')+'（初步描繪）'});
+   hint.textContent='拖曳平移 · 滾輪縮放 · 圖層可開關 · 所有輪廓仍待對位校正';
+  }catch(e){hint.textContent='圖面載入失敗：'+e.message;console.error(e)}
+ }
+ el('mapMode').addEventListener('change',e=>load(e.target.value));
+ el('fit').onclick=()=>svg&&(box={x:src.view[0],y:src.view[1],w:src.view[2],h:src.view[3]},setView());
+ el('zi').onclick=()=>zoom(.8);el('zo').onclick=()=>zoom(1.25);
+ viewport.addEventListener('pointerdown',e=>{if(!svg||e.button!==0)return;start={x:e.clientX,y:e.clientY,box:{...box}};viewport.setPointerCapture(e.pointerId);viewport.classList.add('drag')});
+ viewport.addEventListener('pointermove',e=>{if(!start||!svg)return;const r=svg.getBoundingClientRect(),sc=Math.min(r.width/src.view[2],r.height/src.view[3]);box.x=start.box.x-(e.clientX-start.x)*box.w/(src.view[2]*sc);box.y=start.box.y-(e.clientY-start.y)*box.h/(src.view[3]*sc);setView()});
+ viewport.addEventListener('pointerup',()=>{start=null;viewport.classList.remove('drag')});
+ viewport.addEventListener('pointercancel',()=>{start=null;viewport.classList.remove('drag')});
+ viewport.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.08:.925)},{passive:false});
+ await load('existing');
 })();
-</script></body></html>
+</script>
+</body></html>
