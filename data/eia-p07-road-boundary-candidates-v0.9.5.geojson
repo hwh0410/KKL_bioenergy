@@ -1,0 +1,397 @@
+{
+  "type": "FeatureCollection",
+  "name": "C04 p7 double-sided road boundaries V0.9.5",
+  "metadata": {
+    "coordinate_system": "image pixels in page7 crop 1106×800",
+    "not_georeferenced": true,
+    "not_as_built": true,
+    "modeling_phase": "road boundaries supported by approximately parallel source PDF vector strokes; needs topological closure at junctions",
+    "known_gaps": "Road crossing intersections and diagonal boundaries not yet rebuilt; these rectangles do not represent full internal road network"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "RD095-01",
+      "properties": {
+        "name": "中央製酒區東西向道路（上段）",
+        "category": "road_surface",
+        "status": "two_edges_supported",
+        "source_pdf": "C04.PDF",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "source_vector_segments": [
+          "PDF drawing#11 item#6: northern road edge",
+          "PDF drawing#11 item#9: southern road edge"
+        ],
+        "calibration_m_per_render_px_estimate": 0.5172413793103449,
+        "road_width_m_estimate": 10.43,
+        "original_pdf_geometry_preserved": false,
+        "engineering_accuracy": false,
+        "review_required": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              631.34,
+              360.52
+            ],
+            [
+              853.46,
+              360.52
+            ],
+            [
+              853.46,
+              380.68
+            ],
+            [
+              631.34,
+              380.68
+            ],
+            [
+              631.34,
+              360.52
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "RD095-02",
+      "properties": {
+        "name": "中央製酒區東西向道路（下段）",
+        "category": "road_surface",
+        "status": "two_edges_supported",
+        "source_pdf": "C04.PDF",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "source_vector_segments": [
+          "PDF drawing#11 item#11: northern road edge",
+          "PDF drawing#11 item#13: southern road edge"
+        ],
+        "calibration_m_per_render_px_estimate": 0.5172413793103449,
+        "road_width_m_estimate": 10.61,
+        "original_pdf_geometry_preserved": false,
+        "engineering_accuracy": false,
+        "review_required": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              632.78,
+              522.52
+            ],
+            [
+              853.46,
+              522.52
+            ],
+            [
+              853.46,
+              543.04
+            ],
+            [
+              632.78,
+              543.04
+            ],
+            [
+              632.78,
+              522.52
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "RD095-03",
+      "properties": {
+        "name": "製酒二場西側南北通道",
+        "category": "road_surface",
+        "status": "two_edges_supported",
+        "source_pdf": "C04.PDF",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "source_vector_segments": [
+          "PDF drawing#11 item#380: western road edge",
+          "PDF drawing#11 item#381: eastern road edge"
+        ],
+        "calibration_m_per_render_px_estimate": 0.5172413793103449,
+        "road_width_m_estimate": 10.43,
+        "original_pdf_geometry_preserved": false,
+        "engineering_accuracy": false,
+        "review_required": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              597.98,
+              228.52
+            ],
+            [
+              618.14,
+              228.52
+            ],
+            [
+              618.14,
+              347.2
+            ],
+            [
+              597.98,
+              347.2
+            ],
+            [
+              597.98,
+              228.52
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "RD095-04",
+      "properties": {
+        "name": "製酒三廠預定地西側南北通道",
+        "category": "road_surface",
+        "status": "two_edges_preliminary",
+        "source_pdf": "C04.PDF",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "source_vector_segments": [
+          "PDF drawing#205 item#170: western-side segment; needs source-index audit",
+          "PDF drawing#11 item#129: eastern-side segment"
+        ],
+        "calibration_m_per_render_px_estimate": 0.5172413793103449,
+        "road_width_m_estimate": 10.86,
+        "original_pdf_geometry_preserved": false,
+        "engineering_accuracy": false,
+        "review_required": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              597.14,
+              395.2
+            ],
+            [
+              618.14,
+              395.2
+            ],
+            [
+              618.14,
+              508.12
+            ],
+            [
+              597.14,
+              508.12
+            ],
+            [
+              597.14,
+              395.2
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "RD095-05",
+      "properties": {
+        "name": "製酒一場西側南北通道",
+        "category": "road_surface",
+        "status": "two_edges_preliminary",
+        "source_pdf": "C04.PDF",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "source_vector_segments": [
+          "PDF drawing#42 item#65: western-side segment; needs source-index audit",
+          "PDF drawing#11 item#17: eastern road edge"
+        ],
+        "calibration_m_per_render_px_estimate": 0.5172413793103449,
+        "road_width_m_estimate": 10.86,
+        "original_pdf_geometry_preserved": false,
+        "engineering_accuracy": false,
+        "review_required": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              597.14,
+              557.44
+            ],
+            [
+              618.14,
+              557.44
+            ],
+            [
+              618.14,
+              664.72
+            ],
+            [
+              597.14,
+              664.72
+            ],
+            [
+              597.14,
+              557.44
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "RD095-06",
+      "properties": {
+        "name": "製酒二場東側南北通道",
+        "category": "road_surface",
+        "status": "two_edges_supported",
+        "source_pdf": "C04.PDF",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "source_vector_segments": [
+          "PDF drawing#15 item#200: western-side segment",
+          "PDF drawing#17 item#228: eastern road edge"
+        ],
+        "calibration_m_per_render_px_estimate": 0.5172413793103449,
+        "road_width_m_estimate": 10.43,
+        "original_pdf_geometry_preserved": false,
+        "engineering_accuracy": false,
+        "review_required": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              868.1,
+              232.84
+            ],
+            [
+              888.26,
+              232.84
+            ],
+            [
+              888.26,
+              345.76
+            ],
+            [
+              868.1,
+              345.76
+            ],
+            [
+              868.1,
+              232.84
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "RD095-07",
+      "properties": {
+        "name": "製酒三廠預定地東側南北通道",
+        "category": "road_surface",
+        "status": "two_edges_supported",
+        "source_pdf": "C04.PDF",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "source_vector_segments": [
+          "PDF drawing#13 item#337: western edge",
+          "PDF drawing#13 item#335: eastern edge"
+        ],
+        "calibration_m_per_render_px_estimate": 0.5172413793103449,
+        "road_width_m_estimate": 10.43,
+        "original_pdf_geometry_preserved": false,
+        "engineering_accuracy": false,
+        "review_required": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              868.1,
+              395.2
+            ],
+            [
+              888.26,
+              395.2
+            ],
+            [
+              888.26,
+              508.12
+            ],
+            [
+              868.1,
+              508.12
+            ],
+            [
+              868.1,
+              395.2
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "RD095-08",
+      "properties": {
+        "name": "製酒一場東側南北通道",
+        "category": "road_surface",
+        "status": "two_edges_supported",
+        "source_pdf": "C04.PDF",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "source_vector_segments": [
+          "PDF drawing#12 item#195: western edge",
+          "PDF drawing#12 item#194: eastern edge"
+        ],
+        "calibration_m_per_render_px_estimate": 0.5172413793103449,
+        "road_width_m_estimate": 10.43,
+        "original_pdf_geometry_preserved": false,
+        "engineering_accuracy": false,
+        "review_required": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              868.1,
+              557.44
+            ],
+            [
+              888.26,
+              557.44
+            ],
+            [
+              888.26,
+              664.72
+            ],
+            [
+              868.1,
+              664.72
+            ],
+            [
+              868.1,
+              557.44
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
