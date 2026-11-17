@@ -15,43 +15,89 @@ aside{background:white;padding:18px;border-radius:15px;border:1px solid #dce5e9;
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
 </head>
 <body>
-<header><small>KKL BIOENERGY · SITE DIGITAL MODEL</small><h1>金門酒廠・金寧廠｜互動式 3D 量體平台</h1><p>現況廠區概念模型 V0.1　|　後續規劃：厭氧沼氣設施與工程配置</p></header>
+<header><small>KKL BIOENERGY · SITE DIGITAL MODEL</small><h1>金門酒廠・金寧廠｜互動式 3D 量體平台</h1><p>衛星影像人工套繪 V0.2　|　後續規劃：厭氧沼氣設施與工程配置</p></header>
 <main>
-<section id="view"><div id="stage"></div><div class="tools"><button id="iso" class="on">立體</button><button id="top">俯視</button><button id="reset">重設</button><button id="labelsBtn" class="on">標籤</button><button id="screenshot">截圖 PNG</button></div><div class="north">N ↑</div><div id="labels" class="labels"></div><div class="note">拖曳旋轉 · 滾輪縮放 · 右鍵平移<br>點擊量體可查看資料<br>目前為概念示意，非實測／竣工資料</div></section>
-<aside><h2>既有廠區圖層</h2><div id="legend"></div><label class="toggle"><input type="checkbox" id="roads" checked> 顯示道路</label><label class="toggle"><input type="checkbox" id="trees" checked> 顯示植栽</label><label class="toggle"><input type="checkbox" id="marks" checked disabled> 未來沼氣廠規劃（尚未建置）</label><h2>選取量體</h2><div id="info" class="info">點擊建築或地標以查看示意資訊。</div><div class="warning"><b>精度說明</b><br>廠房名稱、位置、尺寸及朝向皆屬初步示意。尚未以正射影像、地籍圖、竣工圖或現場量測完成校正，不可作為工程配置或距離判定依據。</div></aside>
+<section id="view"><div id="stage"></div><div class="tools"><button id="iso" class="on">立體</button><button id="top">俯視</button><button id="reset">重設</button><button id="labelsBtn" class="on">標籤</button><button id="screenshot">截圖 PNG</button></div><div class="north">N ↑</div><div id="labels" class="labels"></div><div class="note">拖曳旋轉 · 滾輪縮放 · 右鍵平移<br>點擊量體可查看資料<br>衛星影像人工套繪；建築高度與尺度仍待校正</div></section>
+<aside><h2>既有廠區圖層</h2><div id="legend"></div><label class="toggle"><input type="checkbox" id="roads" checked> 顯示道路</label><label class="toggle"><input type="checkbox" id="trees" checked> 顯示植栽</label><label class="toggle"><input type="checkbox" id="marks" checked disabled> 未來沼氣廠規劃（尚未建置）</label><h2>選取量體</h2><div id="info" class="info">點擊建築或地標以查看示意資訊。</div><div class="warning"><b>精度說明</b><br>建築外框依使用者提供之北向衛星截圖人工判讀。尺寸與高度為示意值；未經地理配準、實測或業主確認，不能作為工程配置、土地界線或距離判定依據。</div></aside>
 </main><footer>KKL_bioenergy · 3D visualisation prototype · Three.js · 模型座標單位 m（示意尺度）</footer>
 <script type="module">
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
-const el=document.getElementById('stage'),scene=new THREE.Scene();scene.background=new THREE.Color(0xdcebf0);
-const cam=new THREE.PerspectiveCamera(43,1,.1,1600);cam.position.set(240,220,260);
-const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;el.appendChild(renderer.domElement);
-const ctl=new OrbitControls(cam,renderer.domElement);ctl.enableDamping=true;ctl.maxPolarAngle=Math.PI/2.04;ctl.minDistance=35;ctl.maxDistance=750;
-scene.add(new THREE.HemisphereLight(0xffffff,0x8ea49d,2));let light=new THREE.DirectionalLight(0xffffff,2.3);light.position.set(-100,200,150);light.castShadow=true;light.shadow.mapSize.set(2048,2048);Object.assign(light.shadow.camera,{left:-350,right:350,top:350,bottom:-350});scene.add(light);
-const C={production:0x8eb9bc,storage:0xb6aa92,admin:0xe6d3a6,utility:0x9eafce,landmark:0xa5c9a0};
-const color=(hex)=>new THREE.MeshStandardMaterial({color:hex,roughness:.82});const ground=color(0x9cbd9c),roadmat=color(0x919ca3),roof=color(0x556e79),leaf=color(0x518d65),wood=color(0x876d53);
-const clickable=[],roadObjs=[],treeObjs=[];
-const floor=new THREE.Mesh(new THREE.PlaneGeometry(340,270),ground);floor.rotation.x=-Math.PI/2;floor.position.y=-.25;floor.receiveShadow=true;scene.add(floor);
-function block(name,x,z,w,d,h,type,shape='flat'){let g=new THREE.Group();g.position.set(x,0,z);let b=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),color(C[type]));b.position.y=h/2;b.castShadow=true;b.receiveShadow=true;g.add(b);
-if(shape==='gable'){let rr=new THREE.Mesh(new THREE.CylinderGeometry(0,0,0),roof);g.remove(rr);const geo=new THREE.BufferGeometry(),p=new Float32Array([-w/2,h,-d/2,w/2,h,-d/2,0,h+Math.min(5,d/4),-d/2,-w/2,h,d/2,w/2,h,d/2,0,h+Math.min(5,d/4),d/2]);geo.setAttribute('position',new THREE.BufferAttribute(p,3));geo.setIndex([0,1,2,3,5,4,0,2,5,0,5,3,1,4,5,1,5,2]);geo.computeVertexNormals();let m=new THREE.Mesh(geo,roof);m.castShadow=true;g.add(m)}else{let r=new THREE.Mesh(new THREE.BoxGeometry(w+.7,.7,d+.7),roof);r.position.y=h+.35;g.add(r)}
-g.userData={name,type,detail:'概念量體，非實測資料',dimensions:w+' × '+d+' × '+h+' m'};scene.add(g);clickable.push(g);}
-function road(x,z,w,d){let r=new THREE.Mesh(new THREE.BoxGeometry(w,.12,d),roadmat);r.position.set(x,.01,z);scene.add(r);roadObjs.push(r)}
-road(0,116,337,17);road(0,83,310,9);road(0,0,300,9);road(0,-85,300,9);road(-91,-3,9,194);road(44,-3,9,194);road(135,-3,9,194);
-block('入口展示／行政區',-117,65,39,27,12,'admin');block('入口服務建築',-66,65,30,23,10,'admin');
-block('行政／展示建築（待確認）',-118,23,38,29,13,'admin');
-block('製酒廠房 A',-47,-40,68,34,17,'production','gable');block('製酒廠房 B',-46,-6,66,30,18,'production','gable');block('製酒廠房 C',-39,-97,81,27,19,'production','gable');block('製程廠房 D',46,-44,62,37,21,'production','gable');block('製程廠房 E',43,42,59,33,16,'production','gable');
-block('儲酒／倉儲建築 A',102,-73,53,48,29,'storage');block('倉儲建築 B',105,40,44,40,20,'storage');block('公用設備機房',117,-14,34,26,12,'utility');block('附屬倉庫',-125,-51,29,25,11,'storage','gable');block('附屬製程設施',9,-108,34,18,13,'utility','gable');
-function silo(i,x,z){let g=new THREE.Group();g.position.set(x,0,z);let m=new THREE.Mesh(new THREE.CylinderGeometry(6,6,30,24),color(C.utility));m.position.y=15;m.castShadow=true;g.add(m);let cap=new THREE.Mesh(new THREE.ConeGeometry(7,3,24),roof);cap.position.y=31.5;g.add(cap);g.userData={name:'筒倉 '+i,type:'utility',dimensions:'直徑 12 × 高 30 m',detail:'示意位置與高度'};scene.add(g);clickable.push(g)}for(let i=0;i<4;i++)silo(i+1,71+i*15,-4);
-function bottle(x,z){let g=new THREE.Group();g.position.set(x,0,z);const m=color(0xd5c49d);for(const [y,rt,rb,h] of [[10,4,5,20],[23,2,4,6],[30,2,2,8],[35,2.3,2.3,2]]){let a=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,16),m);a.position.y=y;g.add(a)}g.userData={name:'入口酒瓶地標',type:'landmark',dimensions:'示意',detail:'僅呈現代表性外型'};scene.add(g);clickable.push(g)}bottle(-36,106);bottle(25,106);
-function tree(x,z){let g=new THREE.Group();g.position.set(x,0,z);let trunk=new THREE.Mesh(new THREE.CylinderGeometry(.3,.4,3,6),wood);trunk.position.y=1.5;g.add(trunk);let crown=new THREE.Mesh(new THREE.IcosahedronGeometry(2.6,1),leaf);crown.position.y=4.5;g.add(crown);scene.add(g);treeObjs.push(g)}for(let x=-155;x<=155;x+=13){tree(x,132);tree(x,-129)}for(let z=-116;z<115;z+=13){tree(-156,z);tree(156,z)}
-const legend=[['production','製酒與生產'],['storage','儲酒與倉儲'],['admin','行政與展示'],['utility','設備與筒倉'],['landmark','入口地標']];document.getElementById('legend').innerHTML=legend.map(([id,n])=>'<div class="legend"><span class="swatch" style="background:#'+C[id].toString(16)+'"></span>'+n+'</div>').join('');
-const labelBox=document.getElementById('labels');const nodes=clickable.map(o=>{let e=document.createElement('div');e.className='pin';e.textContent=o.userData.name;labelBox.appendChild(e);return e});let showLabels=true;
-function labels(){const rect=renderer.domElement.getBoundingClientRect();clickable.forEach((o,i)=>{let p=o.position.clone();p.y=(o.children[0]?.geometry?.parameters?.height||15)+5;p.project(cam);const e=nodes[i];e.style.left=(p.x*.5+.5)*rect.width+'px';e.style.top=(-p.y*.5+.5)*rect.height+'px';e.style.display=showLabels&&p.z<1?'block':'none'})}
-let ray=new THREE.Raycaster(),mouse=new THREE.Vector2();renderer.domElement.addEventListener('click',e=>{let r=renderer.domElement.getBoundingClientRect();mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);ray.setFromCamera(mouse,cam);let hits=ray.intersectObjects(clickable,true);if(!hits.length)return;let obj=hits[0].object;while(obj.parent&&!obj.userData.name)obj=obj.parent;let d=obj.userData;if(d.name)document.getElementById('info').textContent=d.name+'｜'+d.dimensions+'｜'+d.detail});
-function cameraTo(top){cam.position.set(top?0:240,top?380:220,top?.01:260);ctl.target.set(0,0,0);ctl.update();document.getElementById('iso').classList.toggle('on',!top);document.getElementById('top').classList.toggle('on',top)}
-document.getElementById('iso').onclick=()=>cameraTo(false);document.getElementById('top').onclick=()=>cameraTo(true);document.getElementById('reset').onclick=()=>cameraTo(false);
-document.getElementById('labelsBtn').onclick=e=>{showLabels=!showLabels;e.currentTarget.classList.toggle('on',showLabels)};
+const stage=document.getElementById('stage'), scene=new THREE.Scene();scene.background=new THREE.Color(0xe9f0ee);
+const camera=new THREE.PerspectiveCamera(44,1,0.1,2200);
+const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;stage.appendChild(renderer.domElement);
+const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.maxPolarAngle=Math.PI/2.01;controls.minDistance=65;controls.maxDistance=1350;
+scene.add(new THREE.HemisphereLight(0xffffff,0x95a4a0,2));
+const sun=new THREE.DirectionalLight(0xffffff,2.5);sun.position.set(-150,400,240);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-650,right:650,top:650,bottom:-650});scene.add(sun);
+const materials={production:0x91abb5,storage:0xc2b3a0,admin:0xe4d3b4,utility:0x9fbbce,landmark:0xc7b773};
+const mat=(c)=>new THREE.MeshStandardMaterial({color:c,roughness:.82,metalness:.03});
+const roof=mat(0x7f9397),roofLight=mat(0xbfcacd),roadMat=mat(0xaeb8b5),forest=mat(0x82a985),lawn=mat(0xb5caa6),mark=mat(0xe8d6a0);
+const root=new THREE.Group();scene.add(root),clickable=[],roadObjs=[],treeObjs=[];
+const px=(x)=>(x-343)*1.08, py=(y)=>(y-354)*1.08;
+function groundPolygon(coords,m,y=0){let s=new THREE.Shape();coords.forEach(([x,z],i)=>i?s.lineTo(px(x),-py(z)):s.moveTo(px(x),-py(z)));s.closePath();let mesh=new THREE.Mesh(new THREE.ShapeGeometry(s),m);mesh.rotation.x=-Math.PI/2;mesh.position.y=y;root.add(mesh);return mesh}
+let ground=new THREE.Mesh(new THREE.PlaneGeometry(880,870),forest);ground.rotation.x=-Math.PI/2;ground.position.y=-.25;ground.receiveShadow=true;root.add(ground);
+groundPolygon([[92,630],[100,488],[140,444],[227,465],[235,623],[190,655]],lawn,.001);
+groundPolygon([[242,243],[435,25],[517,18],[602,42],[603,466],[522,528],[270,519],[225,400]],lawn,.002);
+function strip(points,width,material=roadMat){for(let i=1;i<points.length;i++){const [ax,az]=points[i-1],[bx,bz]=points[i],x1=px(ax),z1=py(az),x2=px(bx),z2=py(bz),d=Math.hypot(x2-x1,z2-z1);let mesh=new THREE.Mesh(new THREE.BoxGeometry(width,.18,d),material);mesh.position.set((x1+x2)/2,.14,(z1+z2)/2);mesh.rotation.y=-Math.atan2(x2-x1,z2-z1);root.add(mesh);roadObjs.push(mesh)}}
+strip([[30,678],[160,672],[292,647],[412,591],[551,517],[608,472]],15);
+strip([[540,18],[554,155],[575,320],[596,459],[608,472]],11);
+strip([[244,233],[312,293],[387,353],[452,415],[514,475]],10);
+strip([[304,155],[358,210],[434,295],[520,383]],8);
+strip([[327,412],[393,361],[454,312],[535,240]],8);
+strip([[285,515],[339,472],[411,415],[486,354],[558,293]],8);
+strip([[106,499],[115,600],[180,638],[245,623]],8);
+const buildings=[
+ ['西南廠房 A',148,517,74,53,15,-6,'production','gable'],
+ ['西南廠房 B',173,584,77,50,18,-5,'production','flat'],
+ ['西南廠房 C',206,511,28,92,11,-5,'storage','flat'],
+ ['西南長型建築',177,635,117,16,7,-8,'storage','flat'],
+ ['西南側附屬設施',70,554,26,42,7,-5,'utility','flat'],
+ ['大型廠房 A',344,274,110,75,26,-31,'production','flat'],
+ ['大型廠房 B',332,362,88,55,19,-31,'production','gable'],
+ ['大型廠房 C',411,347,94,60,22,-31,'production','gable'],
+ ['大型廠房 D',449,418,104,78,23,-31,'production','flat'],
+ ['大型廠房 E',391,449,73,43,14,-31,'production','flat'],
+ ['東北廠房 A',451,109,83,56,19,-31,'production','gable'],
+ ['東北廠房 B',463,170,67,44,15,-31,'production','flat'],
+ ['東北廠房 C',485,221,62,35,15,-31,'production','flat'],
+ ['東側製程廠房 A',522,272,38,56,13,-31,'utility','flat'],
+ ['東側製程廠房 B',534,338,36,53,14,-31,'utility','flat'],
+ ['主要入口附近建築',440,485,48,25,9,-31,'admin','flat'],
+ ['中央製程附屬廠房 A',360,407,36,33,11,-31,'utility','flat'],
+ ['中央製程附屬廠房 B',318,446,47,34,10,-31,'utility','flat'],
+ ['東北大型屋頂建築',454,63,48,44,13,-31,'storage','gable'],
+ ['東側公用機房',554,183,29,32,10,-31,'utility','flat']
+ ];
+function addBuilding([name,x,z,w,d,h,angle,type,roofStyle]){
+ const grp=new THREE.Group();grp.position.set(px(x),0,py(z));grp.rotation.y=-angle*Math.PI/180;
+ const walls=new THREE.Mesh(new THREE.BoxGeometry(w*1.08,h,d*1.08),mat(materials[type]));walls.position.y=h/2;walls.castShadow=true;walls.receiveShadow=true;grp.add(walls);
+ if(roofStyle==='gable'){const rise=Math.min(5,d*.22);const geom=new THREE.BufferGeometry(),pos=[-w*.54,h,-d*.54,w*.54,h,-d*.54,0,h+rise,-d*.54,-w*.54,h,d*.54,w*.54,h,d*.54,0,h+rise,d*.54];geom.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geom.setIndex([0,1,2,3,5,4,0,2,5,0,5,3,1,4,5,1,5,2]);geom.computeVertexNormals();let r=new THREE.Mesh(geom,roofLight);r.material.side=THREE.DoubleSide;r.castShadow=true;grp.add(r)}
+ else{let top=new THREE.Mesh(new THREE.BoxGeometry(w*1.08+.8,.8,d*1.08+.8),roof);top.position.y=h+.4;grp.add(top)}
+ grp.userData={name,type,dimensions:'約 '+Math.round(w*1.08)+' × '+Math.round(d*1.08)+' × '+h+'（模型示意值）',detail:'位置依衛星截圖人工套繪；實際尺寸、高度待校正',h};root.add(grp);clickable.push(grp);
+}
+buildings.forEach(addBuilding);
+function tank(name,x,z,r=5,h=13){let group=new THREE.Group();group.position.set(px(x),0,py(z));let cyl=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,20),mat(0xbccacc));cyl.position.y=h/2;cyl.castShadow=true;group.add(cyl);let top=new THREE.Mesh(new THREE.CylinderGeometry(r,r,.5,20),roofLight);top.position.y=h+.2;group.add(top);group.userData={name,type:'utility',dimensions:'直徑 '+2*r+' × 高 '+h+' m（示意）',detail:'儲槽位置依影像人工判讀，非實測',h};clickable.push(group);root.add(group)}
+let num=1;for(let row=0;row<4;row++)for(let col=0;col<6;col++)tank('東北儲槽 '+num++,486+col*12+row*1.5,76+row*11,4.3,11);
+num=1;for(let row=0;row<3;row++)for(let col=0;col<3;col++)tank('東側儲槽 '+num++,536+col*11,366+row*11,4,11);
+for(let i=0;i<4;i++)tank('南側附屬槽 '+(i+1),440+i*10,440,3.2,7);
+function tree(x,z,s=1){let g=new THREE.Group();g.position.set(px(x),0,py(z));const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.35*s,.5*s,2*s,5),mat(0x6a7659));trunk.position.y=s;g.add(trunk);const crown=new THREE.Mesh(new THREE.IcosahedronGeometry(2.5*s,1),forest);crown.position.y=4.1*s;g.add(crown);root.add(g);treeObjs.push(g)}
+for(let a=0;a<48;a++){let t=a/47;tree(60+180*t,460-55*Math.sin(t*Math.PI),.8);tree(42+205*t,671-30*Math.sin(t*Math.PI),.8)}
+for(let a=0;a<37;a++){let t=a/36;tree(530+80*t,28+410*t,.7)}
+for(let a=0;a<33;a++){let t=a/32;tree(310+230*t,40+9*Math.sin(t*Math.PI),.7)}
+function makeLandmark(name,x,z){let grp=new THREE.Group();grp.position.set(px(x),0,py(z));let cone=new THREE.Mesh(new THREE.CylinderGeometry(1.2,3.3,13,16),mark);cone.position.y=6.5;grp.add(cone);grp.userData={name,type:'landmark',dimensions:'示意地標',detail:'僅作為方位辨識，外觀尚待補充',h:13};root.add(grp);clickable.push(grp)}
+makeLandmark('入口與展示景觀區',301,510);makeLandmark('主要聯外道路',446,551);
+const legend=[['production','主要廠房'],['storage','儲酒／倉儲（待核對）'],['admin','入口與行政'],['utility','槽體及公用設施'],['landmark','方位地標']];
+document.getElementById('legend').innerHTML=legend.map(([k,t])=>'<div class="legend"><span class="swatch" style="background:#'+materials[k].toString(16)+'"></span>'+t+'</div>').join('');
+const labelBox=document.getElementById('labels'),nodes=clickable.map(o=>{const n=document.createElement('div');n.className='pin';n.textContent=o.userData.name;labelBox.append(n);return n});let showLabels=false;
+function updateLabels(){let rect=renderer.domElement.getBoundingClientRect();clickable.forEach((o,i)=>{const p=o.position.clone();p.y=o.userData.h+7;p.project(camera);const e=nodes[i];e.style.left=((p.x+1)/2*rect.width)+'px';e.style.top=((1-p.y)/2*rect.height)+'px';e.style.display=showLabels&&p.z<1?'block':'none'})}
+function setCamera(top){camera.position.set(top?0:560,top?910:690,top?.01:580);controls.target.set(0,0,0);controls.update();document.getElementById('iso').classList.toggle('on',!top);document.getElementById('top').classList.toggle('on',top)}
+setCamera(false);
+document.getElementById('iso').onclick=()=>setCamera(false);document.getElementById('top').onclick=()=>setCamera(true);document.getElementById('reset').onclick=()=>setCamera(false);
+document.getElementById('labelsBtn').classList.remove('on');document.getElementById('labelsBtn').onclick=e=>{showLabels=!showLabels;e.currentTarget.classList.toggle('on',showLabels)};
 document.getElementById('roads').onchange=e=>roadObjs.forEach(o=>o.visible=e.target.checked);document.getElementById('trees').onchange=e=>treeObjs.forEach(o=>o.visible=e.target.checked);
-document.getElementById('screenshot').onclick=()=>{renderer.render(scene,cam);let a=document.createElement('a');a.href=renderer.domElement.toDataURL('image/png');a.download='KKL-jinning-massing-v01.png';a.click()};
-function resize(){let w=el.clientWidth,h=el.clientHeight;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h)}addEventListener('resize',resize);resize();function frame(){requestAnimationFrame(frame);ctl.update();renderer.render(scene,cam);labels()}frame();
+const raycaster=new THREE.Raycaster(),mouse=new THREE.Vector2();
+renderer.domElement.addEventListener('click',e=>{let r=renderer.domElement.getBoundingClientRect();mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);raycaster.setFromCamera(mouse,camera);let hit=raycaster.intersectObjects(clickable,true)[0];if(!hit)return;let p=hit.object;while(p.parent&&!p.userData.name)p=p.parent;if(p.userData.name)document.getElementById('info').textContent=p.userData.name+'｜'+p.userData.dimensions+'｜'+p.userData.detail});
+document.getElementById('screenshot').onclick=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.href=renderer.domElement.toDataURL('image/png');a.download='KKL-Jinning-V0.2-massing.png';a.click()};
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h)}window.addEventListener('resize',resize);resize();
+function render(){requestAnimationFrame(render);controls.update();renderer.render(scene,camera);updateLabels()}render();
 </script></body></html>
