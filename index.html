@@ -151,7 +151,7 @@ for(let a=0;a<52;a++){let t=a/51;tree(95+230*t,475+3*Math.sin(t*Math.PI),.75);tr
 for(let a=0;a<48;a++){let t=a/47;tree(730+64*t,70+430*t,.68)}
 for(let a=0;a<42;a++){let t=a/41;tree(365+290*t,48+18*Math.sin(t*Math.PI),.66)}
 function makeLandmark(name,x,z){let grp=new THREE.Group();grp.position.set(px(x),0,py(z));let cone=new THREE.Mesh(new THREE.CylinderGeometry(1.2,3.3,13,16),mark);cone.position.y=6.5;grp.add(cone);grp.userData={name,type:'landmark',dimensions:'示意地標',detail:'僅作為方位辨識，外觀尚待補充',h:13};root.add(grp);clickable.push(grp)}
-makeLandmark('入口與展示景觀區',437,540);makeLandmark('桃園路與東側道路路口',760,460);
+// Entry and intersection are represented by roads only; no solid objects are placed on carriageways.
 const legend=[['production','主要廠房'],['storage','儲酒／倉儲（待核對）'],['admin','入口與行政'],['utility','槽體及公用設施'],['landmark','方位地標']];
 document.getElementById('legend').innerHTML=legend.map(([k,t])=>'<div class="legend"><span class="swatch" style="background:#'+materials[k].toString(16)+'"></span>'+t+'</div>').join('');
 if(rejected.length)console.warn('Rejected overlapping buildings:',rejected);if(skippedTanks)console.info('Skipped tanks overlapping structures:',skippedTanks);
