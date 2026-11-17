@@ -15,11 +15,11 @@ aside{background:white;padding:18px;border-radius:15px;border:1px solid #dce5e9;
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
 </head>
 <body>
-<header><small>KKL BIOENERGY · SITE DIGITAL MODEL</small><h1>金門酒廠・金寧廠｜互動式 3D 量體平台</h1><p>平滑道路與廠區比例校正 V0.4　|　後續規劃：厭氧沼氣設施與工程配置</p></header>
+<header><small>KKL BIOENERGY · SITE DIGITAL MODEL</small><h1>金門酒廠・金寧廠｜互動式 3D 量體平台</h1><p>OSM 道路向量整合 V0.5　|　後續規劃：厭氧沼氣設施與工程配置</p></header>
 <main>
 <section id="view"><div id="stage"></div><div class="tools"><button id="iso" class="on">立體</button><button id="top">俯視</button><button id="reset">重設</button><button id="labelsBtn" class="on">標籤</button><button id="screenshot">截圖 PNG</button></div><div class="north">N ↑</div><div id="labels" class="labels"></div><div class="note">拖曳旋轉 · 滾輪縮放 · 右鍵平移<br>點擊量體可查看資料<br>參照北向衛星圖重建道路與建築；尺寸仍待實測校正</div></section>
-<aside><h2>既有廠區圖層</h2><div id="legend"></div><label class="toggle"><input type="checkbox" id="roads" checked> 顯示道路</label><label class="toggle"><input type="checkbox" id="trees" checked> 顯示植栽</label><label class="toggle"><input type="checkbox" id="marks" checked disabled> 未來沼氣廠規劃（尚未建置）</label><h2>選取量體</h2><div id="info" class="info">點擊建築或地標以查看示意資訊。</div><div class="warning"><b>精度說明</b><br>道路中心線參照北向地圖人工描繪，使用連續曲面呈現；邊界依使用者標註面積 282,716.95 m²、周長 2.41 km 估算比例。該邊界非地籍界線，建築位置仍為暫定影像套繪，不可用於工程規劃或測量認定。</div></aside>
-</main><footer>KKL_bioenergy · 3D visualisation prototype · Three.js · 按面積 282,716.95 m²、周長約 2.41 km 初步校正；非正式測量</footer>
+<aside><h2>既有廠區圖層</h2><div id="legend"></div><label class="toggle"><input type="checkbox" id="roads" checked> 顯示道路</label><label class="toggle"><input type="checkbox" id="trees" checked> 顯示植栽</label><label class="toggle"><input type="checkbox" id="marks" checked disabled> 未來沼氣廠規劃（尚未建置）</label><h2>選取量體</h2><div id="info" class="info">點擊建築或地標以查看示意資訊。</div><div class="warning"><b>精度說明</b><br>道路現改用使用者提供的 OpenStreetMap GeoJSON 向量座標，視覺尺寸及對齊仍屬暫定；建物仍依過往截圖套繪。用地邊界參考量測面積 282,716.95 m²，非正式地籍圖，不可用於工程規劃或測量認定。資料來源：© OpenStreetMap contributors (ODbL)。</div></aside>
+</main><footer>KKL_bioenergy · 3D visualisation prototype · Three.js · 按面積 282,716.95 m²、周長約 2.41 km 初步校正；非正式測量 · Roads © OpenStreetMap contributors (ODbL)</footer>
 <script type="module">
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
@@ -47,26 +47,13 @@ function boundaryLine(points){const v=points.map(p=>new THREE.Vector3(px(p[0]),.
 boundaryLine(userMeasuredBoundary);
 // Digitized from user's 2026-11-17 north-up map and measurement screenshot.
 // Points are in screenshot pixel coordinates; Google map itself is not redistributed.
-const roadsData=[
- {name:'桃園路',width:14,pts:[[-55,681],[0,697],[60,709],[109,721],[177,730],[244,738],[306,741],[357,743],[408,718],[458,689],[508,659],[553,630],[602,593],[647,557],[689,521],[725,484],[760,460],[805,435],[859,391],[923,341]]},
- {name:'東側聯外道路',width:13,pts:[[639,-50],[651,-12],[658,35],[668,88],[678,143],[688,197],[701,251],[713,310],[725,365],[742,416],[760,460],[776,511],[795,569],[830,631],[862,688]]},
- {name:'東側岔路',width:11,pts:[[760,460],[786,448],[816,431],[852,400],[916,347]]},
- {name:'西北斜向邊界道路',width:8,pts:[[369,263],[403,242],[445,214],[484,185],[521,154],[563,125],[609,82],[648,43]]},
- {name:'北側內部主通道',width:7.5,pts:[[410,287],[452,258],[497,226],[544,194],[589,161],[629,134],[683,99]]},
- {name:'北側第二通道',width:7,pts:[[440,331],[479,300],[522,272],[570,240],[615,208],[665,174],[696,150]]},
- {name:'中央內部主通道',width:8.3,pts:[[469,374],[501,352],[538,322],[573,297],[609,270],[650,241],[710,201]]},
- {name:'中央南部通道',width:8,pts:[[511,426],[544,403],[579,380],[617,352],[655,324],[694,294],[722,273]]},
- {name:'西側南北通道',width:8,pts:[[369,263],[384,292],[404,318],[431,331],[449,359],[467,383],[489,408],[512,431],[536,458],[557,485]]},
- {name:'中央縱向通道',width:7.3,pts:[[411,289],[426,308],[440,331],[470,365],[503,403],[533,439],[559,470],[591,509],[620,547]]},
- {name:'東側廠內縱向通道',width:7.5,pts:[[670,86],[676,138],[682,184],[689,234],[700,278],[710,328],[719,377],[730,419],[746,453]]},
- {name:'南側內部斜向通道',width:7.8,pts:[[356,547],[391,523],[426,498],[464,472],[503,445],[543,417],[586,389]]},
- {name:'西南區東西向通道',width:7,pts:[[123,529],[165,517],[209,507],[256,494],[297,476],[337,453],[375,429]]},
- {name:'西南區外側環路',width:7,pts:[[109,720],[112,679],[113,634],[115,595],[119,552],[135,528],[169,508],[212,496],[256,494]]},
- {name:'西南區南側通道',width:7,pts:[[116,650],[153,656],[195,661],[237,663],[276,659],[313,650],[359,629]]},
- {name:'西南廠房連接道',width:7,pts:[[237,663],[247,630],[259,600],[279,572],[306,549],[335,530]]},
- {name:'南側廠區入口',width:9,pts:[[508,659],[502,632],[490,602],[475,576],[455,548],[437,521]]},
- {name:'東側廠區入口',width:8,pts:[[724,484],[699,471],[668,458],[643,444],[617,427]]}
-];
+const roadsData=[]; // authoritative OSM vectors are loaded from ./data/roads-osm.geojson
+const OSM_ANCHOR={lon:118.345669,lat:24.432521,x:760,y:460}; // approximate 2-point visual alignment to supplied north-up map
+const OSM_METER_X=111320*Math.cos(OSM_ANCHOR.lat*Math.PI/180);
+const OSM_METER_Y=111195;
+function osmWorld(lon,lat){return new THREE.Vector3(px(OSM_ANCHOR.x)+(lon-OSM_ANCHOR.lon)*OSM_METER_X,0,py(OSM_ANCHOR.y)-(lat-OSM_ANCHOR.lat)*OSM_METER_Y)}
+function osmPixel(lon,lat){let w=osmWorld(lon,lat);return [w.x/METERS_PER_PIXEL+442,w.z/METERS_PER_PIXEL+386]}
+const ROAD_TYPES={secondary:14,secondary_link:10,tertiary:11,residential:7,service:6,track:4,footway:2.5,path:2.5};
 const buildings=[
  ['西南廠房 A',156,508,67,46,15,-6,'production','gable'],
  ['西南廠房 B',173,580,66,44,18,-5,'production','flat'],
@@ -116,8 +103,8 @@ for(let i=0;i<3;i++)safeTank('南側附屬槽 '+(i+1),478+i*9,462,2.9,7);
 // Adjacent roads can meet at intersections; anti-z-fighting via consistent elevation.
 const roadClearance=.75;
 function ribbonRoad(entry,index){
- const curve=new THREE.CatmullRomCurve3(entry.pts.map(([x,y])=>new THREE.Vector3(px(x),0,py(y))),false,'centripetal',.5);
- const steps=Math.max(40,entry.pts.length*12);
+ const curve=new THREE.CatmullRomCurve3(entry.pts.map(([x,y])=>new THREE.Vector3(px(x),0,py(y))),false,'centripetal',.3);
+ const steps=Math.max(12,entry.pts.length*5);
  const vertices=[],indices=[],uv=[],samplePositions=[];
  for(let i=0;i<=steps;i++){
   const t=i/steps,p=curve.getPoint(t),tan=curve.getTangent(t).normalize(),nx=-tan.z,nz=tan.x;
@@ -134,22 +121,46 @@ function ribbonRoad(entry,index){
  const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geo.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));geo.setIndex(indices);geo.computeVertexNormals();
  const mesh=new THREE.Mesh(geo,roadMat);mesh.receiveShadow=true;mesh.userData.roadName=entry.name;root.add(mesh);roadObjs.push(mesh);
 }
-roadsData.forEach(ribbonRoad);
-function nearestRoadDistance(x,z){
- let min=Infinity;for(const r of roadsData){const p=r.pts;for(let i=1;i<p.length;i++){
- const a=p[i-1],b=p[i],dx=b[0]-a[0],dy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[1])*dy)/(dx*dx+dy*dy)));
- min=Math.min(min,Math.hypot(x-a[0]-t*dx,z-a[1]-t*dy)-r.width/(2*METERS_PER_PIXEL));
- }}return min;
+// The source file is derived from the user's Overpass Turbo export, with OSM attribution.
+async function loadOsmRoads(){
+ try{
+  const res=await fetch('./data/roads-osm.geojson');
+  if(!res.ok)throw Error('HTTP '+res.status);
+  const json=await res.json();
+  let n=0, skipped=0;
+  for(const f of json.features){
+   if(f.geometry?.type!=='LineString')continue;
+   const points=f.geometry.coordinates.map(([lon,lat])=>osmPixel(lon,lat));
+   // Skip far-away geometry, and exclude pedestrian paths from asphalt rendering.
+   const type=f.properties.highway;
+   if(!ROAD_TYPES[type] || type==='footway' || type==='path')continue;
+   if(!points.some(([x,y])=>x>20&&x<890&&y>-60&&y<810))continue;
+   const entry={name:f.properties.name||('OSM '+type),width:ROAD_TYPES[type],pts:points,id:f.properties.id};
+   roadsData.push(entry);
+   ribbonRoad(entry,n++);
+  }
+  makeTrees();
+  if(!document.getElementById('roads').checked)roadObjs.forEach(o=>o.visible=false);
+  document.getElementById('info').textContent='OSM 道路圖層已載入：'+n+' 條道路線段（以原始 GPS 座標轉換）。建築位置仍待精確配準。';
+ }catch(error){
+  console.error('OSM GeoJSON loading failed:',error);
+  document.getElementById('info').textContent='道路圖層載入失敗：'+error.message+'。請確認網站資料檔與網路連線。';
+  makeTrees();
+ }
 }
+void loadOsmRoads();
+function nearestRoadDistance(x,z){let d=Infinity;for(const road of roadsData){for(let k=1;k<road.pts.length;k++){let a=road.pts[k-1],b=road.pts[k],vx=b[0]-a[0],vy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*vx+(z-a[1])*vy)/(vx*vx+vy*vy||1)));d=Math.min(d,Math.hypot(x-a[0]-t*vx,z-a[1]-t*vy)-road.width/(2*METERS_PER_PIXEL))}}return d}
 function tree(x,z,size=1){
- if(!clearOfStructures(x,z,5)||nearestRoadDistance(x,z)<6)return;
+ if(!clearOfStructures(x,z,5)||nearestRoadDistance(x,z)<7)return;
  const g=new THREE.Group();g.position.set(px(x),0,py(z));
  const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.3*size,.45*size,2*size,5),mat(0x6a7659));trunk.position.y=size;g.add(trunk);
  const crown=new THREE.Mesh(new THREE.IcosahedronGeometry(2.3*size,1),forest);crown.position.y=4.1*size;g.add(crown);root.add(g);treeObjs.push(g);
 }
-for(let a=0;a<52;a++){let t=a/51;tree(95+230*t,475+3*Math.sin(t*Math.PI),.75);tree(30+340*t,683+10*Math.sin(t*Math.PI),.75)}
-for(let a=0;a<48;a++){let t=a/47;tree(730+64*t,70+430*t,.68)}
-for(let a=0;a<42;a++){let t=a/41;tree(365+290*t,48+18*Math.sin(t*Math.PI),.66)}
+function makeTrees(){if(treeObjs.length)return;
+ for(let i=0;i<52;i++){let t=i/51;tree(95+230*t,475+3*Math.sin(t*Math.PI),.75);tree(30+340*t,683+10*Math.sin(t*Math.PI),.75)}
+ for(let i=0;i<48;i++){let t=i/47;tree(730+64*t,70+430*t,.68)}
+ for(let i=0;i<42;i++){let t=i/41;tree(365+290*t,48+18*Math.sin(t*Math.PI),.66)}
+}
 function makeLandmark(name,x,z){let grp=new THREE.Group();grp.position.set(px(x),0,py(z));let cone=new THREE.Mesh(new THREE.CylinderGeometry(1.2,3.3,13,16),mark);cone.position.y=6.5;grp.add(cone);grp.userData={name,type:'landmark',dimensions:'示意地標',detail:'僅作為方位辨識，外觀尚待補充',h:13};root.add(grp);clickable.push(grp)}
 // Entry and intersection are represented by roads only; no solid objects are placed on carriageways.
 const legend=[['production','主要廠房'],['storage','儲酒／倉儲（待核對）'],['admin','入口與行政'],['utility','槽體及公用設施'],['landmark','方位地標']];
@@ -164,7 +175,7 @@ document.getElementById('labelsBtn').classList.remove('on');document.getElementB
 document.getElementById('roads').onchange=e=>roadObjs.forEach(o=>o.visible=e.target.checked);document.getElementById('trees').onchange=e=>treeObjs.forEach(o=>o.visible=e.target.checked);
 const raycaster=new THREE.Raycaster(),mouse=new THREE.Vector2();
 renderer.domElement.addEventListener('click',e=>{let r=renderer.domElement.getBoundingClientRect();mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);raycaster.setFromCamera(mouse,camera);let hit=raycaster.intersectObjects(clickable,true)[0];if(!hit)return;let p=hit.object;while(p.parent&&!p.userData.name)p=p.parent;if(p.userData.name)document.getElementById('info').textContent=p.userData.name+'｜'+p.userData.dimensions+'｜'+p.userData.detail});
-document.getElementById('screenshot').onclick=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.href=renderer.domElement.toDataURL('image/png');a.download='KKL-Jinning-V0.4-massing.png';a.click()};
+document.getElementById('screenshot').onclick=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.href=renderer.domElement.toDataURL('image/png');a.download='KKL-Jinning-V0.5-osm.png';a.click()};
 function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h)}window.addEventListener('resize',resize);resize();
 function render(){requestAnimationFrame(render);controls.update();renderer.render(scene,camera);updateLabels()}render();
 </script></body></html>
