@@ -12,6 +12,10 @@ REGISTRATION = pathlib.Path(__file__).resolve().parents[1] / "register_pages.py"
 reg_spec = importlib.util.spec_from_file_location("register_pages", REGISTRATION)
 registration = importlib.util.module_from_spec(reg_spec)
 reg_spec.loader.exec_module(registration)
+ZONES = pathlib.Path(__file__).resolve().parents[1] / "classify_expansion_zones.py"
+zones_spec = importlib.util.spec_from_file_location("classify_expansion_zones", ZONES)
+zones = importlib.util.module_from_spec(zones_spec)
+zones_spec.loader.exec_module(zones)
 
 
 class TestSourceGeometry(unittest.TestCase):
@@ -47,6 +51,12 @@ class TestSourceGeometry(unittest.TestCase):
             self.assertLess(y0, y1)
             self.assertGreaterEqual(x0, 0)
             self.assertLessEqual(x1, 842)
+
+    def test_expansion_color_keys_follow_legend_palette(self):
+        self.assertTrue(zones.rgb_close(zones.A_GREEN, (0.0, 0.765, 0.0)))
+        self.assertTrue(zones.rgb_close(zones.B_GRAY, (0.725, 0.725, 0.725)))
+        self.assertTrue(zones.rgb_close(zones.C_RED, (1.0, 0.0, 0.0)))
+        self.assertFalse(zones.rgb_close((0.1, 0.1, 0.1), zones.A_GREEN))
 
 
 if __name__ == "__main__":
