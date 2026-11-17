@@ -21,9 +21,9 @@ aside{padding:18px}h2{font-size:16px;margin:0 0 12px}h3{font-size:13px;margin:19
 footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b8b85}
 @media(max-width:850px){main{display:flex;flex-direction:column;padding:8px}#viewport{height:61vh;min-height:340px}aside{padding:14px}}
 </style></head><body>
-<header><div class="kicker">KKL BIOENERGY · HISTORICAL EIA PLANS</div><h1>金門酒廠金寧廠｜工程配置圖數位化</h1><p>V0.9.3 · 依《金寧三廠整廠系統新建工程環境影響說明書》第四章 · 歷史設計參考圖，不是竣工現況</p></header>
+<header><div class="kicker">KKL BIOENERGY · HISTORICAL EIA PLANS</div><h1>金門酒廠金寧廠｜工程配置圖數位化</h1><p>V0.9.4 · 依《金寧三廠整廠系統新建工程環境影響說明書》第四章 · 歷史設計參考圖，不是竣工現況</p></header>
 <main><section class="panel"><div class="toolbar">
-<select id="mapMode" aria-label="配置圖版本"><option value="semantic">V0.9.3：分類候選輪廓（需核對）</option><option value="existing">環評圖 4.2.2-1：既有廠區</option><option value="expansion">環評圖 4.2.2-2：擴建範圍</option><option value="legacy">早期彩色示意圖（僅供比較）</option></select>
+<select id="mapMode" aria-label="配置圖版本"><option value="snap">V0.9.4：PDF 向量校正（六處）</option><option value="semantic">V0.9.3：分類候選輪廓（需核對）</option><option value="existing">環評圖 4.2.2-1：既有廠區</option><option value="expansion">環評圖 4.2.2-2：擴建範圍</option><option value="legacy">早期彩色示意圖（僅供比較）</option></select>
 <button id="fit" class="primary">完整圖面</button><button id="zi">＋</button><button id="zo">－</button>
 <a id="download" class="download" href="./plan/eia-existing-v0.9.svg" download>下載本圖 SVG</a></div>
 <div id="viewport"><div id="hint">正在讀取向量圖…</div></div></section>
@@ -37,6 +37,7 @@ footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b
 <script>
 (async()=>{
  const modes={
+ snap:{src:'./plan/eia-semantic-v0.9.4.svg',view:[0,0,1106,800],description:'V0.9.4：6 個矩形外框已依 PDF 原始向量線段輔助校正，其他輪廓仍待核對。圖上比例尺暫估 0.5172 m/px；此非工程座標。',layers:[['roads','道路候選線'],['buildings','建築與設施候選外框'],['points','點位候選'],['labels','物件 ID 標籤'],['key','說明標籤']]},
  semantic:{src:'./plan/eia-semantic-v0.9.3.svg',view:[0,0,1106,800],description:'PDF 第7頁圖4.2.2-1 的 24 個設施/景觀外框候選、9 條道路中心線與 3 個點位。基於原始向量圖面人工輔助分類，尚未完成精確描線與比例校正。',layers:[['candidate-roads','道路中心線候選'],['candidate-buildings','設施／景觀外框候選'],['candidate-points','出入口／水池定位點'],['key','圖例標題']]},
  existing:{src:'./plan/eia-existing-v0.9.svg',view:[175,90,1125,730],description:'PDF 第7頁圖4.2.2-1，既有建築、內部通道及遊客景觀的初步向量描繪。',layers:[['boundary','基地範圍'],['roads','道路／動線'],['buildings','建築量體足跡'],['visitor-landmarks','遊客景觀與出入口'],['annotations','文字標示'],['scale','參考比例尺']]},
  expansion:{src:'./plan/eia-expansion-v0.9.svg',view:[170,95,1160,765],description:'PDF 第8頁圖4.2.2-2，A/B/C 用地分類、擴建規劃區及歷史廠區位置。',layers:[['site-boundary','原圖廠區線'],['land-use-zones','A/B/C 分區'],['roads','歷史道路示意'],['planning-blocks','設施規劃區外框'],['annotations','文字標示']]},
@@ -72,7 +73,7 @@ footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b
  viewport.addEventListener('pointerup',()=>{start=null;viewport.classList.remove('drag')});
  viewport.addEventListener('pointercancel',()=>{start=null;viewport.classList.remove('drag')});
  viewport.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.08:.925)},{passive:false});
- el('mapMode').value='semantic';await load('semantic');
+ el('mapMode').value='snap';await load('snap');
 })();
 </script>
 </body></html>
