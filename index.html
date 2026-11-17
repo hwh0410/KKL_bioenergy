@@ -17,8 +17,10 @@ aside{background:white;padding:18px;border-radius:15px;border:1px solid #dce5e9;
 <body>
 <header><small>KKL BIOENERGY · SITE DIGITAL MODEL</small><h1>金門酒廠・金寧廠｜互動式 3D 量體平台</h1><p>建物位置校核與編輯 V0.7　|　後續規劃：厭氧沼氣設施與工程配置</p></header>
 <main>
-<section id="view"><div id="stage"></div><div class="tools"><button id="iso" class="on">立體</button><button id="top">俯視</button><button id="reset">重設</button><button id="labelsBtn" class="on">標籤</button><button id="screenshot">截圖 PNG</button></div><div class="north">N ↑</div><div id="labels" class="labels"></div><div class="note">拖曳旋轉 · 滾輪縮放 · 右鍵平移<br>點擊量體可查看資料<br>參照北向衛星圖重建道路與建築；尺寸仍待實測校正</div></section>
-<aside><h2>既有廠區圖層</h2><div id="legend"></div><label class="toggle"><input type="checkbox" id="roads" checked> 顯示道路</label><label class="toggle"><input type="checkbox" id="trees" checked> 顯示植栽</label><label class="toggle"><input type="checkbox" id="marks" checked disabled> 未來沼氣廠規劃（尚未建置）</label><h2>空間校核</h2><div id="spatialQa" class="info">檢查道路與建築配置中…</div><h2 style="margin-top:15px">建築校正工具</h2>
+<section id="view"><div id="stage"></div><div class="tools"><button id="iso" class="on">立體</button><button id="top">俯視</button><button id="reset">重設</button><button id="labelsBtn" class="on">標籤</button><button id="screenshot">截圖 PNG</button></div><div class="north">N ↑</div><div id="labels" class="labels"></div><div class="note">拖曳旋轉 · 滾輪縮放 · 右鍵平移<br>點擊量體可查看資料<br>官方示意圖校正訪客區；廠房桶槽維持原量體，非實測精度</div></section>
+<aside><h2>既有廠區圖層</h2><div id="legend"></div><label class="toggle"><input type="checkbox" id="roads" checked> 顯示道路</label><label class="toggle"><input type="checkbox" id="trees" checked> 顯示原有植栽</label>
+<label class="toggle"><input type="checkbox" id="visitor" checked> 訪客區量體及景觀</label>
+<label class="toggle"><input type="checkbox" id="visitorTrees" checked> 訪客區路樹</label><label class="toggle"><input type="checkbox" id="marks" checked disabled> 未來沼氣廠規劃（尚未建置）</label><h2>空間校核</h2><div id="spatialQa" class="info">檢查道路與建築配置中…</div><h2 style="margin-top:15px">建築校正工具</h2>
 <label class="toggle" for="buildingPicker">選取建築（僅概念座標）</label>
 <select id="buildingPicker" style="width:100%;padding:9px;border:1px solid #d7e1e4;border-radius:7px"></select>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0">
@@ -31,7 +33,7 @@ aside{background:white;padding:18px;border-radius:15px;border:1px solid #dce5e9;
 <button id="exportBuildings">匯出建物 GeoJSON</button>
 </div>
 <div id="editStatus" class="info">調整僅作用於瀏覽器目前畫面；匯出的 GeoJSON 可用於更新原始檔，不會自動修改 GitHub。</div>
-<h2 style="margin-top:15px">選取量體</h2><div id="info" class="info">點擊建築或地標以查看示意資訊。</div><div class="warning"><b>精度說明</b><br>道路與建築均使用 WGS84 座標。道路來自 OSM；建築為過往衛星影像人工套繪的暫定外框，尚未精確配準。可逐棟編輯並匯出新的 GeoJSON，所有修正仍需人工比對參考圖。疑似重疊僅標示供人工確認，並不裁切 OSM 道路。用地外框不是法定地籍界線。© OpenStreetMap contributors (ODbL)。</div></aside>
+<h2 style="margin-top:15px">選取量體</h2><div id="info" class="info">點擊建築或地標以查看示意資訊。</div><div class="warning"><b>精度說明</b><br>道路、工業建物與新訪客區均使用 WGS84 座標。道路來自 OSM；建築為過往衛星影像人工套繪的暫定外框，尚未精確配準。可逐棟編輯並匯出新的 GeoJSON，所有修正仍需人工比對參考圖。疑似重疊僅標示供人工確認，並不裁切 OSM 道路。用地外框不是法定地籍界線。© OpenStreetMap contributors (ODbL)。</div></aside>
 </main><footer>KKL_bioenergy · 3D visualisation prototype · Three.js · 按面積 282,716.95 m²、周長約 2.41 km 初步校正；非正式測量 · Roads © OpenStreetMap contributors (ODbL)</footer>
 <script type="module">
 import * as THREE from 'three';
@@ -46,7 +48,7 @@ const materials={production:0x91abb5,storage:0xc2b3a0,admin:0xe4d3b4,utility:0x9
 const mat=(c)=>new THREE.MeshStandardMaterial({color:c,roughness:.82,metalness:.03});
 const roof=mat(0x7f9397),roofLight=mat(0xbfcacd),roadMat=mat(0xaeb8b5),forest=mat(0x82a985),lawn=mat(0xb5caa6),mark=mat(0xe8d6a0);
 const root=new THREE.Group();scene.add(root);
-const clickable=[], roadObjs=[], treeObjs=[], buildingObjects=new Map();
+const clickable=[], roadObjs=[], treeObjs=[], visitorObjs=[], visitorTreeObjs=[], visitorOccupancy=[], buildingObjects=new Map();
 const METERS_PER_PIXEL=Math.sqrt(282716.95/238478.5); // Based on user's traced 282,716.95 m² area
 const px=(x)=>(x-442)*METERS_PER_PIXEL, py=(y)=>(y-386)*METERS_PER_PIXEL;
 // Building placements now come from provisional WGS84 GeoJSON, not runtime screenshot transforms.
@@ -99,6 +101,75 @@ function safeTank(name,xOld,zOld,r,h){const [x,z]=[1.16*xOld+55,1.05*zOld+42];if
 for(let row=0;row<4;row++)for(let col=0;col<5;col++)safeTank('東北儲槽 '+num++,510+col*11,68+row*11,3.5,11);
 num=1;for(let row=0;row<3;row++)for(let col=0;col<3;col++)safeTank('東側儲槽 '+num++,542+col*10,358+row*10,3.1,11);
 for(let i=0;i<3;i++)safeTank('南側附屬槽 '+(i+1),478+i*9,462,2.9,7);
+// V0.8 visitor-zone objects: add-only; legacy 19 industrial building volumes & tanks remain intact.
+// Approximate location is inferred from user's official visitor schematic, not surveyed coordinates.
+let visitorGeo={type:'FeatureCollection',features:[]};
+try{
+ const response=await fetch('./data/visitor-zone.geojson');
+ if(!response.ok)throw Error('HTTP '+response.status);
+ visitorGeo=await response.json();
+}catch(err){console.error('visitor-zone.geojson:',err);document.getElementById('info').textContent='訪客區圖層未能載入：'+err.message;}
+const visitorColors={pavilion:0xe2d9c8,administration:0xb97565,museum:0xe1cec3};
+const visitorMat=(c)=>new THREE.MeshStandardMaterial({color:c,roughness:.85});
+const waterMat=new THREE.MeshStandardMaterial({color:0x70afbf,roughness:.3,metalness:.1,transparent:true,opacity:.9});
+const pavementMat=visitorMat(0xc8c9bb),parkMat=visitorMat(0xa1bf82),bottleMat=visitorMat(0xe8e4d1);
+function visitorBuilding(f){
+ const p=f.properties,[x,z]=osmPixel(...p.center_wgs84),w=p.width_m_estimate,d=p.depth_m_estimate,h=p.height_m_estimate,angle=p.rotation_degrees_estimate||0;
+ const grp=new THREE.Group();grp.position.set(px(x),0,py(z));grp.rotation.y=-angle*Math.PI/180;
+ const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),visitorMat(visitorColors[p.style]||0xd1bbaa));m.position.y=h/2;m.castShadow=true;m.receiveShadow=true;grp.add(m);
+ const top=new THREE.Mesh(new THREE.BoxGeometry(w+.4,.7,d+.4),roofLight);top.position.y=h+.35;top.castShadow=true;grp.add(top);
+ grp.userData={name:p.name,h,type:'visitor_building',detail:'官方示意圖相對定位，尺寸與高度為暫定估值',dimensions:w+' × '+d+' × '+h+' m'};
+ root.add(grp);clickable.push(grp);visitorObjs.push(grp);
+ visitorOccupancy.push({name:p.name,x,z,rx:w/(2*METERS_PER_PIXEL)+3,rz:d/(2*METERS_PER_PIXEL)+3,angle});
+}
+function visitorLandmark(f){
+ const p=f.properties,[x,z]=osmPixel(...p.center_wgs84),w=p.width_m_estimate,d=p.depth_m_estimate,h=p.height_m_estimate;
+ const grp=new THREE.Group();grp.position.set(px(x),0,py(z));const cylinder=(r,hh,material,y)=>{let m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,hh,48),material);m.position.y=y;grp.add(m);return m};
+ if(p.category==='fountain'){
+  const r=w/2;cylinder(r,.24,pavementMat,.14);cylinder(r*.7,.17,waterMat,.31);cylinder(r*.28,.5,pavementMat,.52);
+ }else if(p.category==='spring'){
+  cylinder(w*.48,.35,pavementMat,.22);cylinder(w*.36,.13,waterMat,.48);
+  const arc=new THREE.Mesh(new THREE.TorusGeometry(w*.35,.5,7,64,Math.PI),pavementMat);arc.rotation.x=-Math.PI/2;arc.position.y=.7;grp.add(arc);
+ }else if(p.category==='bottle_park'){
+  const grass=new THREE.Mesh(new THREE.CylinderGeometry(w*.47,w*.47,1.2,48),parkMat);grass.scale.z=d/w;grass.position.y=.6;grp.add(grass);
+ }else if(p.category==='bottle_landmark'){
+  const base=new THREE.Mesh(new THREE.BoxGeometry(w,.6,d),pavementMat);base.position.y=.3;grp.add(base);
+  for(const side of [-1,1]){const bottle=new THREE.Group();bottle.position.x=side*w*.23;
+   for(const [rad,hh,yy] of [[2.2,h*.55,h*.275],[1.4,h*.17,h*.635],[.8,h*.22,h*.83]]){let m=new THREE.Mesh(new THREE.CylinderGeometry(rad,rad,hh,20),bottleMat);m.position.y=yy;bottle.add(m)}
+   const cap=new THREE.Mesh(new THREE.CylinderGeometry(.92,.92,.6,20),mark);cap.position.y=h*.95;bottle.add(cap);grp.add(bottle)}
+ }
+ grp.userData={name:p.name,h,type:p.category,detail:'官方配置圖景觀點位；實景造型留待下一階段',dimensions:'示意寬 '+w+' m'};
+ root.add(grp);clickable.push(grp);visitorObjs.push(grp);
+ visitorOccupancy.push({name:p.name,x,z,rx:w/(2*METERS_PER_PIXEL)+4,rz:d/(2*METERS_PER_PIXEL)+4,angle:0});
+}
+for(const feature of visitorGeo.features||[]){
+ if(feature.properties?.category==='visitor_building')visitorBuilding(feature);
+ else if(feature.geometry?.type==='Point')visitorLandmark(feature);
+}
+function visitorPlantAllowed(x,y){
+ if(!clearOfStructures(x,y,7)||nearestRoadDistance(x,y)<6)return false;
+ return visitorOccupancy.every(o=>{
+  const dx=x-o.x,dz=y-o.z,rot=-o.angle*Math.PI/180,u=dx*Math.cos(rot)+dz*Math.sin(rot),v=-dx*Math.sin(rot)+dz*Math.cos(rot);
+  return Math.abs(u)>o.rx+4||Math.abs(v)>o.rz+4;
+ });
+}
+function plantVisitorTree(x,z,scale=1){
+ if(!visitorPlantAllowed(x,z))return;
+ const obj=new THREE.Group();obj.position.set(px(x),0,py(z));
+ const stem=new THREE.Mesh(new THREE.CylinderGeometry(.28*scale,.45*scale,3*scale,7),mat(0x786453));stem.position.y=1.5*scale;obj.add(stem);
+ const leaves=new THREE.Mesh(new THREE.IcosahedronGeometry(2.5*scale,1),visitorMat(0x6c9869));leaves.position.y=5.2*scale;obj.add(leaves);
+ root.add(obj);visitorTreeObjs.push(obj);
+}
+function makeVisitorTrees(){
+ if(visitorTreeObjs.length)return;
+ // Paired promenade rows near the welcome fountain and plaza. Skip roads and landmarks.
+ const line=(a,b,n,t=.9)=>{for(let i=0;i<n;i++){const q=(i+.5)/n;plantVisitorTree(a[0]+(b[0]-a[0])*q,a[1]+(b[1]-a[1])*q,t)}};
+ line([372,584],[374,657],10);line([458,580],[459,654],10);
+ line([332,531],[373,509],7,.85);
+ line([471,532],[509,539],6,.85);
+ line([375,678],[475,671],12,.8);
+ line([684,493],[729,515],7,.8);
+}
 // Smooth continuous ribbon mesh replaces the original row of box geometries.
 // Curve sampling uses Catmull–Rom interpolation and a normal-based continuous ribbon.
 // Adjacent roads can meet at intersections; anti-z-fighting via consistent elevation.
@@ -141,6 +212,7 @@ async function loadOsmRoads(){
    ribbonRoad(entry,n++);
   }
   makeTrees();
+  makeVisitorTrees();
   showSpatialDiagnostics();
   if(!document.getElementById('roads').checked)roadObjs.forEach(o=>o.visible=false);
   document.getElementById('info').textContent='OSM 道路圖層已載入：'+n+' 條道路線段（以原始 GPS 座標轉換）。建築位置仍待精確配準。';
@@ -216,6 +288,8 @@ setCamera(false);
 document.getElementById('iso').onclick=()=>setCamera(false);document.getElementById('top').onclick=()=>setCamera(true);document.getElementById('reset').onclick=()=>setCamera(false);
 document.getElementById('labelsBtn').classList.remove('on');document.getElementById('labelsBtn').onclick=e=>{showLabels=!showLabels;e.currentTarget.classList.toggle('on',showLabels)};
 document.getElementById('roads').onchange=e=>roadObjs.forEach(o=>o.visible=e.target.checked);document.getElementById('trees').onchange=e=>treeObjs.forEach(o=>o.visible=e.target.checked);
+document.getElementById('visitor').onchange=e=>visitorObjs.forEach(o=>o.visible=e.target.checked);
+document.getElementById('visitorTrees').onchange=e=>visitorTreeObjs.forEach(o=>o.visible=e.target.checked);
 // In-browser footprint adjustment, provenance kept separate from authoritative OSM roads.
 const picker=document.getElementById('buildingPicker');
 for(const name of buildingObjects.keys()){const opt=document.createElement('option');opt.value=name;opt.textContent=name;picker.add(opt)}
@@ -266,7 +340,7 @@ document.getElementById('exportBuildings').onclick=()=>{
 };
 const raycaster=new THREE.Raycaster(),mouse=new THREE.Vector2();
 renderer.domElement.addEventListener('click',e=>{let r=renderer.domElement.getBoundingClientRect();mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);raycaster.setFromCamera(mouse,camera);let hit=raycaster.intersectObjects(clickable,true)[0];if(!hit)return;let p=hit.object;while(p.parent&&!p.userData.name)p=p.parent;if(p.userData.name){document.getElementById('info').textContent=p.userData.name+'｜'+p.userData.dimensions+'｜'+p.userData.detail;if(p.userData.buildable)pickBuilding(p.userData.name)}});
-document.getElementById('screenshot').onclick=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.href=renderer.domElement.toDataURL('image/png');a.download='KKL-Jinning-V0.7-building-review.png';a.click()};
+document.getElementById('screenshot').onclick=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.href=renderer.domElement.toDataURL('image/png');a.download='KKL-Jinning-V0.8-visitor-zone.png';a.click()};
 function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h)}window.addEventListener('resize',resize);resize();
 function render(){requestAnimationFrame(render);controls.update();renderer.render(scene,camera);updateLabels()}render();
 </script></body></html>
