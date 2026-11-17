@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="175 90 1125 730" role="img">
+<title>金寧廠環評既有廠區配置圖初步向量化（2007年前後歷史規劃）</title>
+<desc>依 C04.PDF 第7頁圖4.2.2-1人工描繪，非測繪成果。比例用圖內0–60公尺刻度初步估算；建築外框、道路線形需校驗。</desc>
+<style>
+text{font-family:'Noto Sans TC','Microsoft JhengHei',sans-serif;fill:#243e47}
+.building rect{fill:#eff1eb;stroke:#536d70;stroke-width:2}.building text{font-size:12px;paint-order:stroke;stroke:#fff;stroke-width:2px;font-weight:600}
+.building.production rect{fill:#c7dce0}.building.warehouse rect{fill:#eadbc2}.building.admin rect{fill:#e8cabb}.building.reserved rect{fill:#fff3d9;stroke-dasharray:8 5}.building.utility rect{fill:#d7e2d6}.building.storage rect{fill:#ebd8c1}
+.road{fill:none;stroke:#f6f7f2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0px 0px 1px #8f9f99)}
+.subtle{font-size:13px;fill:#667b7d}.small{font-size:11px;fill:#617879}.gate{opacity:.9}
+</style>
+<rect x="175" y="90" width="1125" height="730" fill="#f5f8f5"/>
+<g id="boundary"><path d="M238 733 L610 206 L1213 128 L1004 701 L994 738 L445 753 Z" fill="#dfeddc" stroke="#66907c" stroke-width="3"/></g>
+<g id="roads"><path id="R01" d="M612 264 L1149 264" class="road" stroke-width="9" data-name="北側橫向通道"><title>北側橫向通道</title></path>
+<path id="R02" d="M602 408 L1127 408" class="road" stroke-width="12" data-name="第一條中段橫向道路"><title>第一條中段橫向道路</title></path>
+<path id="R03" d="M607 548 L1090 548" class="road" stroke-width="12" data-name="第二條中段橫向道路"><title>第二條中段橫向道路</title></path>
+<path id="R04" d="M590 692 L1005 692" class="road" stroke-width="11" data-name="南側橫向通道"><title>南側橫向通道</title></path>
+<path id="R05" d="M601 271 L601 699" class="road" stroke-width="11" data-name="西側南北通道"><title>西側南北通道</title></path>
+<path id="R06" d="M718 267 L718 702" class="road" stroke-width="11" data-name="中央南北通道"><title>中央南北通道</title></path>
+<path id="R07" d="M948 265 L948 695" class="road" stroke-width="11" data-name="東側中間通道"><title>東側中間通道</title></path>
+<path id="R08" d="M1145 264 L1104 409 L1070 552 L1025 691" class="road" stroke-width="10" data-name="東側內部通道"><title>東側內部通道</title></path>
+<path id="R09" d="M235 741 Q599 762 1000 742" class="road" stroke-width="16" data-name="南側桃園路"><title>南側桃園路</title></path>
+<path id="R10" d="M1022 745 L1217 126" class="road" stroke-width="17" data-name="東側盤果路"><title>東側盤果路</title></path>
+<path id="R11" d="M268 695 Q346 520 438 385 L611 204" class="road" stroke-width="8" data-name="西側通達道路"><title>西側通達道路</title></path></g>
+<g id="buildings"><g id="E01" class="building utility" data-name="廢水處理區"><rect x="435" y="285" width="153" height="106" rx="5"/><text x="511.5" y="338" text-anchor="middle">廢水處理區</text><title>E01 廢水處理區｜既有，歷史環評初步描繪</title></g>
+<g id="E02" class="building warehouse" data-name="倉庫"><rect x="611" y="284" width="91" height="110" rx="5"/><text x="656.5" y="339" text-anchor="middle">倉庫</text><title>E02 倉庫｜既有，歷史環評初步描繪</title></g>
+<g id="E03" class="building production" data-name="製酒二場"><rect x="727" y="282" width="203" height="110" rx="5"/><text x="828.5" y="337" text-anchor="middle">製酒二場</text><title>E03 製酒二場｜既有，歷史環評初步描繪</title></g>
+<g id="E04" class="building production" data-name="製麴二場"><rect x="959" y="272" width="181" height="55" rx="5"/><text x="1049.5" y="299.5" text-anchor="middle">製麴二場</text><title>E04 製麴二場｜既有，歷史環評初步描繪</title></g>
+<g id="E05" class="building production" data-name="製麴一場"><rect x="957" y="344" width="155" height="52" rx="5"/><text x="1034.5" y="370" text-anchor="middle">製麴一場</text><title>E05 製麴一場｜既有，歷史環評初步描繪</title></g>
+<g id="E06" class="building admin" data-name="福利大樓／員工活動中心"><rect x="612" y="421" width="87" height="111" rx="5"/><text x="655.5" y="476.5" text-anchor="middle">福利大樓／員工活動中心</text><title>E06 福利大樓／員工活動中心｜既有，歷史環評初步描繪</title></g>
+<g id="E07" class="building reserved" data-name="製酒三場預定地"><rect x="728" y="422" width="206" height="117" rx="5"/><text x="831" y="480.5" text-anchor="middle">製酒三場預定地</text><title>E07 製酒三場預定地｜當時預定，歷史環評初步描繪</title></g>
+<g id="E08" class="building storage" data-name="儲酒／酒類設施區"><rect x="958" y="420" width="122" height="150" rx="5"/><text x="1019" y="495" text-anchor="middle">儲酒／酒類設施區</text><title>E08 儲酒／酒類設施區｜既有，歷史環評初步描繪</title></g>
+<g id="E09" class="building production" data-name="製酒一場"><rect x="727" y="562" width="209" height="119" rx="5"/><text x="831.5" y="621.5" text-anchor="middle">製酒一場</text><title>E09 製酒一場｜既有，歷史環評初步描繪</title></g>
+<g id="E10" class="building admin" data-name="行政大樓"><rect x="608" y="560" width="104" height="70" rx="5"/><text x="660" y="595" text-anchor="middle">行政大樓</text><title>E10 行政大樓｜既有，歷史環評初步描繪</title></g>
+<g id="E11" class="building utility" data-name="研發及辦公建築"><rect x="960" y="580" width="59" height="103" rx="5"/><text x="989.5" y="631.5" text-anchor="middle">研發及辦公建築</text><title>E11 研發及辦公建築｜待核對，歷史環評初步描繪</title></g>
+<g id="E12" class="building utility" data-name="南側附屬建築"><rect x="510" y="540" width="76" height="85" rx="5"/><text x="548" y="582.5" text-anchor="middle">南側附屬建築</text><title>E12 南側附屬建築｜待核對，歷史環評初步描繪</title></g>
+<g id="E13" class="building storage" data-name="酒糟貯存場"><rect x="614" y="213" width="97" height="48" rx="5"/><text x="662.5" y="237" text-anchor="middle">酒糟貯存場</text><title>E13 酒糟貯存場｜既有，歷史環評初步描繪</title></g>
+<g id="E14" class="building utility" data-name="冷卻水設施"><rect x="881" y="179" width="57" height="76" rx="5"/><text x="909.5" y="217" text-anchor="middle">冷卻水設施</text><title>E14 冷卻水設施｜既有，歷史環評初步描繪</title></g>
+<g id="E15" class="building utility" data-name="地下油槽"><rect x="1060" y="149" width="54" height="103" rx="5"/><text x="1087" y="200.5" text-anchor="middle">地下油槽</text><title>E15 地下油槽｜既有，歷史環評初步描繪</title></g>
+<g id="E16" class="building admin" data-name="行政／展示附屬建築"><rect x="570" y="653" width="136" height="40" rx="5"/><text x="638" y="673" text-anchor="middle">行政／展示附屬建築</text><title>E16 行政／展示附屬建築｜待核對，歷史環評初步描繪</title></g></g>
+<g id="visitor-landmarks"><g id="V01" class="landmark"><circle cx="451" cy="471" r="47" fill="#edf4f3" stroke="#5f999c" stroke-width="3"/><circle cx="451" cy="471" r="30.55" fill="#b6d5db"/><circle cx="451" cy="471" r="10.34" fill="#eef4e9"/><title>迎賓水池</title></g>
+<path id="V02" d="M459 500 q-22 20 0 40 q22 20 0 40 q-22 20 0 40" fill="none" stroke="#93b0b5" stroke-width="8" stroke-linecap="round"><title>曲水流觴／景觀中軸</title></path>
+<g id="V03" class="landmark"><ellipse cx="630" cy="646" rx="28" ry="19.599999999999998" fill="#eadfc8" stroke="#beac8f" stroke-width="2"/><title>行政大樓前廣場</title></g>
+<g id="V04" class="landmark"><ellipse cx="559" cy="473" rx="13" ry="9.1" fill="#eadfc8" stroke="#beac8f" stroke-width="2"/><title>酒瓶／展示地標區</title></g>
+<g id="G01" class="gate"><circle cx="445" cy="724" r="7" fill="#f3b25f" stroke="#91652d" stroke-width="2"/><title>遊客入口</title></g>
+<g id="G02" class="gate"><circle cx="732" cy="706" r="7" fill="#f3b25f" stroke="#91652d" stroke-width="2"/><title>桃園路大門</title></g>
+<g id="G03" class="gate"><circle cx="1120" cy="411" r="7" fill="#f3b25f" stroke="#91652d" stroke-width="2"/><title>盤果路物料門</title></g></g>
+<g id="annotations">
+<text x="490" y="179" class="small">北側沿界／當年雜林及擴建候選區</text>
+<text x="376" y="392" class="small">西側綠帶</text>
+<text x="450" y="716" class="small">遊客入口</text>
+<text x="745" y="730" class="small">桃園路大門</text>
+<text x="1097" y="390" class="small" transform="rotate(-73 1097 390)">盤果路側</text>
+</g>
+<g id="legend" transform="translate(220 110)"><rect width="350" height="63" rx="9" fill="#ffffff" opacity=".92"/><text x="12" y="23" font-size="17" font-weight="700">金寧廠｜環評既有配置圖</text><text x="12" y="45" class="small">來源：C04.PDF p.7 圖4.2.2-1｜歷史配置初步描繪</text></g>
+<g id="scale" transform="translate(255 786)"><path d="M0 0 H104" stroke="#2f444a" stroke-width="5"/><path d="M0 -7 V7 M52 -7 V7 M104 -7 V7" stroke="#2f444a" stroke-width="2"/><text y="-12" class="small">0　　　　　 30　　　　　 60m（初步參考）</text></g>
+</svg>
