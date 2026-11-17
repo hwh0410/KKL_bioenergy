@@ -1,0 +1,322 @@
+{
+  "schema": "eia-v0.9-preliminary-digitization",
+  "coordinateSystem": "SVG source page pixels (NOT geographic or survey coordinates)",
+  "geometryAccuracy": "manual trace / outline only",
+  "sources": [
+    {
+      "image": "C04.PDF",
+      "page": 7,
+      "figure": "4.2.2-1",
+      "status": "existing historical configuration"
+    },
+    {
+      "image": "C04.PDF",
+      "page": 8,
+      "figure": "4.2.2-2",
+      "status": "historical expansion plan"
+    }
+  ],
+  "features": [
+    {
+      "id": "R01",
+      "name": "北側橫向通道",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "R02",
+      "name": "第一條中段橫向道路",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "R03",
+      "name": "第二條中段橫向道路",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "R04",
+      "name": "南側橫向通道",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "R05",
+      "name": "西側南北通道",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "R06",
+      "name": "中央南北通道",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "R07",
+      "name": "東側中間通道",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "R08",
+      "name": "東側內部通道",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "R09",
+      "name": "南側桃園路",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "R10",
+      "name": "東側盤果路",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "R11",
+      "name": "西側通達道路",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E01",
+      "name": "廢水處理區",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E02",
+      "name": "倉庫",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E03",
+      "name": "製酒二場",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E04",
+      "name": "製麴二場",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E05",
+      "name": "製麴一場",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E06",
+      "name": "福利大樓／員工活動中心",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E07",
+      "name": "製酒三場預定地",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E08",
+      "name": "儲酒／酒類設施區",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E09",
+      "name": "製酒一場",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E10",
+      "name": "行政大樓",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E11",
+      "name": "研發及辦公建築",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E12",
+      "name": "南側附屬建築",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E13",
+      "name": "酒糟貯存場",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E14",
+      "name": "冷卻水設施",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E15",
+      "name": "地下油槽",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "E16",
+      "name": "行政／展示附屬建築",
+      "sourcePage": 7,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "Z-A",
+      "name": "北側新增廠區用地",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "Z-B",
+      "name": "既有廠區用地",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "Z-C1",
+      "name": "北側配合擴建帶",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "Z-C2",
+      "name": "北側西段擴建帶",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "Z-C3",
+      "name": "中央廠內擴建用地",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "P01",
+      "name": "北側新建原物料／倉儲規劃區",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "P02",
+      "name": "北側倉儲及包裝規劃區",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "P03",
+      "name": "北側中段規劃用地",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "P04",
+      "name": "北側東段規劃用地",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "P05",
+      "name": "西北規劃區",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "P06",
+      "name": "既有廠區建築群 A",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "P07",
+      "name": "既有廠區建築群 B",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "P08",
+      "name": "既有廠區建築群 C",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "P09",
+      "name": "既有廠區建築群 D",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "P10",
+      "name": "第三期廠內擴建區",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    },
+    {
+      "id": "P11",
+      "name": "南側既有主廠房",
+      "sourcePage": 8,
+      "certainty": "indicative",
+      "geometrySource": "corresponding SVG element"
+    }
+  ]
+}
