@@ -1,0 +1,1676 @@
+{
+  "type": "FeatureCollection",
+  "name": "C04 p7 semantic candidates V0.9.4",
+  "metadata": {
+    "datum": "page image pixels; NOT GIS",
+    "geometrySource": "Manually selected corner / feature candidates cross-checked against original PDF vector render. NOT CAD layer restoration or exact snapping.",
+    "historical": true,
+    "precision": "review required",
+    "version": "0.9.4",
+    "reference": "C04.PDF page 7 figure 4.2.2-1",
+    "reference_image_size_px": [
+      1106,
+      800
+    ],
+    "calibration": {
+      "scale_bar_m": 60,
+      "scale_bar_pixels_approx": 116,
+      "meters_per_pixel_estimate": 0.517241,
+      "scale_is_provisional": true
+    },
+    "snap_method": "Apply source-vector-supported four-edge adjustments only for candidates with complete evidence; otherwise retain prior shape.",
+    "not_geo_referenced": true,
+    "not_as_built": true,
+    "vector_supported_shapes": 6
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "F001",
+      "properties": {
+        "name": "廢水處理池",
+        "category": "utilities",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              796,
+              103
+            ],
+            [
+              871,
+              103
+            ],
+            [
+              871,
+              153
+            ],
+            [
+              796,
+              153
+            ],
+            [
+              796,
+              103
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F002",
+      "properties": {
+        "name": "冷卻水處理池",
+        "category": "utilities",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "original_coordinates": [
+          [
+            796,
+            153
+          ],
+          [
+            870,
+            153
+          ],
+          [
+            870,
+            191
+          ],
+          [
+            796,
+            191
+          ],
+          [
+            796,
+            153
+          ]
+        ],
+        "snap_status": "four_edge_source_vector_supported",
+        "max_corner_adjustment_px": 3.187,
+        "source_geometry_quality": "pdf_vector_alignment_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              797.782,
+              155.56
+            ],
+            [
+              868.102,
+              155.56
+            ],
+            [
+              868.102,
+              188.44
+            ],
+            [
+              797.782,
+              188.44
+            ],
+            [
+              797.782,
+              155.56
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F003",
+      "properties": {
+        "name": "小麥臨時倉庫",
+        "category": "warehouse",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "original_coordinates": [
+          [
+            892,
+            159
+          ],
+          [
+            998,
+            159
+          ],
+          [
+            998,
+            197
+          ],
+          [
+            892,
+            197
+          ],
+          [
+            892,
+            159
+          ]
+        ],
+        "snap_status": "four_edge_source_vector_supported",
+        "max_corner_adjustment_px": 3.94,
+        "source_geometry_quality": "pdf_vector_alignment_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              888.26,
+              159.16
+            ],
+            [
+              998.662,
+              159.16
+            ],
+            [
+              998.662,
+              195.76
+            ],
+            [
+              888.26,
+              195.76
+            ],
+            [
+              888.26,
+              159.16
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F004",
+      "properties": {
+        "name": "地下油槽區",
+        "category": "utilities",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              1008,
+              75
+            ],
+            [
+              1066,
+              74
+            ],
+            [
+              1065,
+              192
+            ],
+            [
+              1008,
+              192
+            ],
+            [
+              1008,
+              75
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F005",
+      "properties": {
+        "name": "廠內倉庫",
+        "category": "warehouse",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "original_coordinates": [
+          [
+            487,
+            228
+          ],
+          [
+            589,
+            228
+          ],
+          [
+            589,
+            350
+          ],
+          [
+            487,
+            350
+          ],
+          [
+            487,
+            228
+          ]
+        ],
+        "snap_status": "four_edge_source_vector_supported",
+        "max_corner_adjustment_px": 3.857,
+        "source_geometry_quality": "pdf_vector_alignment_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              490.822,
+              228.52
+            ],
+            [
+              587.902,
+              228.52
+            ],
+            [
+              587.902,
+              350.2
+            ],
+            [
+              490.822,
+              350.2
+            ],
+            [
+              490.822,
+              228.52
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F006",
+      "properties": {
+        "name": "製酒二場",
+        "category": "production",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "original_coordinates": [
+          [
+            628,
+            228
+          ],
+          [
+            858,
+            228
+          ],
+          [
+            858,
+            349
+          ],
+          [
+            628,
+            349
+          ],
+          [
+            628,
+            228
+          ]
+        ],
+        "snap_status": "four_edge_source_vector_supported",
+        "max_corner_adjustment_px": 1.22,
+        "source_geometry_quality": "pdf_vector_alignment_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              628.222,
+              228.52
+            ],
+            [
+              858.02,
+              228.52
+            ],
+            [
+              858.02,
+              350.2
+            ],
+            [
+              628.222,
+              350.2
+            ],
+            [
+              628.222,
+              228.52
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F007",
+      "properties": {
+        "name": "製麴二場",
+        "category": "production",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              898,
+              214
+            ],
+            [
+              1097,
+              214
+            ],
+            [
+              1082,
+              271
+            ],
+            [
+              898,
+              271
+            ],
+            [
+              898,
+              214
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F008",
+      "properties": {
+        "name": "製麴一場",
+        "category": "production",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "original_coordinates": [
+          [
+            899,
+            294
+          ],
+          [
+            1029,
+            294
+          ],
+          [
+            1029,
+            350
+          ],
+          [
+            899,
+            350
+          ],
+          [
+            899,
+            294
+          ]
+        ],
+        "snap_status": "four_edge_source_vector_supported",
+        "max_corner_adjustment_px": 2.175,
+        "source_geometry_quality": "pdf_vector_alignment_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              898.342,
+              294.4
+            ],
+            [
+              1026.862,
+              294.4
+            ],
+            [
+              1026.862,
+              350.2
+            ],
+            [
+              898.342,
+              350.2
+            ],
+            [
+              898.342,
+              294.4
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F009",
+      "properties": {
+        "name": "小麥庫房",
+        "category": "warehouse",
+        "confidence": "medium",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              1028,
+              291
+            ],
+            [
+              1066,
+              291
+            ],
+            [
+              1063,
+              349
+            ],
+            [
+              1028,
+              349
+            ],
+            [
+              1028,
+              291
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F010",
+      "properties": {
+        "name": "福利大樓",
+        "category": "administration",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              390,
+              416
+            ],
+            [
+              455,
+              414
+            ],
+            [
+              456,
+              509
+            ],
+            [
+              391,
+              512
+            ],
+            [
+              390,
+              416
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F011",
+      "properties": {
+        "name": "金門縣辦公展示訓練中心",
+        "category": "administration",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              490,
+              391
+            ],
+            [
+              588,
+              392
+            ],
+            [
+              587,
+              513
+            ],
+            [
+              490,
+              514
+            ],
+            [
+              490,
+              391
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F012",
+      "properties": {
+        "name": "製酒三廠預定地",
+        "category": "reserved",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              630,
+              390
+            ],
+            [
+              730,
+              390
+            ],
+            [
+              730,
+              423
+            ],
+            [
+              716,
+              438
+            ],
+            [
+              717,
+              467
+            ],
+            [
+              729,
+              483
+            ],
+            [
+              730,
+              512
+            ],
+            [
+              627,
+              512
+            ],
+            [
+              626,
+              391
+            ],
+            [
+              630,
+              390
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F013",
+      "properties": {
+        "name": "附屬大樓",
+        "category": "administration",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              898,
+              448
+            ],
+            [
+              1028,
+              446
+            ],
+            [
+              1028,
+              479
+            ],
+            [
+              897,
+              479
+            ],
+            [
+              898,
+              448
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F014",
+      "properties": {
+        "name": "鍋爐房及附屬設施",
+        "category": "utilities",
+        "confidence": "medium",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              898,
+              391
+            ],
+            [
+              1023,
+              391
+            ],
+            [
+              1029,
+              445
+            ],
+            [
+              898,
+              446
+            ],
+            [
+              898,
+              391
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F015",
+      "properties": {
+        "name": "高粱酒倉",
+        "category": "warehouse",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              899,
+              480
+            ],
+            [
+              969,
+              480
+            ],
+            [
+              969,
+              562
+            ],
+            [
+              899,
+              562
+            ],
+            [
+              899,
+              480
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F016",
+      "properties": {
+        "name": "製酒一場",
+        "category": "production",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "original_coordinates": [
+          [
+            628,
+            553
+          ],
+          [
+            859,
+            553
+          ],
+          [
+            859,
+            677
+          ],
+          [
+            628,
+            677
+          ],
+          [
+            628,
+            553
+          ]
+        ],
+        "snap_status": "four_edge_source_vector_supported",
+        "max_corner_adjustment_px": 2.299,
+        "source_geometry_quality": "pdf_vector_alignment_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              628.222,
+              553
+            ],
+            [
+              858.02,
+              553
+            ],
+            [
+              858.02,
+              674.92
+            ],
+            [
+              628.222,
+              674.92
+            ],
+            [
+              628.222,
+              553
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F017",
+      "properties": {
+        "name": "行政大樓",
+        "category": "administration",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              485,
+              557
+            ],
+            [
+              589,
+              557
+            ],
+            [
+              589,
+              591
+            ],
+            [
+              484,
+              591
+            ],
+            [
+              485,
+              557
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F018",
+      "properties": {
+        "name": "酒史館",
+        "category": "administration",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              500,
+              606
+            ],
+            [
+              555,
+              602
+            ],
+            [
+              555,
+              638
+            ],
+            [
+              500,
+              638
+            ],
+            [
+              500,
+              606
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F019",
+      "properties": {
+        "name": "小型酒瓶展示設施",
+        "category": "landmark",
+        "confidence": "low",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              547,
+              626
+            ],
+            [
+              573,
+              625
+            ],
+            [
+              573,
+              670
+            ],
+            [
+              547,
+              670
+            ],
+            [
+              547,
+              626
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F020",
+      "properties": {
+        "name": "廠外東側附屬建築",
+        "category": "utilities",
+        "confidence": "medium",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              891,
+              573
+            ],
+            [
+              954,
+              574
+            ],
+            [
+              963,
+              643
+            ],
+            [
+              900,
+              643
+            ],
+            [
+              891,
+              573
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F021",
+      "properties": {
+        "name": "加油站",
+        "category": "utilities",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              974,
+              579
+            ],
+            [
+              1026,
+              584
+            ],
+            [
+              1011,
+              671
+            ],
+            [
+              973,
+              668
+            ],
+            [
+              974,
+              579
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F022",
+      "properties": {
+        "name": "迎賓水池／景觀主軸",
+        "category": "landscape",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              227,
+              393
+            ],
+            [
+              371,
+              394
+            ],
+            [
+              368,
+              737
+            ],
+            [
+              236,
+              735
+            ],
+            [
+              227,
+              393
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F023",
+      "properties": {
+        "name": "行政景觀廣場",
+        "category": "landscape",
+        "confidence": "medium",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              373,
+              543
+            ],
+            [
+              489,
+              545
+            ],
+            [
+              485,
+              680
+            ],
+            [
+              369,
+              679
+            ],
+            [
+              373,
+              543
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F024",
+      "properties": {
+        "name": "廠內冷卻／附屬設施",
+        "category": "utilities",
+        "confidence": "low",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "not_yet_verified_against_pdf_lines",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              1044,
+              361
+            ],
+            [
+              1106,
+              366
+            ],
+            [
+              1091,
+              404
+            ],
+            [
+              1045,
+              402
+            ],
+            [
+              1044,
+              361
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "R001",
+      "properties": {
+        "name": "北側東西向道路",
+        "category": "road",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "road_or_point_not_snapped",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            606,
+            207
+          ],
+          [
+            1105,
+            207
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "R002",
+      "properties": {
+        "name": "製酒二場南側道路",
+        "category": "road",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "road_or_point_not_snapped",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            481,
+            374
+          ],
+          [
+            1030,
+            374
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "R003",
+      "properties": {
+        "name": "第二條廠內東西向道路",
+        "category": "road",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "road_or_point_not_snapped",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            474,
+            533
+          ],
+          [
+            1031,
+            533
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "R004",
+      "properties": {
+        "name": "南側廠內聯絡道路",
+        "category": "road",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "road_or_point_not_snapped",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            369,
+            689
+          ],
+          [
+            972,
+            691
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "R005",
+      "properties": {
+        "name": "製酒一二場間南北向通道",
+        "category": "road",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "road_or_point_not_snapped",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            607,
+            208
+          ],
+          [
+            608,
+            690
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "R006",
+      "properties": {
+        "name": "廠區東側主通道",
+        "category": "road",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "road_or_point_not_snapped",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            876,
+            209
+          ],
+          [
+            874,
+            693
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "R007",
+      "properties": {
+        "name": "廠內西側聯絡通道",
+        "category": "road",
+        "confidence": "medium",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "road_or_point_not_snapped",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            471,
+            381
+          ],
+          [
+            471,
+            543
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "R008",
+      "properties": {
+        "name": "南側桃園路",
+        "category": "road",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "road_or_point_not_snapped",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            48,
+            749
+          ],
+          [
+            292,
+            775
+          ],
+          [
+            552,
+            782
+          ],
+          [
+            817,
+            777
+          ],
+          [
+            947,
+            780
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "R009",
+      "properties": {
+        "name": "東側外部聯絡道路",
+        "category": "road",
+        "confidence": "medium",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "road_or_point_not_snapped",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            1054,
+            722
+          ],
+          [
+            1089,
+            619
+          ],
+          [
+            1121,
+            499
+          ],
+          [
+            1130,
+            390
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "P001",
+      "properties": {
+        "name": "遊客入口",
+        "category": "point",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "road_or_point_not_snapped",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          295,
+          733
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "P002",
+      "properties": {
+        "name": "廠區大門",
+        "category": "point",
+        "confidence": "high",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "road_or_point_not_snapped",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          608,
+          709
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "P003",
+      "properties": {
+        "name": "迎賓水池圓形區",
+        "category": "point",
+        "confidence": "medium",
+        "source_pdf_page": 7,
+        "source_figure": "4.2.2-1",
+        "coordinate_system": "rendered PDF crop: Rect(112,52,665,452) at 2 pixels/point",
+        "status": "manual_vector_assisted_candidate",
+        "review_required": true,
+        "engineering_accuracy": false,
+        "geometry_review_required": true,
+        "calibration_id": "pdf-p07-ruler-estimate-0.51724m-per-pixel",
+        "snap_status": "road_or_point_not_snapped",
+        "source_geometry_quality": "prior_semantic_candidate"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          298,
+          477
+        ]
+      }
+    }
+  ]
+}
