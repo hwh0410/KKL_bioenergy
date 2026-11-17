@@ -21,9 +21,9 @@ aside{padding:18px}h2{font-size:16px;margin:0 0 12px}h3{font-size:13px;margin:19
 footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b8b85}
 @media(max-width:850px){main{display:flex;flex-direction:column;padding:8px}#viewport{height:61vh;min-height:340px}aside{padding:14px}}
 </style></head><body>
-<header><div class="kicker">KKL BIOENERGY · HISTORICAL EIA PLANS</div><h1>金門酒廠金寧廠｜工程配置圖數位化</h1><p>V0.9.5 · 依《金寧三廠整廠系統新建工程環境影響說明書》第四章 · 歷史設計參考圖，不是竣工現況</p></header>
+<header><div class="kicker">KKL BIOENERGY · HISTORICAL EIA PLANS</div><h1>金門酒廠金寧廠｜工程配置圖數位化</h1><p>V0.9.6 · 依《金寧三廠整廠系統新建工程環境影響說明書》第四章 · 歷史設計參考圖，不是竣工現況</p></header>
 <main><section class="panel"><div class="toolbar">
-<select id="mapMode" aria-label="配置圖版本"><option value="roads095">V0.9.5：道路雙側邊線檢查</option><option value="snap">V0.9.4：PDF 向量校正（六處）</option><option value="semantic">V0.9.3：分類候選輪廓（需核對）</option><option value="existing">環評圖 4.2.2-1：既有廠區</option><option value="expansion">環評圖 4.2.2-2：擴建範圍</option><option value="legacy">早期彩色示意圖（僅供比較）</option></select>
+<select id="mapMode" aria-label="配置圖版本"><option value="fountain096">V0.9.6：迎賓水池與景觀主軸</option><option value="roads095">V0.9.5：道路雙側邊線檢查</option><option value="snap">V0.9.4：PDF 向量校正（六處）</option><option value="semantic">V0.9.3：分類候選輪廓（需核對）</option><option value="existing">環評圖 4.2.2-1：既有廠區</option><option value="expansion">環評圖 4.2.2-2：擴建範圍</option><option value="legacy">早期彩色示意圖（僅供比較）</option></select>
 <button id="fit" class="primary">完整圖面</button><button id="zi">＋</button><button id="zo">－</button>
 <a id="download" class="download" href="./plan/eia-existing-v0.9.svg" download>下載本圖 SVG</a></div>
 <div id="viewport"><div id="hint">正在讀取向量圖…</div></div></section>
@@ -37,6 +37,7 @@ footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b
 <script>
 (async()=>{
  const modes={
+ fountain096:{src:'./plan/eia-fountain-landscape-v0.9.6.svg',view:[175,372,340,390],description:'V0.9.6：迎賓水池區分成上方半環廣場、池緣、曲水流觴、水池、階梯、步道及景觀樹點。這些路徑為依原圖判讀的近似描線，尚未逐段吸附原 PDF 向量；目前不具實測精度。',layers:[['zones','景觀區域示意'],['plaza_edge','半環廣場輪廓'],['water_edge','水池與曲水池緣'],['water_centerline','曲水主軸'],['walkway_edge','步道邊緣'],['steps','階梯'],['plaza_detail','廣場分隔線'],['trees','景觀植栽示意'],['labels','景點名稱']]},
  roads095:{src:'./plan/eia-road-corridors-v0.9.5.svg',view:[0,0,1106,800],description:'V0.9.5：依 PDF 原始向量建立 8 個道路面候選，其中 6 個有雙側邊線支持、2 個僅有單側線段。F012 不規則預定地和 F022 迎賓水池仍待處理。',layers:[['building-context','原有建築及景觀候選背景'],['road-surfaces','來源向量支持／待確認道路面'],['labels','檢查說明']]},
  snap:{src:'./plan/eia-semantic-v0.9.4.svg',view:[0,0,1106,800],description:'V0.9.4：6 個矩形外框已依 PDF 原始向量線段輔助校正，其他輪廓仍待核對。圖上比例尺暫估 0.5172 m/px；此非工程座標。',layers:[['roads','道路候選線'],['buildings','建築與設施候選外框'],['points','點位候選'],['labels','物件 ID 標籤'],['key','說明標籤']]},
  semantic:{src:'./plan/eia-semantic-v0.9.3.svg',view:[0,0,1106,800],description:'PDF 第7頁圖4.2.2-1 的 24 個設施/景觀外框候選、9 條道路中心線與 3 個點位。基於原始向量圖面人工輔助分類，尚未完成精確描線與比例校正。',layers:[['candidate-roads','道路中心線候選'],['candidate-buildings','設施／景觀外框候選'],['candidate-points','出入口／水池定位點'],['key','圖例標題']]},
@@ -74,7 +75,7 @@ footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b
  viewport.addEventListener('pointerup',()=>{start=null;viewport.classList.remove('drag')});
  viewport.addEventListener('pointercancel',()=>{start=null;viewport.classList.remove('drag')});
  viewport.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.08:.925)},{passive:false});
- el('mapMode').value='roads095';await load('roads095');
+ el('mapMode').value='fountain096';await load('fountain096');
 })();
 </script>
 </body></html>
