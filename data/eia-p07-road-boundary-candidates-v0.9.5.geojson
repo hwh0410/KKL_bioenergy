@@ -6,7 +6,7 @@
     "not_georeferenced": true,
     "not_as_built": true,
     "modeling_phase": "road boundaries supported by approximately parallel source PDF vector strokes; needs topological closure at junctions",
-    "known_gaps": "Road crossing intersections and diagonal boundaries not yet rebuilt; these rectangles do not represent full internal road network"
+    "known_gaps": "Road crossing intersections and diagonal boundaries not yet rebuilt; these rectangles do not represent full internal road network; RD095-06/RD095-08 have only one confirmed side; displayed strip width is speculative. Do not interpret as measured road surface."
   },
   "features": [
     {
@@ -255,16 +255,15 @@
       "properties": {
         "name": "製酒二場東側南北通道",
         "category": "road_surface",
-        "status": "two_edges_supported",
+        "status": "single_edge_supported_opposite_boundary_inferred",
         "source_pdf": "C04.PDF",
         "source_pdf_page": 7,
         "source_figure": "4.2.2-1",
         "source_vector_segments": [
-          "PDF drawing#15 item#200: western-side segment",
-          "PDF drawing#17 item#228: eastern road edge"
+          "PDF drawing#15 item#200: west edge x=868.10; matching east edge of same segment not found"
         ],
         "calibration_m_per_render_px_estimate": 0.5172413793103449,
-        "road_width_m_estimate": 10.43,
+        "road_width_m_estimate": null,
         "original_pdf_geometry_preserved": false,
         "engineering_accuracy": false,
         "review_required": true
@@ -351,16 +350,15 @@
       "properties": {
         "name": "製酒一場東側南北通道",
         "category": "road_surface",
-        "status": "two_edges_supported",
+        "status": "single_edge_supported_opposite_boundary_inferred",
         "source_pdf": "C04.PDF",
         "source_pdf_page": 7,
         "source_figure": "4.2.2-1",
         "source_vector_segments": [
-          "PDF drawing#12 item#195: western edge",
-          "PDF drawing#12 item#194: eastern edge"
+          "PDF drawing#12 item#195: west edge x=868.10; matching east edge not found (drawing#12 item#194 is x=898.34)"
         ],
         "calibration_m_per_render_px_estimate": 0.5172413793103449,
-        "road_width_m_estimate": 10.43,
+        "road_width_m_estimate": null,
         "original_pdf_geometry_preserved": false,
         "engineering_accuracy": false,
         "review_required": true
