@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "0.9.6",
+  "document": "C04.PDF",
+  "sourcePage": 7,
+  "sourceFigure": "4.2.2-1",
+  "coordinateSpace": "PDF crop (112,52)-(665,452) rendered at 2px/pt, viewBox 1106x800",
+  "sourceMethod": "Manual visual tracing referencing original PDF vectors, not original CAD entity recovery",
+  "engineeringAccuracy": false,
+  "allCurvesReviewed": false,
+  "calibration": "0.51724 m/px provisional, not applied",
+  "objects": [
+    {
+      "id": "LS096-01",
+      "name": "北端環形廣場外緣",
+      "type": "plaza_edge",
+      "status": "visually_traced",
+      "d": "M 229 490 C 229 430 260 395 303 395 C 346 395 373 427 373 482"
+    },
+    {
+      "id": "LS096-02",
+      "name": "北端內環外緣",
+      "type": "plaza_edge",
+      "status": "visually_traced",
+      "d": "M 247 486 C 247 439 268 414 303 414 C 337 414 356 444 356 484"
+    },
+    {
+      "id": "LS096-03",
+      "name": "主水景上方環形池緣",
+      "type": "water_edge",
+      "status": "visually_traced",
+      "d": "M 255 487 C 256 451 272 430 303 431 C 333 432 346 455 347 487"
+    },
+    {
+      "id": "LS096-04",
+      "name": "中央圓形池內緣",
+      "type": "water_edge",
+      "status": "visually_traced",
+      "d": "M 273 474 C 273 456 285 444 302 444 C 320 444 332 458 332 476 C 332 492 319 506 301 506 C 285 506 273 491 273 474 Z"
+    },
+    {
+      "id": "LS096-05",
+      "name": "上方放射景觀分隔線",
+      "type": "plaza_detail",
+      "status": "conceptual",
+      "d": "M 241 459 L 270 459 M 248 431 L 278 446 M 272 405 L 285 432 M 303 398 L 303 430 M 335 407 L 322 435 M 360 430 L 335 447 M 373 459 L 348 459"
+    },
+    {
+      "id": "LS096-06",
+      "name": "曲水流觴主水道中心線",
+      "type": "water_centerline",
+      "status": "visually_traced",
+      "d": "M 305 508 C 335 506 338 521 320 531 C 295 540 290 546 311 553 C 338 563 338 575 313 585 C 282 597 288 608 313 614 C 338 620 330 629 301 640"
+    },
+    {
+      "id": "LS096-07",
+      "name": "曲水流觴左側池緣",
+      "type": "water_edge",
+      "status": "visually_traced",
+      "d": "M 300 508 C 321 504 326 521 310 526 C 282 537 279 553 301 563 C 326 573 326 577 304 585 C 273 594 278 616 306 622 C 320 624 313 629 291 635"
+    },
+    {
+      "id": "LS096-08",
+      "name": "曲水流觴右側池緣",
+      "type": "water_edge",
+      "status": "visually_traced",
+      "d": "M 315 506 C 347 506 350 526 332 538 C 310 546 308 548 324 555 C 352 567 346 588 324 596 C 298 602 301 603 327 609 C 351 622 336 641 311 647"
+    },
+    {
+      "id": "LS096-09",
+      "name": "南端圓形水景外緣",
+      "type": "water_edge",
+      "status": "visually_traced",
+      "d": "M 266 650 C 266 628 281 614 301 614 C 322 614 339 628 339 651 C 339 672 322 687 301 687 C 280 687 266 672 266 650 Z"
+    },
+    {
+      "id": "LS096-10",
+      "name": "南端圓形水景內緣",
+      "type": "water_edge",
+      "status": "visually_traced",
+      "d": "M 282 651 C 282 640 291 632 301 632 C 311 632 321 640 321 651 C 321 662 312 671 301 671 C 290 671 282 662 282 651 Z"
+    },
+    {
+      "id": "LS096-11",
+      "name": "西側主步道邊緣",
+      "type": "walkway_edge",
+      "status": "visually_traced",
+      "d": "M 244 522 L 244 699 M 259 533 L 259 690"
+    },
+    {
+      "id": "LS096-12",
+      "name": "東側主步道邊緣",
+      "type": "walkway_edge",
+      "status": "visually_traced",
+      "d": "M 351 523 L 351 696 M 367 518 L 367 699"
+    },
+    {
+      "id": "LS096-13",
+      "name": "南端景觀入口階梯",
+      "type": "steps",
+      "status": "conceptual",
+      "d": "M 240 695 L 365 695 M 239 704 L 366 704 M 237 713 L 369 713 M 234 722 L 371 722"
+    },
+    {
+      "id": "LS096-14",
+      "name": "東側行政廣場連通步道",
+      "type": "walkway_edge",
+      "status": "visually_traced",
+      "d": "M 367 552 L 475 552 M 367 567 L 475 567"
+    },
+    {
+      "id": "LS096-15",
+      "name": "西側景觀區連通步道",
+      "type": "walkway_edge",
+      "status": "visually_traced",
+      "d": "M 182 548 L 245 548 M 182 562 L 245 562"
+    }
+  ]
+}
