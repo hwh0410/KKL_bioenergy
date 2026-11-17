@@ -31,6 +31,8 @@ jobs:
           test -s plan/eia-existing-v0.9.svg
           test -s plan/eia-expansion-v0.9.svg
           test -s plan/eia-semantic-v0.9.3.svg
+          test -s plan/eia-semantic-v0.9.4.svg
+          test -s data/eia-p07-semantic-calibrated-v0.9.4.geojson
           test -s data/eia-p07-semantic-candidates-v0.9.3.geojson
           mkdir -p _site/plan
           cp plan/*.svg _site/plan/
@@ -49,6 +51,7 @@ jobs:
           python3 -m json.tool _site/data/roads-osm.geojson > /dev/null
           python3 -m json.tool _site/data/visitor-zone.geojson > /dev/null
           python3 -m json.tool _site/data/eia-p07-semantic-candidates-v0.9.3.geojson > /dev/null
+          python3 -m json.tool _site/data/eia-p07-semantic-calibrated-v0.9.4.geojson > /dev/null
           touch _site/.nojekyll
           find _site -type f | sort
       - name: Upload GitHub Pages artifact
