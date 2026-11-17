@@ -1,0 +1,11 @@
+
+# Private EIA source handoff: never publish in public Pages repository
+KKL_Work_Handoff_PRIVATE*/
+KKL_Work_Handoff_PRIVATE*.zip
+private_sources/
+restricted_vectors/
+references/C04.PDF
+source/C04.PDF
+C04.PDF
+C04-p07-CAD-vector-reference.svg
+C04-p07-source-geometry-unclassified.dxf
