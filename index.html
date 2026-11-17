@@ -15,10 +15,23 @@ aside{background:white;padding:18px;border-radius:15px;border:1px solid #dce5e9;
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
 </head>
 <body>
-<header><small>KKL BIOENERGY · SITE DIGITAL MODEL</small><h1>金門酒廠・金寧廠｜互動式 3D 量體平台</h1><p>WGS84 建物與道路整合 V0.6　|　後續規劃：厭氧沼氣設施與工程配置</p></header>
+<header><small>KKL BIOENERGY · SITE DIGITAL MODEL</small><h1>金門酒廠・金寧廠｜互動式 3D 量體平台</h1><p>建物位置校核與編輯 V0.7　|　後續規劃：厭氧沼氣設施與工程配置</p></header>
 <main>
 <section id="view"><div id="stage"></div><div class="tools"><button id="iso" class="on">立體</button><button id="top">俯視</button><button id="reset">重設</button><button id="labelsBtn" class="on">標籤</button><button id="screenshot">截圖 PNG</button></div><div class="north">N ↑</div><div id="labels" class="labels"></div><div class="note">拖曳旋轉 · 滾輪縮放 · 右鍵平移<br>點擊量體可查看資料<br>參照北向衛星圖重建道路與建築；尺寸仍待實測校正</div></section>
-<aside><h2>既有廠區圖層</h2><div id="legend"></div><label class="toggle"><input type="checkbox" id="roads" checked> 顯示道路</label><label class="toggle"><input type="checkbox" id="trees" checked> 顯示植栽</label><label class="toggle"><input type="checkbox" id="marks" checked disabled> 未來沼氣廠規劃（尚未建置）</label><h2>空間校核</h2><div id="spatialQa" class="info">檢查道路與建築配置中…</div><h2 style="margin-top:15px">選取量體</h2><div id="info" class="info">點擊建築或地標以查看示意資訊。</div><div class="warning"><b>精度說明</b><br>道路與建築均使用 WGS84 座標。道路來自 OSM；建築為過往衛星影像人工套繪的暫定外框，尚未精確配準。疑似重疊僅標示供人工確認，並不裁切 OSM 道路。用地外框不是法定地籍界線。© OpenStreetMap contributors (ODbL)。</div></aside>
+<aside><h2>既有廠區圖層</h2><div id="legend"></div><label class="toggle"><input type="checkbox" id="roads" checked> 顯示道路</label><label class="toggle"><input type="checkbox" id="trees" checked> 顯示植栽</label><label class="toggle"><input type="checkbox" id="marks" checked disabled> 未來沼氣廠規劃（尚未建置）</label><h2>空間校核</h2><div id="spatialQa" class="info">檢查道路與建築配置中…</div><h2 style="margin-top:15px">建築校正工具</h2>
+<label class="toggle" for="buildingPicker">選取建築（僅概念座標）</label>
+<select id="buildingPicker" style="width:100%;padding:9px;border:1px solid #d7e1e4;border-radius:7px"></select>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0">
+<label style="font-size:12px">向東移動 (m)<input id="shiftEast" type="number" step="1" value="0" style="width:100%;padding:8px"></label>
+<label style="font-size:12px">向北移動 (m)<input id="shiftNorth" type="number" step="1" value="0" style="width:100%;padding:8px"></label>
+</div>
+<label style="font-size:12px">新增旋轉角度 (°)<input id="shiftAngle" type="number" value="0" step="1" style="width:100%;padding:8px"></label>
+<div style="display:flex;gap:7px;flex-wrap:wrap;margin:12px 0">
+<button id="applyAdjustment">套用調整</button><button id="undoAdjustment">復原上一步</button>
+<button id="exportBuildings">匯出建物 GeoJSON</button>
+</div>
+<div id="editStatus" class="info">調整僅作用於瀏覽器目前畫面；匯出的 GeoJSON 可用於更新原始檔，不會自動修改 GitHub。</div>
+<h2 style="margin-top:15px">選取量體</h2><div id="info" class="info">點擊建築或地標以查看示意資訊。</div><div class="warning"><b>精度說明</b><br>道路與建築均使用 WGS84 座標。道路來自 OSM；建築為過往衛星影像人工套繪的暫定外框，尚未精確配準。可逐棟編輯並匯出新的 GeoJSON，所有修正仍需人工比對參考圖。疑似重疊僅標示供人工確認，並不裁切 OSM 道路。用地外框不是法定地籍界線。© OpenStreetMap contributors (ODbL)。</div></aside>
 </main><footer>KKL_bioenergy · 3D visualisation prototype · Three.js · 按面積 282,716.95 m²、周長約 2.41 km 初步校正；非正式測量 · Roads © OpenStreetMap contributors (ODbL)</footer>
 <script type="module">
 import * as THREE from 'three';
@@ -33,7 +46,7 @@ const materials={production:0x91abb5,storage:0xc2b3a0,admin:0xe4d3b4,utility:0x9
 const mat=(c)=>new THREE.MeshStandardMaterial({color:c,roughness:.82,metalness:.03});
 const roof=mat(0x7f9397),roofLight=mat(0xbfcacd),roadMat=mat(0xaeb8b5),forest=mat(0x82a985),lawn=mat(0xb5caa6),mark=mat(0xe8d6a0);
 const root=new THREE.Group();scene.add(root);
-const clickable=[], roadObjs=[], treeObjs=[];
+const clickable=[], roadObjs=[], treeObjs=[], buildingObjects=new Map();
 const METERS_PER_PIXEL=Math.sqrt(282716.95/238478.5); // Based on user's traced 282,716.95 m² area
 const px=(x)=>(x-442)*METERS_PER_PIXEL, py=(y)=>(y-386)*METERS_PER_PIXEL;
 // Building placements now come from provisional WGS84 GeoJSON, not runtime screenshot transforms.
@@ -69,7 +82,7 @@ function addBuilding([name,x,z,w,d,h,angle,type,roofStyle]){
  const walls=new THREE.Mesh(new THREE.BoxGeometry(w*METERS_PER_PIXEL,h,d*METERS_PER_PIXEL),mat(materials[type]));walls.position.y=h/2;walls.castShadow=true;walls.receiveShadow=true;grp.add(walls);
  if(roofStyle==='gable'){const rise=Math.min(5,d*.22);const geom=new THREE.BufferGeometry(),pos=[-w*.54,h,-d*.54,w*.54,h,-d*.54,0,h+rise,-d*.54,-w*.54,h,d*.54,w*.54,h,d*.54,0,h+rise,d*.54];geom.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geom.setIndex([0,1,2,3,5,4,0,2,5,0,5,3,1,4,5,1,5,2]);geom.computeVertexNormals();let r=new THREE.Mesh(geom,roofLight);r.material.side=THREE.DoubleSide;r.castShadow=true;grp.add(r)}
  else{let top=new THREE.Mesh(new THREE.BoxGeometry(w*METERS_PER_PIXEL+.8,.8,d*METERS_PER_PIXEL+.8),roof);top.position.y=h+.4;grp.add(top)}
- grp.userData={name,type,dimensions:'約 '+Math.round(w*METERS_PER_PIXEL)+' × '+Math.round(d*METERS_PER_PIXEL)+' × '+h+'（模型示意值）',detail:'位置依衛星截圖人工套繪；實際尺寸、高度待校正',h};root.add(grp);clickable.push(grp);
+ grp.userData={name,type,buildable:true,dimensions:'約 '+Math.round(w*METERS_PER_PIXEL)+' × '+Math.round(d*METERS_PER_PIXEL)+' × '+h+'（模型示意值）',detail:'位置依衛星截圖人工套繪；實際尺寸、高度待校正',h};root.add(grp);clickable.push(grp);buildingObjects.set(name,{group:grp,record:[name,x,z,w,d,h,angle,type,roofStyle]});
 }
 layout.forEach(addBuilding);
 function tank(name,x,z,r=5,h=13){let group=new THREE.Group();group.position.set(px(x),0,py(z));let cyl=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,20),mat(0xbccacc));cyl.position.y=h/2;cyl.castShadow=true;group.add(cyl);let top=new THREE.Mesh(new THREE.CylinderGeometry(r,r,.5,20),roofLight);top.position.y=h+.2;group.add(top);group.userData={name,type:'utility',dimensions:'直徑 '+2*r+' × 高 '+h+' m（示意）',detail:'儲槽位置依影像人工判讀，非實測',h};clickable.push(group);root.add(group)}
@@ -132,18 +145,45 @@ async function loadOsmRoads(){
  }
 }
 void loadOsmRoads();
+// Spatial QA checks full line segments, not only OSM vertices.
+function intersectsSegments(a,b,c,d){
+ const cross=(p,q,r)=>(q[0]-p[0])*(r[1]-p[1])-(q[1]-p[1])*(r[0]-p[0]);
+ const A=cross(a,b,c),B=cross(a,b,d),C=cross(c,d,a),D=cross(c,d,b);
+ return A*B<0&&C*D<0;
+}
+function pointToSegment(x,y,a,b){
+ const dx=b[0]-a[0],dy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(y-a[1])*dy)/(dx*dx+dy*dy||1)));
+ return Math.hypot(x-a[0]-t*dx,y-a[1]-t*dy);
+}
+function segmentPolyDistance(a,b,poly){
+ if(pointPolyDistance(...a,poly)===0||pointPolyDistance(...b,poly)===0)return 0;
+ let best=Math.min(pointPolyDistance(...a,poly),pointPolyDistance(...b,poly));
+ for(let j=0;j<poly.length;j++){
+  const c=poly[j],d=poly[(j+1)%poly.length];
+  if(intersectsSegments(a,b,c,d))return 0;
+  best=Math.min(best,pointToSegment(...c,a,b),pointToSegment(...d,a,b),pointToSegment(...a,c,d),pointToSegment(...b,c,d));
+ }
+ return best;
+}
+let latestFlags=new Set();
 function showSpatialDiagnostics(){
  const flagged=new Set();
- for(const b of footprint){
-  if(!b.poly||!b.name||!b.name.match(/廠房|建築|機房|設施/))continue;
+ for(const [name,obj] of buildingObjects){
+  const a=obj.record, poly=shapePoly(a[1],a[2],a[3],a[4],a[6]);
   for(const road of roadsData){
    const limit=road.width/(2*METERS_PER_PIXEL)+2;
-   if(road.pts.some(([x,y])=>pointPolyDistance(x,y,b.poly)<limit)){flagged.add(b.name);break;}
+   let found=false;
+   for(let i=1;i<road.pts.length;i++){
+    if(segmentPolyDistance(road.pts[i-1],road.pts[i],poly)<limit){found=true;break}
+   }
+   if(found){flagged.add(name);break}
   }
  }
- const node=document.getElementById('spatialQa');
- if(node)node.textContent='現況建物 '+layout.length+' 棟｜OSM 道路 '+roadsData.length+' 段｜疑似重疊 '+flagged.size+' 棟（待人工確認）';
- console.info('Provisional building and OSM road conflicts:',[...flagged]);
+ latestFlags=flagged;
+ const status=document.getElementById('spatialQa');
+ if(status)status.textContent='建物 '+buildingObjects.size+' 棟｜OSM 道路 '+roadsData.length+' 段｜疑似重疊 '+flagged.size+' 棟（僅供校正，非實際違規判定）';
+ for(const [name,obj] of buildingObjects){const mesh=obj.group.children[0];if(mesh.material?.emissive)mesh.material.emissive.setHex(flagged.has(name)?0x9d2e21:0x000000);}
+ console.info('Buildings flagged for review:',[...flagged]);
 }
 function nearestRoadDistance(x,z){let d=Infinity;for(const road of roadsData){for(let k=1;k<road.pts.length;k++){let a=road.pts[k-1],b=road.pts[k],vx=b[0]-a[0],vy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*vx+(z-a[1])*vy)/(vx*vx+vy*vy||1)));d=Math.min(d,Math.hypot(x-a[0]-t*vx,z-a[1]-t*vy)-road.width/(2*METERS_PER_PIXEL))}}return d}
 function tree(x,z,size=1){
@@ -169,9 +209,57 @@ setCamera(false);
 document.getElementById('iso').onclick=()=>setCamera(false);document.getElementById('top').onclick=()=>setCamera(true);document.getElementById('reset').onclick=()=>setCamera(false);
 document.getElementById('labelsBtn').classList.remove('on');document.getElementById('labelsBtn').onclick=e=>{showLabels=!showLabels;e.currentTarget.classList.toggle('on',showLabels)};
 document.getElementById('roads').onchange=e=>roadObjs.forEach(o=>o.visible=e.target.checked);document.getElementById('trees').onchange=e=>treeObjs.forEach(o=>o.visible=e.target.checked);
+// In-browser footprint adjustment, provenance kept separate from authoritative OSM roads.
+const picker=document.getElementById('buildingPicker');
+for(const name of buildingObjects.keys()){const opt=document.createElement('option');opt.value=name;opt.textContent=name;picker.add(opt)}
+const east=document.getElementById('shiftEast'),north=document.getElementById('shiftNorth'),angle=document.getElementById('shiftAngle'),editStatus=document.getElementById('editStatus');
+const history=[];
+function pickBuilding(name){
+ if(!buildingObjects.has(name))return;
+ picker.value=name;
+ const obj=buildingObjects.get(name).record;
+ document.getElementById('info').textContent=name+'：目前暫定中心位置 '+obj[1].toFixed(1)+', '+obj[2].toFixed(1)+'（內部像素座標）；可在右側輸入相對位移。';
+}
+picker.addEventListener('change',()=>pickBuilding(picker.value));
+picker.value=buildings[0][0];pickBuilding(picker.value);
+function syncGeometry(name){
+ const b=buildingObjects.get(name);if(!b)return;
+ const rec=b.record;b.group.position.set(px(rec[1]),0,py(rec[2]));b.group.rotation.y=-rec[6]*Math.PI/180;
+ const prop=buildingsGeo.features.find(f=>f.properties.name===name)?.properties;
+ if(!prop)return;
+ const x=rec[1],y=rec[2],w=rec[3],d=rec[4],rotation=rec[6];
+ const poly=shapePoly(x,y,w,d,rotation);
+ const toGps=([xx,yy])=>[+(OSM_ANCHOR.lon+(xx-OSM_ANCHOR.x)*METERS_PER_PIXEL/OSM_METER_X).toFixed(8),+(OSM_ANCHOR.lat-(yy-OSM_ANCHOR.y)*METERS_PER_PIXEL/OSM_METER_Y).toFixed(8)];
+ const feat=buildingsGeo.features.find(f=>f.properties.name===name);
+ feat.geometry.coordinates=[[...poly.map(toGps),toGps(poly[0])]];
+ feat.properties.center_wgs84=toGps([x,y]);
+ feat.properties.rotation_degrees_estimate=rotation;
+ feat.properties.adjusted_in_browser=true;
+ feat.properties.accuracy='user_adjusted_unverified';
+}
+document.getElementById('applyAdjustment').onclick=()=>{
+ const name=picker.value,b=buildingObjects.get(name),dx=Number(east.value),dy=Number(north.value),da=Number(angle.value);
+ if(!b||![dx,dy,da].every(Number.isFinite)){editStatus.textContent='請輸入有效的數字。';return}
+ if(Math.abs(dx)>200||Math.abs(dy)>200||Math.abs(da)>180){editStatus.textContent='單次位移不得超過 ±200 m、旋轉不得超過 ±180°。';return}
+ history.push({name,record:b.record.slice()});
+ b.record[1]+=dx/METERS_PER_PIXEL;b.record[2]-=dy/METERS_PER_PIXEL;b.record[6]+=da;
+ syncGeometry(name);showSpatialDiagnostics();east.value='0';north.value='0';angle.value='0';
+ editStatus.textContent=name+' 已在目前頁面調整；請檢查紅色重疊提示，完成後匯出 GeoJSON。';
+};
+document.getElementById('undoAdjustment').onclick=()=>{
+ const last=history.pop();if(!last){editStatus.textContent='目前沒有可復原的調整。';return}
+ buildingObjects.get(last.name).record=last.record;syncGeometry(last.name);showSpatialDiagnostics();pickBuilding(last.name);editStatus.textContent='已復原 '+last.name+' 的上一步調整。';
+};
+document.getElementById('exportBuildings').onclick=()=>{
+ const json=JSON.parse(JSON.stringify(buildingsGeo));
+ json.metadata={...json.metadata,edited_in_browser:true,accuracy_notice:'Manual approximate position edits, not certified survey',exported_from:'KKL Bioenergy V0.7'};
+ const blob=new Blob([JSON.stringify(json,null,2)],{type:'application/geo+json'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='existing-buildings-v0.7-reviewed.geojson';a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
 const raycaster=new THREE.Raycaster(),mouse=new THREE.Vector2();
-renderer.domElement.addEventListener('click',e=>{let r=renderer.domElement.getBoundingClientRect();mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);raycaster.setFromCamera(mouse,camera);let hit=raycaster.intersectObjects(clickable,true)[0];if(!hit)return;let p=hit.object;while(p.parent&&!p.userData.name)p=p.parent;if(p.userData.name)document.getElementById('info').textContent=p.userData.name+'｜'+p.userData.dimensions+'｜'+p.userData.detail});
-document.getElementById('screenshot').onclick=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.href=renderer.domElement.toDataURL('image/png');a.download='KKL-Jinning-V0.6-georeferenced.png';a.click()};
+renderer.domElement.addEventListener('click',e=>{let r=renderer.domElement.getBoundingClientRect();mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);raycaster.setFromCamera(mouse,camera);let hit=raycaster.intersectObjects(clickable,true)[0];if(!hit)return;let p=hit.object;while(p.parent&&!p.userData.name)p=p.parent;if(p.userData.name){document.getElementById('info').textContent=p.userData.name+'｜'+p.userData.dimensions+'｜'+p.userData.detail;if(p.userData.buildable)pickBuilding(p.userData.name)}});
+document.getElementById('screenshot').onclick=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.href=renderer.domElement.toDataURL('image/png');a.download='KKL-Jinning-V0.7-building-review.png';a.click()};
 function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h)}window.addEventListener('resize',resize);resize();
 function render(){requestAnimationFrame(render);controls.update();renderer.render(scene,camera);updateLabels()}render();
 </script></body></html>
