@@ -1,0 +1,58 @@
+{
+  "version": "0.9.9",
+  "source": "C04.PDF",
+  "page": 7,
+  "figure": "4.2.2-1",
+  "method": "Source drawing/item candidate search by radial bands with tangent consistency, endpoint clustering at 1.5 displayed pixels",
+  "coordinateBasis": "PDF crop (112,52)-(665,452), rendered 2px/point",
+  "note": "These are search results, not complete CAD rings. Matching can include neighboring details. No exact ring contour has been verified.",
+  "isFullOriginalPDFExtraction": false,
+  "georeferenced": false,
+  "engineeringAccuracy": false,
+  "regions": [
+    {
+      "id": "UPPER-OUTER",
+      "name": "北端環形廣場外環",
+      "fragments": 11,
+      "components": 5,
+      "largestComponent": 5
+    },
+    {
+      "id": "UPPER-MIDDLE",
+      "name": "北端環形廣場中環",
+      "fragments": 32,
+      "components": 12,
+      "largestComponent": 8
+    },
+    {
+      "id": "UPPER-INNER",
+      "name": "北端水景內環",
+      "fragments": 14,
+      "components": 5,
+      "largestComponent": 8
+    },
+    {
+      "id": "LOWER-OUTER",
+      "name": "南端圓池外環",
+      "fragments": 0,
+      "components": 0,
+      "largestComponent": 0
+    },
+    {
+      "id": "LOWER-INNER",
+      "name": "南端圓池內環",
+      "fragments": 1,
+      "components": 1,
+      "largestComponent": 1
+    }
+  ],
+  "qa": {
+    "totalFragments": 58,
+    "totalConnectedGroups": 22,
+    "fullyVerifiedClosedRings": 0,
+    "endpointTolerancePx": 1.5,
+    "sourceSemanticIdentityConfirmed": false,
+    "replacedExistingLandscapeCurves": false
+  },
+  "next": "Use source-stroke topology and targeted ring segmentation without assuming fixed circle centers; visually validate source chains before replacing any V0.9.6 guide curves."
+}
