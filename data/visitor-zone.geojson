@@ -1,0 +1,281 @@
+{
+  "type": "FeatureCollection",
+  "name": "Jinning visitor zone positioning V0.8",
+  "metadata": {
+    "crs": "EPSG:4326",
+    "status": "conceptual_not_surveyed",
+    "reference": "User-provided official visitor site schematic and aerial reference; approx homography, with small collision adjustments",
+    "note": "Do not interpret as official building coordinates or cadastral data"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "visitor-building-1",
+      "properties": {
+        "name": "金酒生活館",
+        "category": "visitor_building",
+        "width_m_estimate": 52,
+        "depth_m_estimate": 20,
+        "height_m_estimate": 8,
+        "rotation_degrees_estimate": -29,
+        "center_wgs84": [
+          118.34167283,
+          24.43203171
+        ],
+        "reference_image_pixel": [
+          388,
+          510
+        ],
+        "confidence": "schematic",
+        "source": "User-provided official schematic; provisional alignment with north-up map",
+        "accuracy": "indicative_only",
+        "style": "pavilion"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              118.34140063,
+              24.431997
+            ],
+            [
+              118.34184937,
+              24.43222372
+            ],
+            [
+              118.34194504,
+              24.43206641
+            ],
+            [
+              118.3414963,
+              24.43183969
+            ],
+            [
+              118.34140063,
+              24.431997
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "visitor-building-2",
+      "properties": {
+        "name": "行政大樓",
+        "category": "visitor_building",
+        "width_m_estimate": 34,
+        "depth_m_estimate": 21,
+        "height_m_estimate": 16,
+        "rotation_degrees_estimate": -29,
+        "center_wgs84": [
+          118.34284381,
+          24.43213942
+        ],
+        "reference_image_pixel": [
+          497,
+          499
+        ],
+        "confidence": "schematic_adjusted_to_avoid_industrial_overlap",
+        "source": "User-provided official schematic; provisional alignment with north-up map",
+        "accuracy": "indicative_only",
+        "style": "administration"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              118.34264688,
+              24.43214789
+            ],
+            [
+              118.34294029,
+              24.43229613
+            ],
+            [
+              118.34304074,
+              24.43213095
+            ],
+            [
+              118.34274733,
+              24.43198271
+            ],
+            [
+              118.34264688,
+              24.43214789
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "visitor-building-3",
+      "properties": {
+        "name": "廠史館",
+        "category": "visitor_building",
+        "width_m_estimate": 27,
+        "depth_m_estimate": 17,
+        "height_m_estimate": 11,
+        "rotation_degrees_estimate": -29,
+        "center_wgs84": [
+          118.3431661,
+          24.43145399
+        ],
+        "reference_image_pixel": [
+          527,
+          569
+        ],
+        "confidence": "schematic",
+        "source": "User-provided official schematic; provisional alignment with north-up map",
+        "accuracy": "indicative_only",
+        "style": "museum"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              118.34300894,
+              24.43146198
+            ],
+            [
+              118.34324194,
+              24.4315797
+            ],
+            [
+              118.34332326,
+              24.43144599
+            ],
+            [
+              118.34309026,
+              24.43132827
+            ],
+            [
+              118.34300894,
+              24.43146198
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "visitor-landmark-1",
+      "properties": {
+        "name": "迎賓水池",
+        "category": "fountain",
+        "width_m_estimate": 38,
+        "depth_m_estimate": 36,
+        "height_m_estimate": 1,
+        "center_wgs84": [
+          118.34190918,
+          24.43089585
+        ],
+        "reference_image_pixel": [
+          410,
+          626
+        ],
+        "description": "環狀迎賓水景與廣場，先以簡化圓形底座呈現",
+        "source": "User-provided official visitor schematic",
+        "accuracy": "indicative_only"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.34190918,
+          24.43089585
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "visitor-landmark-2",
+      "properties": {
+        "name": "寶月新泉",
+        "category": "spring",
+        "width_m_estimate": 22,
+        "depth_m_estimate": 18,
+        "height_m_estimate": 2.5,
+        "center_wgs84": [
+          118.34138277,
+          24.43151274
+        ],
+        "reference_image_pixel": [
+          361,
+          563
+        ],
+        "description": "弧形水景，僅示意占地",
+        "source": "User-provided official visitor schematic",
+        "accuracy": "indicative_only"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.34138277,
+          24.43151274
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "visitor-landmark-3",
+      "properties": {
+        "name": "酒瓶公園",
+        "category": "bottle_park",
+        "width_m_estimate": 29,
+        "depth_m_estimate": 25,
+        "height_m_estimate": 2,
+        "center_wgs84": [
+          118.34226369,
+          24.43140503
+        ],
+        "reference_image_pixel": [
+          443,
+          574
+        ],
+        "description": "草地與地景裝置範圍",
+        "source": "User-provided official visitor schematic",
+        "accuracy": "indicative_only"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.34226369,
+          24.43140503
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "visitor-landmark-4",
+      "properties": {
+        "name": "酒瓶地標",
+        "category": "bottle_landmark",
+        "width_m_estimate": 23,
+        "depth_m_estimate": 15,
+        "height_m_estimate": 15,
+        "center_wgs84": [
+          118.34512131,
+          24.43232546
+        ],
+        "reference_image_pixel": [
+          709,
+          480
+        ],
+        "description": "東南側入口雙瓶地標，僅簡化量體",
+        "source": "User-provided official visitor schematic",
+        "accuracy": "indicative_only"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.34512131,
+          24.43232546
+        ]
+      }
+    }
+  ]
+}
