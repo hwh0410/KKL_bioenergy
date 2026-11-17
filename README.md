@@ -45,3 +45,11 @@
 - 依使用者標記的面積 **282,716.95 平方公尺** 與周長 **約 2.41 公里**，估算每個參考影像像素約 **1.089 公尺**；這不是地理配準、正式測量或法定地籍界線。
 - 維持建物旋轉矩形占地排除重疊、儲槽避讓、道路與建物避讓、植栽避讓。
 - 注意：建物取自先前另一張衛星截圖的初步套繪，透過暫定影像轉換置入此次地圖座標；建築與道路的精確吻合仍待後續核對與修正。
+
+## V0.5 — OSM 道路向量整合
+- 道路來源：使用者於 Overpass Turbo 匯出的 `export.geojson`，保留金寧廠周邊 **67 條** OSM 道路線段，存於 `data/roads-osm.geojson`。
+- 道路使用原始 WGS84 經緯度，載入時以當地近似公尺投影轉為 Three.js 場景座標；以已知路口進行**暫定視覺對位**，不是正式地理配準。
+- 利用連續帶狀三角網格繪製道路，保留道路類別（secondary / tertiary / service / secondary_link / track）。
+- 既有廠區建築仍為人工示意量體；如與 OSM 路線衝突，原型將避讓而非推定道路錯誤，未來需地理配準並重新套繪建築。
+- **資料來源與授權：© OpenStreetMap contributors，Open Database License (ODbL) 1.0。** [OpenStreetMap copyright](https://www.openstreetmap.org/copyright)。
+- 因為只查詢附近路段，未必包含所有廠內私人道路；不應將現有道路完整度用於正式工程設計。
