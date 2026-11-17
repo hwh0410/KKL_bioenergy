@@ -27,7 +27,13 @@ jobs:
           grep -q '<html' index.html
           mkdir -p _site
           cp index.html _site/index.html
+          test -s data/existing-buildings.geojson
+          test -s data/roads-osm.geojson
+          cp -R data _site/data
+          python3 -m json.tool _site/data/existing-buildings.geojson > /dev/null
+          python3 -m json.tool _site/data/roads-osm.geojson > /dev/null
           touch _site/.nojekyll
+          find _site -type f | sort
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
