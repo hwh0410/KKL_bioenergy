@@ -15,18 +15,18 @@ aside{background:white;padding:18px;border-radius:15px;border:1px solid #dce5e9;
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
 </head>
 <body>
-<header><small>KKL BIOENERGY · SITE DIGITAL MODEL</small><h1>金門酒廠・金寧廠｜互動式 3D 量體平台</h1><p>廠區與周邊道路重建 V0.3　|　後續規劃：厭氧沼氣設施與工程配置</p></header>
+<header><small>KKL BIOENERGY · SITE DIGITAL MODEL</small><h1>金門酒廠・金寧廠｜互動式 3D 量體平台</h1><p>平滑道路與廠區比例校正 V0.4　|　後續規劃：厭氧沼氣設施與工程配置</p></header>
 <main>
 <section id="view"><div id="stage"></div><div class="tools"><button id="iso" class="on">立體</button><button id="top">俯視</button><button id="reset">重設</button><button id="labelsBtn" class="on">標籤</button><button id="screenshot">截圖 PNG</button></div><div class="north">N ↑</div><div id="labels" class="labels"></div><div class="note">拖曳旋轉 · 滾輪縮放 · 右鍵平移<br>點擊量體可查看資料<br>參照北向衛星圖重建道路與建築；尺寸仍待實測校正</div></section>
-<aside><h2>既有廠區圖層</h2><div id="legend"></div><label class="toggle"><input type="checkbox" id="roads" checked> 顯示道路</label><label class="toggle"><input type="checkbox" id="trees" checked> 顯示植栽</label><label class="toggle"><input type="checkbox" id="marks" checked disabled> 未來沼氣廠規劃（尚未建置）</label><h2>選取量體</h2><div id="info" class="info">點擊建築或地標以查看示意資訊。</div><div class="warning"><b>精度說明</b><br>參照使用者提供之北向衛星截圖人工套繪，包含桃園路、東側聯外道路、廠區出入口。已加入物件足跡重疊檢查與道路避讓；仍未經座標配準與現場量測，尺寸／道路線形皆屬示意，不可用於工程距離與地界判定。</div></aside>
-</main><footer>KKL_bioenergy · 3D visualisation prototype · Three.js · 畫面比例為暫定示意尺度；非測量公尺</footer>
+<aside><h2>既有廠區圖層</h2><div id="legend"></div><label class="toggle"><input type="checkbox" id="roads" checked> 顯示道路</label><label class="toggle"><input type="checkbox" id="trees" checked> 顯示植栽</label><label class="toggle"><input type="checkbox" id="marks" checked disabled> 未來沼氣廠規劃（尚未建置）</label><h2>選取量體</h2><div id="info" class="info">點擊建築或地標以查看示意資訊。</div><div class="warning"><b>精度說明</b><br>道路中心線參照北向地圖人工描繪，使用連續曲面呈現；邊界依使用者標註面積 282,716.95 m²、周長 2.41 km 估算比例。該邊界非地籍界線，建築位置仍為暫定影像套繪，不可用於工程規劃或測量認定。</div></aside>
+</main><footer>KKL_bioenergy · 3D visualisation prototype · Three.js · 按面積 282,716.95 m²、周長約 2.41 km 初步校正；非正式測量</footer>
 <script type="module">
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 const stage=document.getElementById('stage'), scene=new THREE.Scene();scene.background=new THREE.Color(0xe9f0ee);
-const camera=new THREE.PerspectiveCamera(44,1,0.1,2200);
+const camera=new THREE.PerspectiveCamera(44,1,0.1,3200);
 const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;stage.appendChild(renderer.domElement);
-const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.maxPolarAngle=Math.PI/2.01;controls.minDistance=65;controls.maxDistance=1350;
+const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.maxPolarAngle=Math.PI/2.01;controls.minDistance=65;controls.maxDistance=1900;
 scene.add(new THREE.HemisphereLight(0xffffff,0x95a4a0,2));
 const sun=new THREE.DirectionalLight(0xffffff,2.5);sun.position.set(-150,400,240);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-650,right:650,top:650,bottom:-650});scene.add(sun);
 const materials={production:0x91abb5,storage:0xc2b3a0,admin:0xe4d3b4,utility:0x9fbbce,landmark:0xc7b773};
@@ -34,25 +34,38 @@ const mat=(c)=>new THREE.MeshStandardMaterial({color:c,roughness:.82,metalness:.
 const roof=mat(0x7f9397),roofLight=mat(0xbfcacd),roadMat=mat(0xaeb8b5),forest=mat(0x82a985),lawn=mat(0xb5caa6),mark=mat(0xe8d6a0);
 const root=new THREE.Group();scene.add(root);
 const clickable=[], roadObjs=[], treeObjs=[];
-const px=(x)=>(x-343)*1.08, py=(y)=>(y-354)*1.08;
+const METERS_PER_PIXEL=Math.sqrt(282716.95/238478.5); // Based on user's traced 282,716.95 m² area
+const px=(x)=>(x-442)*METERS_PER_PIXEL, py=(y)=>(y-386)*METERS_PER_PIXEL;
+const oldToMap=(x,y)=>[1.16*x+55,1.05*y+42]; // Provisional alignment of previous aerial screenshot to measured Google map
 function groundPolygon(coords,m,y=0){let s=new THREE.Shape();coords.forEach(([x,z],i)=>i?s.lineTo(px(x),-py(z)):s.moveTo(px(x),-py(z)));s.closePath();let mesh=new THREE.Mesh(new THREE.ShapeGeometry(s),m);mesh.rotation.x=-Math.PI/2;mesh.position.y=y;root.add(mesh);return mesh}
-let ground=new THREE.Mesh(new THREE.PlaneGeometry(880,870),forest);ground.rotation.x=-Math.PI/2;ground.position.y=-.25;ground.receiveShadow=true;root.add(ground);
-groundPolygon([[92,630],[100,488],[140,444],[227,465],[235,623],[190,655]],lawn,.001);
-groundPolygon([[242,243],[435,25],[517,18],[602,42],[603,466],[522,528],[270,519],[225,400]],lawn,.002);
-// All horizontal positions below refer to pixels on the supplied north-up 686×709 aerial reference.
-// This is local registration only, not surveyed GIS coordinates. The visual meters-per-pixel is provisional.
+let ground=new THREE.Mesh(new THREE.PlaneGeometry(1300,1200),forest);ground.rotation.x=-Math.PI/2;ground.position.y=-.25;ground.receiveShadow=true;root.add(ground);
+// Surveyed via on-screen Google Maps ruler, NOT an official cadastral boundary.
+const userMeasuredBoundary=[[109,720],[121,518],[431,331],[369,263],[648,27],[664,33],[760,460],[356,743]];
+const siteFill=mat(0xb7cdb0);
+const site=groundPolygon(userMeasuredBoundary,siteFill,.014);site.material.transparent=true;site.material.opacity=.74;
+function boundaryLine(points){const v=points.map(p=>new THREE.Vector3(px(p[0]),.25,py(p[1])));v.push(v[0].clone());let line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(v),new THREE.LineBasicMaterial({color:0x648d6c,transparent:true,opacity:.8}));root.add(line)}
+boundaryLine(userMeasuredBoundary);
+// Digitized from user's 2026-11-17 north-up map and measurement screenshot.
+// Points are in screenshot pixel coordinates; Google map itself is not redistributed.
 const roadsData=[
- {name:'桃園路（南側）',width:17,pts:[[0,667],[70,691],[138,697],[219,686],[298,650],[374,619],[445,574],[508,530],[571,492],[611,463],[661,437],[703,417]]},
- {name:'東側聯外道路',width:15,pts:[[575,-20],[589,45],[598,119],[605,193],[612,271],[618,346],[624,413],[611,463],[635,532],[683,596]]},
- {name:'東側道路延伸',width:12,pts:[[703,296],[668,340],[639,388],[611,463]]},
- {name:'西南側外緣道路',width:9,pts:[[8,598],[40,627],[87,651],[139,664],[219,659],[296,634]]},
- {name:'西南廠房出入口',width:8,pts:[[112,669],[107,636],[103,603],[106,562],[113,512],[144,478],[189,465],[230,472]]},
- {name:'主廠區南側入口',width:10,pts:[[359,615],[355,584],[346,558],[333,538],[316,514]]},
- {name:'主廠區東側出入口',width:9,pts:[[558,505],[546,483],[532,457]]},
- {name:'中央主幹道',width:8,pts:[[283,446],[314,425],[347,400],[376,378],[418,346],[456,319],[494,290],[539,255],[568,236]]},
- {name:'廠區東北通道',width:7,pts:[[392,185],[431,212],[465,239],[491,267],[526,299]]},
- {name:'廠區西側通道',width:7,pts:[[267,321],[280,348],[298,376],[315,405]]},
- {name:'廠區東側通道',width:8,pts:[[559,134],[568,180],[574,226],[579,275],[581,335],[580,394],[564,440]]}
+ {name:'桃園路',width:14,pts:[[-55,681],[0,697],[60,709],[109,721],[177,730],[244,738],[306,741],[357,743],[408,718],[458,689],[508,659],[553,630],[602,593],[647,557],[689,521],[725,484],[760,460],[805,435],[859,391],[923,341]]},
+ {name:'東側聯外道路',width:13,pts:[[639,-50],[651,-12],[658,35],[668,88],[678,143],[688,197],[701,251],[713,310],[725,365],[742,416],[760,460],[776,511],[795,569],[830,631],[862,688]]},
+ {name:'東側岔路',width:11,pts:[[760,460],[786,448],[816,431],[852,400],[916,347]]},
+ {name:'西北斜向邊界道路',width:8,pts:[[369,263],[403,242],[445,214],[484,185],[521,154],[563,125],[609,82],[648,43]]},
+ {name:'北側內部主通道',width:7.5,pts:[[410,287],[452,258],[497,226],[544,194],[589,161],[629,134],[683,99]]},
+ {name:'北側第二通道',width:7,pts:[[440,331],[479,300],[522,272],[570,240],[615,208],[665,174],[696,150]]},
+ {name:'中央內部主通道',width:8.3,pts:[[469,374],[501,352],[538,322],[573,297],[609,270],[650,241],[710,201]]},
+ {name:'中央南部通道',width:8,pts:[[511,426],[544,403],[579,380],[617,352],[655,324],[694,294],[722,273]]},
+ {name:'西側南北通道',width:8,pts:[[369,263],[384,292],[404,318],[431,331],[449,359],[467,383],[489,408],[512,431],[536,458],[557,485]]},
+ {name:'中央縱向通道',width:7.3,pts:[[411,289],[426,308],[440,331],[470,365],[503,403],[533,439],[559,470],[591,509],[620,547]]},
+ {name:'東側廠內縱向通道',width:7.5,pts:[[670,86],[676,138],[682,184],[689,234],[700,278],[710,328],[719,377],[730,419],[746,453]]},
+ {name:'南側內部斜向通道',width:7.8,pts:[[356,547],[391,523],[426,498],[464,472],[503,445],[543,417],[586,389]]},
+ {name:'西南區東西向通道',width:7,pts:[[123,529],[165,517],[209,507],[256,494],[297,476],[337,453],[375,429]]},
+ {name:'西南區外側環路',width:7,pts:[[109,720],[112,679],[113,634],[115,595],[119,552],[135,528],[169,508],[212,496],[256,494]]},
+ {name:'西南區南側通道',width:7,pts:[[116,650],[153,656],[195,661],[237,663],[276,659],[313,650],[359,629]]},
+ {name:'西南廠房連接道',width:7,pts:[[237,663],[247,630],[259,600],[279,572],[306,549],[335,530]]},
+ {name:'南側廠區入口',width:9,pts:[[508,659],[502,632],[490,602],[475,576],[455,548],[437,521]]},
+ {name:'東側廠區入口',width:8,pts:[[724,484],[699,471],[668,458],[643,444],[617,427]]}
 ];
 const buildings=[
  ['西南廠房 A',156,508,67,46,15,-6,'production','gable'],
@@ -82,57 +95,76 @@ function collide(p,q,clear=0){for(const poly of [p,q])for(let i=0;i<poly.length;
 function pointPolyDistance(x,z,poly){let inside=false,min=Infinity;for(let i=0,j=poly.length-1;i<poly.length;j=i++){let a=poly[j],b=poly[i];if(((a[1]>z)!==(b[1]>z))&& x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0])inside=!inside;let dx=b[0]-a[0],dy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[1])*dy)/(dx*dx+dy*dy)));min=Math.min(min,Math.hypot(x-(a[0]+t*dx),z-(a[1]+t*dy)));}return inside?0:min;}
 function clearOfStructures(x,z,pad=0){return footprint.every(f=>pointPolyDistance(x,z,f.poly)>f.pad+pad)}
 let rejected=[];
-const layout=buildings.filter(b=>{const poly=shapePoly(b[1],b[2],b[3],b[4],b[6]);const conflict=footprint.find(f=>collide(poly,f.poly,2));if(conflict){rejected.push(b[0]+' / '+conflict.name);return false}footprint.push({name:b[0],poly,pad:0});return true});
+const layout=buildings.map(b=>{const [x,z]=oldToMap(b[1],b[2]);return [b[0],x,z,b[3]*1.16,b[4]*1.05,b[5],b[6],b[7],b[8]]}).filter(b=>{const poly=shapePoly(b[1],b[2],b[3],b[4],b[6]);const conflict=footprint.find(f=>collide(poly,f.poly,2));if(conflict){rejected.push(b[0]+' / '+conflict.name);return false}footprint.push({name:b[0],poly,pad:0});return true});
 function addBuilding([name,x,z,w,d,h,angle,type,roofStyle]){
  const grp=new THREE.Group();grp.position.set(px(x),0,py(z));grp.rotation.y=-angle*Math.PI/180;
- const walls=new THREE.Mesh(new THREE.BoxGeometry(w*1.08,h,d*1.08),mat(materials[type]));walls.position.y=h/2;walls.castShadow=true;walls.receiveShadow=true;grp.add(walls);
+ const walls=new THREE.Mesh(new THREE.BoxGeometry(w*METERS_PER_PIXEL,h,d*METERS_PER_PIXEL),mat(materials[type]));walls.position.y=h/2;walls.castShadow=true;walls.receiveShadow=true;grp.add(walls);
  if(roofStyle==='gable'){const rise=Math.min(5,d*.22);const geom=new THREE.BufferGeometry(),pos=[-w*.54,h,-d*.54,w*.54,h,-d*.54,0,h+rise,-d*.54,-w*.54,h,d*.54,w*.54,h,d*.54,0,h+rise,d*.54];geom.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geom.setIndex([0,1,2,3,5,4,0,2,5,0,5,3,1,4,5,1,5,2]);geom.computeVertexNormals();let r=new THREE.Mesh(geom,roofLight);r.material.side=THREE.DoubleSide;r.castShadow=true;grp.add(r)}
- else{let top=new THREE.Mesh(new THREE.BoxGeometry(w*1.08+.8,.8,d*1.08+.8),roof);top.position.y=h+.4;grp.add(top)}
- grp.userData={name,type,dimensions:'約 '+Math.round(w*1.08)+' × '+Math.round(d*1.08)+' × '+h+'（模型示意值）',detail:'位置依衛星截圖人工套繪；實際尺寸、高度待校正',h};root.add(grp);clickable.push(grp);
+ else{let top=new THREE.Mesh(new THREE.BoxGeometry(w*METERS_PER_PIXEL+.8,.8,d*METERS_PER_PIXEL+.8),roof);top.position.y=h+.4;grp.add(top)}
+ grp.userData={name,type,dimensions:'約 '+Math.round(w*METERS_PER_PIXEL)+' × '+Math.round(d*METERS_PER_PIXEL)+' × '+h+'（模型示意值）',detail:'位置依衛星截圖人工套繪；實際尺寸、高度待校正',h};root.add(grp);clickable.push(grp);
 }
 layout.forEach(addBuilding);
 function tank(name,x,z,r=5,h=13){let group=new THREE.Group();group.position.set(px(x),0,py(z));let cyl=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,20),mat(0xbccacc));cyl.position.y=h/2;cyl.castShadow=true;group.add(cyl);let top=new THREE.Mesh(new THREE.CylinderGeometry(r,r,.5,20),roofLight);top.position.y=h+.2;group.add(top);group.userData={name,type:'utility',dimensions:'直徑 '+2*r+' × 高 '+h+' m（示意）',detail:'儲槽位置依影像人工判讀，非實測',h};clickable.push(group);root.add(group)}
 // Discrete tank footprints are checked before placement; tanks never occupy a building.
 let num=1,skippedTanks=0;
-function safeTank(name,x,z,r,h){if(!clearOfStructures(x,z,r+2)){skippedTanks++;return;}footprint.push({name,poly:shapePoly(x,z,r*2,r*2,0),pad:0});tank(name,x,z,r*1.08,h)}
+function safeTank(name,xOld,zOld,r,h){const [x,z]=oldToMap(xOld,zOld);if(!clearOfStructures(x,z,r+2)){skippedTanks++;return;}footprint.push({name,poly:shapePoly(x,z,r*2,r*2,0),pad:0});tank(name,x,z,r*METERS_PER_PIXEL,h)}
 for(let row=0;row<4;row++)for(let col=0;col<5;col++)safeTank('東北儲槽 '+num++,510+col*11,68+row*11,3.5,11);
 num=1;for(let row=0;row<3;row++)for(let col=0;col<3;col++)safeTank('東側儲槽 '+num++,542+col*10,358+row*10,3.1,11);
 for(let i=0;i<3;i++)safeTank('南側附屬槽 '+(i+1),478+i*9,462,2.9,7);
-// Roads are segmented and clipped against building/tank footprints to prevent under-building overlap.
-const roadClearance=1.4;
-function strip(points,width,material=roadMat){
- for(let i=1;i<points.length;i++){
-  const [ax,az]=points[i-1],[bx,bz]=points[i],dist=Math.hypot(bx-ax,bz-az),n=Math.ceil(dist/4);
-  for(let j=0;j<n;j++){const t0=j/n,t1=(j+1)/n,tm=(t0+t1)*.5,x=ax+(bx-ax)*tm,z=az+(bz-az)*tm;
-   if(!clearOfStructures(x,z,width/2/1.08+roadClearance))continue;
-   const dx=(bx-ax)*(t1-t0),dz=(bz-az)*(t1-t0),len=Math.hypot(dx,dz)*1.08;
-   let mesh=new THREE.Mesh(new THREE.BoxGeometry(width,.10,len+.2),material);
-   mesh.position.set(px(x),.095,py(z));mesh.rotation.y=-Math.atan2(dx,dz);root.add(mesh);roadObjs.push(mesh);
-  }
+// Smooth continuous ribbon mesh replaces the original row of box geometries.
+// Curve sampling uses Catmull–Rom interpolation and a normal-based continuous ribbon.
+// Adjacent roads can meet at intersections; anti-z-fighting via consistent elevation.
+const roadClearance=.75;
+function ribbonRoad(entry,index){
+ const curve=new THREE.CatmullRomCurve3(entry.pts.map(([x,y])=>new THREE.Vector3(px(x),0,py(y))),false,'centripetal',.5);
+ const steps=Math.max(40,entry.pts.length*12);
+ const vertices=[],indices=[],uv=[],samplePositions=[];
+ for(let i=0;i<=steps;i++){
+  const t=i/steps,p=curve.getPoint(t),tan=curve.getTangent(t).normalize(),nx=-tan.z,nz=tan.x;
+  const half=entry.width*.5;
+  vertices.push(p.x+nx*half,.085+index*.001,p.z+nz*half,p.x-nx*half,.085+index*.001,p.z-nz*half);
+  uv.push(0,t*18,1,t*18);samplePositions.push(p);
  }
+ for(let i=0;i<steps;i++){
+  const a=i*2,b=(i+1)*2,p=samplePositions[i].clone().add(samplePositions[i+1]).multiplyScalar(.5);
+  const xx=p.x/METERS_PER_PIXEL+442,yy=p.z/METERS_PER_PIXEL+386;
+  if(!clearOfStructures(xx,yy,(entry.width/2)/METERS_PER_PIXEL+roadClearance))continue;
+  indices.push(a,b,a+1,b,b+1,a+1);
+ }
+ const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geo.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));geo.setIndex(indices);geo.computeVertexNormals();
+ const mesh=new THREE.Mesh(geo,roadMat);mesh.receiveShadow=true;mesh.userData.roadName=entry.name;root.add(mesh);roadObjs.push(mesh);
 }
-roadsData.forEach(r=>strip(r.pts,r.width));
-const namedRoads=roadsData.slice(0,3);
-function tree(x,z,s=1){if(!clearOfStructures(x,z,5)||roadsData.some(r=>r.pts.slice(1).some((p,i)=>{const a=r.pts[i],dx=p[0]-a[0],dy=p[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[1])*dy)/(dx*dx+dy*dy)));return Math.hypot(x-a[0]-t*dx,z-a[1]-t*dy)<r.width/2+5})))return;
- let g=new THREE.Group();g.position.set(px(x),0,py(z));const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.3*s,.45*s,2*s,5),mat(0x6a7659));trunk.position.y=s;g.add(trunk);const crown=new THREE.Mesh(new THREE.IcosahedronGeometry(2.3*s,1),forest);crown.position.y=4.1*s;g.add(crown);root.add(g);treeObjs.push(g)}
-for(let a=0;a<55;a++){let t=a/54;tree(54+205*t,451-21*Math.sin(t*Math.PI),.8);tree(25+250*t,673-12*Math.sin(t*Math.PI),.8)}
-for(let a=0;a<40;a++){let t=a/39;tree(558+55*t,24+427*t,.7)}
-for(let a=0;a<33;a++){let t=a/32;tree(307+229*t,40+8*Math.sin(t*Math.PI),.7)}
+roadsData.forEach(ribbonRoad);
+function nearestRoadDistance(x,z){
+ let min=Infinity;for(const r of roadsData){const p=r.pts;for(let i=1;i<p.length;i++){
+ const a=p[i-1],b=p[i],dx=b[0]-a[0],dy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[1])*dy)/(dx*dx+dy*dy)));
+ min=Math.min(min,Math.hypot(x-a[0]-t*dx,z-a[1]-t*dy)-r.width/(2*METERS_PER_PIXEL));
+ }}return min;
+}
+function tree(x,z,size=1){
+ if(!clearOfStructures(x,z,5)||nearestRoadDistance(x,z)<6)return;
+ const g=new THREE.Group();g.position.set(px(x),0,py(z));
+ const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.3*size,.45*size,2*size,5),mat(0x6a7659));trunk.position.y=size;g.add(trunk);
+ const crown=new THREE.Mesh(new THREE.IcosahedronGeometry(2.3*size,1),forest);crown.position.y=4.1*size;g.add(crown);root.add(g);treeObjs.push(g);
+}
+for(let a=0;a<52;a++){let t=a/51;tree(95+230*t,475+3*Math.sin(t*Math.PI),.75);tree(30+340*t,683+10*Math.sin(t*Math.PI),.75)}
+for(let a=0;a<48;a++){let t=a/47;tree(730+64*t,70+430*t,.68)}
+for(let a=0;a<42;a++){let t=a/41;tree(365+290*t,48+18*Math.sin(t*Math.PI),.66)}
 function makeLandmark(name,x,z){let grp=new THREE.Group();grp.position.set(px(x),0,py(z));let cone=new THREE.Mesh(new THREE.CylinderGeometry(1.2,3.3,13,16),mark);cone.position.y=6.5;grp.add(cone);grp.userData={name,type:'landmark',dimensions:'示意地標',detail:'僅作為方位辨識，外觀尚待補充',h:13};root.add(grp);clickable.push(grp)}
-makeLandmark('入口與展示景觀區',301,510);makeLandmark('主要聯外道路',610,466);
+makeLandmark('入口與展示景觀區',437,540);makeLandmark('桃園路與東側道路路口',760,460);
 const legend=[['production','主要廠房'],['storage','儲酒／倉儲（待核對）'],['admin','入口與行政'],['utility','槽體及公用設施'],['landmark','方位地標']];
 document.getElementById('legend').innerHTML=legend.map(([k,t])=>'<div class="legend"><span class="swatch" style="background:#'+materials[k].toString(16)+'"></span>'+t+'</div>').join('');
 if(rejected.length)console.warn('Rejected overlapping buildings:',rejected);if(skippedTanks)console.info('Skipped tanks overlapping structures:',skippedTanks);
 const labelBox=document.getElementById('labels'),nodes=clickable.map(o=>{const n=document.createElement('div');n.className='pin';n.textContent=o.userData.name;labelBox.append(n);return n});let showLabels=false;
 function updateLabels(){let rect=renderer.domElement.getBoundingClientRect();clickable.forEach((o,i)=>{const p=o.position.clone();p.y=o.userData.h+7;p.project(camera);const e=nodes[i];e.style.left=((p.x+1)/2*rect.width)+'px';e.style.top=((1-p.y)/2*rect.height)+'px';e.style.display=showLabels&&p.z<1?'block':'none'})}
-function setCamera(top){camera.position.set(top?0:610,top?970:730,top?.01:660);controls.target.set(0,0,0);controls.update();document.getElementById('iso').classList.toggle('on',!top);document.getElementById('top').classList.toggle('on',top)}
+function setCamera(top){camera.position.set(top?0:800,top?1250:930,top?.01:850);controls.target.set(0,0,0);controls.update();document.getElementById('iso').classList.toggle('on',!top);document.getElementById('top').classList.toggle('on',top)}
 setCamera(false);
 document.getElementById('iso').onclick=()=>setCamera(false);document.getElementById('top').onclick=()=>setCamera(true);document.getElementById('reset').onclick=()=>setCamera(false);
 document.getElementById('labelsBtn').classList.remove('on');document.getElementById('labelsBtn').onclick=e=>{showLabels=!showLabels;e.currentTarget.classList.toggle('on',showLabels)};
 document.getElementById('roads').onchange=e=>roadObjs.forEach(o=>o.visible=e.target.checked);document.getElementById('trees').onchange=e=>treeObjs.forEach(o=>o.visible=e.target.checked);
 const raycaster=new THREE.Raycaster(),mouse=new THREE.Vector2();
 renderer.domElement.addEventListener('click',e=>{let r=renderer.domElement.getBoundingClientRect();mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);raycaster.setFromCamera(mouse,camera);let hit=raycaster.intersectObjects(clickable,true)[0];if(!hit)return;let p=hit.object;while(p.parent&&!p.userData.name)p=p.parent;if(p.userData.name)document.getElementById('info').textContent=p.userData.name+'｜'+p.userData.dimensions+'｜'+p.userData.detail});
-document.getElementById('screenshot').onclick=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.href=renderer.domElement.toDataURL('image/png');a.download='KKL-Jinning-V0.3-massing.png';a.click()};
+document.getElementById('screenshot').onclick=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.href=renderer.domElement.toDataURL('image/png');a.download='KKL-Jinning-V0.4-massing.png';a.click()};
 function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h)}window.addEventListener('resize',resize);resize();
 function render(){requestAnimationFrame(render);controls.update();renderer.render(scene,camera);updateLabels()}render();
 </script></body></html>
