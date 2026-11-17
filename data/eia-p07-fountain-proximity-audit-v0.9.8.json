@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "0.9.8",
+  "source": "C04.PDF page 7 4.2.2-1 get_drawings vectors",
+  "referenceRegion": "crop Rect(112,52,665,452) at 2 px / PDF pt",
+  "algorithm": "Sample candidate SVG path at ~1.5px intervals and measure nearest distance to ALL source PDF path strokes (straight lines, cubic curves, rectangles, quads) via KD-tree",
+  "caution": "Nearby stroke may be text, trees, decoration or the wrong side of water; source proximity is necessary but not sufficient to prove semantic match.",
+  "thresholdPixels": 2,
+  "acceptanceCoverageThreshold": 0.8,
+  "acceptedCurveCount": 0,
+  "changedGeometry": false,
+  "publicationNote": "Metric only; do not publish entire underlying source PDF vector content",
+  "results": [
+    {
+      "id": "LS096-01",
+      "name": "北端環形廣場外緣",
+      "category": "plaza_edge",
+      "coverageWithin2px": 0.308,
+      "distanceP90px": 7.265,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-02",
+      "name": "北端內環外緣",
+      "category": "plaza_edge",
+      "coverageWithin2px": 0.316,
+      "distanceP90px": 9.722,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-03",
+      "name": "主水景上方環形池緣",
+      "category": "water_edge",
+      "coverageWithin2px": 0.293,
+      "distanceP90px": 8.689,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-04",
+      "name": "中央圓形池內緣",
+      "category": "water_edge",
+      "coverageWithin2px": 0.409,
+      "distanceP90px": 6.816,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-05",
+      "name": "上方放射景觀分隔線",
+      "category": "plaza_detail",
+      "coverageWithin2px": 0.331,
+      "distanceP90px": 8.526,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-06",
+      "name": "曲水流觴主水道中心線",
+      "category": "water_centerline",
+      "coverageWithin2px": 0.251,
+      "distanceP90px": 22.841,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-07",
+      "name": "曲水流觴左側池緣",
+      "category": "water_edge",
+      "coverageWithin2px": 0.062,
+      "distanceP90px": 23.248,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-08",
+      "name": "曲水流觴右側池緣",
+      "category": "water_edge",
+      "coverageWithin2px": 0.194,
+      "distanceP90px": 10.929,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-09",
+      "name": "南端圓形水景外緣",
+      "category": "water_edge",
+      "coverageWithin2px": 0.128,
+      "distanceP90px": 15.704,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-10",
+      "name": "南端圓形水景內緣",
+      "category": "water_edge",
+      "coverageWithin2px": 0,
+      "distanceP90px": 26.253,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-11",
+      "name": "西側主步道邊緣",
+      "category": "walkway_edge",
+      "coverageWithin2px": 0.471,
+      "distanceP90px": 3.504,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-12",
+      "name": "東側主步道邊緣",
+      "category": "walkway_edge",
+      "coverageWithin2px": 0.1,
+      "distanceP90px": 25.562,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-13",
+      "name": "南端景觀入口階梯",
+      "category": "steps",
+      "coverageWithin2px": 0.125,
+      "distanceP90px": 20.074,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-14",
+      "name": "東側行政廣場連通步道",
+      "category": "walkway_edge",
+      "coverageWithin2px": 0.171,
+      "distanceP90px": 31.353,
+      "review": "unverified",
+      "sourceMatched": false
+    },
+    {
+      "id": "LS096-15",
+      "name": "西側景觀區連通步道",
+      "category": "walkway_edge",
+      "coverageWithin2px": 0.186,
+      "distanceP90px": 13.464,
+      "review": "unverified",
+      "sourceMatched": false
+    }
+  ]
+}
