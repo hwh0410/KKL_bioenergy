@@ -1,346 +1,48 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>金門酒廠・金寧廠｜3D 廠區量體平台</title>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>金門酒廠金寧廠｜2D 平面配置</title>
 <style>
-:root{font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;color:#253942;background:#eef3f5}*{box-sizing:border-box}body{margin:0}
-header{background:#fff;border-bottom:1px solid #dce5e9;padding:17px 24px}small{color:#317968;font-weight:800;letter-spacing:.12em}h1{font-size:clamp(21px,2.5vw,30px);margin:4px 0}header p{color:#667982;margin:0;font-size:13px}
-main{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:15px;padding:15px;max-width:1700px;margin:auto}
-#view{position:relative;min-height:76vh;background:#dce9ec;border-radius:15px;overflow:hidden;border:1px solid #cfdce0}#stage{position:absolute;inset:0}
-.tools{position:absolute;top:13px;left:13px;display:flex;gap:6px;flex-wrap:wrap;max-width:85%}button{border:1px solid #d7e1e4;background:white;border-radius:8px;padding:9px 11px;color:#2f4951;font-weight:700;cursor:pointer}button.on{background:#247365;color:white;border-color:#247365}.note{position:absolute;bottom:14px;left:13px;background:#ffffffdc;border-radius:9px;padding:10px;font-size:12px;line-height:1.7}.north{position:absolute;right:14px;top:14px;background:white;padding:10px;border-radius:8px;font-weight:800}.labels{position:absolute;inset:0;pointer-events:none}.pin{position:absolute;transform:translate(-50%,-100%);font-size:11px;font-weight:700;background:#fffe;border:1px solid #dee8e8;padding:3px 6px;border-radius:5px;white-space:nowrap}
-aside{background:white;padding:18px;border-radius:15px;border:1px solid #dce5e9;align-self:start}h2{font-size:17px;margin:0 0 12px}.legend{display:flex;align-items:center;gap:9px;font-size:13px;margin:10px 0}.swatch{width:12px;height:12px;border-radius:3px}.info{background:#edf5f3;padding:12px;border-radius:9px;font-size:13px;line-height:1.75}.warning{padding:12px;background:#fff6e7;border-left:3px solid #d9a843;font-size:12px;line-height:1.7;margin-top:13px}.toggle{display:block;margin:13px 0;font-size:13px}footer{max-width:1700px;margin:auto;padding:3px 20px 20px;color:#75838a;font-size:12px}
-@media(max-width:850px){main{display:block;padding:8px}#view{min-height:67vh}.tools button{padding:7px;font-size:11px}aside{margin-top:10px}.note{max-width:75%}}
-</style>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
-</head>
-<body>
-<header><small>KKL BIOENERGY · SITE DIGITAL MODEL</small><h1>金門酒廠・金寧廠｜互動式 3D 量體平台</h1><p>建物位置校核與編輯 V0.7　|　後續規劃：厭氧沼氣設施與工程配置</p></header>
-<main>
-<section id="view"><div id="stage"></div><div class="tools"><button id="iso" class="on">立體</button><button id="top">俯視</button><button id="reset">重設</button><button id="labelsBtn" class="on">標籤</button><button id="screenshot">截圖 PNG</button></div><div class="north">N ↑</div><div id="labels" class="labels"></div><div class="note">拖曳旋轉 · 滾輪縮放 · 右鍵平移<br>點擊量體可查看資料<br>官方示意圖校正訪客區；廠房桶槽維持原量體，非實測精度</div></section>
-<aside><h2>既有廠區圖層</h2><div id="legend"></div><label class="toggle"><input type="checkbox" id="roads" checked> 顯示道路</label><label class="toggle"><input type="checkbox" id="trees" checked> 顯示原有植栽</label>
-<label class="toggle"><input type="checkbox" id="visitor" checked> 訪客區量體及景觀</label>
-<label class="toggle"><input type="checkbox" id="visitorTrees" checked> 訪客區路樹</label><label class="toggle"><input type="checkbox" id="marks" checked disabled> 未來沼氣廠規劃（尚未建置）</label><h2>空間校核</h2><div id="spatialQa" class="info">檢查道路與建築配置中…</div><h2 style="margin-top:15px">建築校正工具</h2>
-<label class="toggle" for="buildingPicker">選取建築（僅概念座標）</label>
-<select id="buildingPicker" style="width:100%;padding:9px;border:1px solid #d7e1e4;border-radius:7px"></select>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0">
-<label style="font-size:12px">向東移動 (m)<input id="shiftEast" type="number" step="1" value="0" style="width:100%;padding:8px"></label>
-<label style="font-size:12px">向北移動 (m)<input id="shiftNorth" type="number" step="1" value="0" style="width:100%;padding:8px"></label>
-</div>
-<label style="font-size:12px">新增旋轉角度 (°)<input id="shiftAngle" type="number" value="0" step="1" style="width:100%;padding:8px"></label>
-<div style="display:flex;gap:7px;flex-wrap:wrap;margin:12px 0">
-<button id="applyAdjustment">套用調整</button><button id="undoAdjustment">復原上一步</button>
-<button id="exportBuildings">匯出建物 GeoJSON</button>
-</div>
-<div id="editStatus" class="info">調整僅作用於瀏覽器目前畫面；匯出的 GeoJSON 可用於更新原始檔，不會自動修改 GitHub。</div>
-<h2 style="margin-top:15px">選取量體</h2><div id="info" class="info">點擊建築或地標以查看示意資訊。</div><div class="warning"><b>精度說明</b><br>道路、工業建物與新訪客區均使用 WGS84 座標。道路來自 OSM；建築為過往衛星影像人工套繪的暫定外框，尚未精確配準。可逐棟編輯並匯出新的 GeoJSON，所有修正仍需人工比對參考圖。疑似重疊僅標示供人工確認，並不裁切 OSM 道路。用地外框不是法定地籍界線。© OpenStreetMap contributors (ODbL)。</div></aside>
-</main><footer>KKL_bioenergy · 3D visualisation prototype · Three.js · 按面積 282,716.95 m²、周長約 2.41 km 初步校正；非正式測量 · Roads © OpenStreetMap contributors (ODbL)</footer>
-<script type="module">
-import * as THREE from 'three';
-import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
-const stage=document.getElementById('stage'), scene=new THREE.Scene();scene.background=new THREE.Color(0xe9f0ee);
-const camera=new THREE.PerspectiveCamera(44,1,0.1,3200);
-const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;stage.appendChild(renderer.domElement);
-const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.maxPolarAngle=Math.PI/2.01;controls.minDistance=65;controls.maxDistance=1900;
-scene.add(new THREE.HemisphereLight(0xffffff,0x95a4a0,2));
-const sun=new THREE.DirectionalLight(0xffffff,2.5);sun.position.set(-150,400,240);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-650,right:650,top:650,bottom:-650});scene.add(sun);
-const materials={production:0x91abb5,storage:0xc2b3a0,admin:0xe4d3b4,utility:0x9fbbce,landmark:0xc7b773};
-const mat=(c)=>new THREE.MeshStandardMaterial({color:c,roughness:.82,metalness:.03});
-const roof=mat(0x7f9397),roofLight=mat(0xbfcacd),roadMat=mat(0xaeb8b5),forest=mat(0x82a985),lawn=mat(0xb5caa6),mark=mat(0xe8d6a0);
-const root=new THREE.Group();scene.add(root);
-const clickable=[], roadObjs=[], treeObjs=[], visitorObjs=[], visitorTreeObjs=[], visitorOccupancy=[], buildingObjects=new Map();
-const METERS_PER_PIXEL=Math.sqrt(282716.95/238478.5); // Based on user's traced 282,716.95 m² area
-const px=(x)=>(x-442)*METERS_PER_PIXEL, py=(y)=>(y-386)*METERS_PER_PIXEL;
-// Building placements now come from provisional WGS84 GeoJSON, not runtime screenshot transforms.
-function groundPolygon(coords,m,y=0){let s=new THREE.Shape();coords.forEach(([x,z],i)=>i?s.lineTo(px(x),-py(z)):s.moveTo(px(x),-py(z)));s.closePath();let mesh=new THREE.Mesh(new THREE.ShapeGeometry(s),m);mesh.rotation.x=-Math.PI/2;mesh.position.y=y;root.add(mesh);return mesh}
-let ground=new THREE.Mesh(new THREE.PlaneGeometry(1300,1200),forest);ground.rotation.x=-Math.PI/2;ground.position.y=-.25;ground.receiveShadow=true;root.add(ground);
-// Surveyed via on-screen Google Maps ruler, NOT an official cadastral boundary.
-const userMeasuredBoundary=[[109,720],[121,518],[431,331],[369,263],[648,27],[664,33],[760,460],[356,743]];
-const siteFill=mat(0xb7cdb0);
-const site=groundPolygon(userMeasuredBoundary,siteFill,.014);site.material.transparent=true;site.material.opacity=.74;
-function boundaryLine(points){const v=points.map(p=>new THREE.Vector3(px(p[0]),.25,py(p[1])));v.push(v[0].clone());let line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(v),new THREE.LineBasicMaterial({color:0x648d6c,transparent:true,opacity:.8}));root.add(line)}
-boundaryLine(userMeasuredBoundary);
-// Digitized from user's 2026-11-17 north-up map and measurement screenshot.
-// Points are in screenshot pixel coordinates; Google map itself is not redistributed.
-const roadsData=[]; // authoritative OSM vectors are loaded from ./data/roads-osm.geojson
-const OSM_ANCHOR={lon:118.3456692,lat:24.4325213,x:760,y:460}; // WGS84 road junction control point
-const OSM_METER_X=111320*Math.cos(OSM_ANCHOR.lat*Math.PI/180);
-const OSM_METER_Y=111195;
-function osmWorld(lon,lat){return new THREE.Vector3(px(OSM_ANCHOR.x)+(lon-OSM_ANCHOR.lon)*OSM_METER_X,0,py(OSM_ANCHOR.y)-(lat-OSM_ANCHOR.lat)*OSM_METER_Y)}
-function osmPixel(lon,lat){let w=osmWorld(lon,lat);return [w.x/METERS_PER_PIXEL+442,w.z/METERS_PER_PIXEL+386]}
-const ROAD_TYPES={secondary:14,secondary_link:10,tertiary:11,residential:7,service:6,track:4,footway:2.5,path:2.5};
-const buildingsGeo=await fetch('./data/existing-buildings.geojson').then(async r=>{
- if(!r.ok)throw Error('建物資料無法載入 HTTP '+r.status);
- return r.json();
-}).catch(error=>{
- console.error('Building data load failed:',error);
- document.getElementById('spatialQa').textContent='建物資料載入失敗：'+error.message+'（請檢查 GitHub Pages 的 data/ 檔案）';
- return {features:[],metadata:{load_error:String(error)}};
-});
-const buildings=buildingsGeo.features.map(f=>{const p=f.properties,[x,y]=osmPixel(...p.center_wgs84);return [p.name,x,y,p.width_m_estimate/METERS_PER_PIXEL,p.depth_m_estimate/METERS_PER_PIXEL,p.height_m_estimate,p.rotation_degrees_estimate,p.category,p.roof]});
-// SAT narrow-phase: rotated building footprint, required clearance in reference pixels.
-const footprint=[];
-function shapePoly(x,z,w,d,angle){const theta=-angle*Math.PI/180,c=Math.cos(theta),s=Math.sin(theta);return [[-w/2,-d/2],[w/2,-d/2],[w/2,d/2],[-w/2,d/2]].map(([u,v])=>[x+u*c+v*s,z-u*s+v*c]);}
-function collide(p,q,clear=0){for(const poly of [p,q])for(let i=0;i<poly.length;i++){const e=[poly[(i+1)%poly.length][0]-poly[i][0],poly[(i+1)%poly.length][1]-poly[i][1]],ax=[-e[1],e[0]];const u=p.map(v=>v[0]*ax[0]+v[1]*ax[1]),v=q.map(v=>v[0]*ax[0]+v[1]*ax[1]);const len=Math.hypot(...ax);if(Math.max(...u)+clear*len<=Math.min(...v)||Math.max(...v)+clear*len<=Math.min(...u))return false;}return true}
-function pointPolyDistance(x,z,poly){let inside=false,min=Infinity;for(let i=0,j=poly.length-1;i<poly.length;j=i++){let a=poly[j],b=poly[i];if(((a[1]>z)!==(b[1]>z))&& x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0])inside=!inside;let dx=b[0]-a[0],dy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[1])*dy)/(dx*dx+dy*dy)));min=Math.min(min,Math.hypot(x-(a[0]+t*dx),z-(a[1]+t*dy)));}return inside?0:min;}
-function clearOfStructures(x,z,pad=0){return footprint.every(f=>pointPolyDistance(x,z,f.poly)>f.pad+pad)}
-let rejected=[];
-const layout=buildings.filter(b=>{const poly=shapePoly(b[1],b[2],b[3],b[4],b[6]);const conflict=footprint.find(f=>collide(poly,f.poly,2));if(conflict){rejected.push(b[0]+' / '+conflict.name);return false}footprint.push({name:b[0],poly,pad:0});return true});
-function addBuilding([name,x,z,w,d,h,angle,type,roofStyle]){
- const grp=new THREE.Group();grp.position.set(px(x),0,py(z));grp.rotation.y=-angle*Math.PI/180;
- const walls=new THREE.Mesh(new THREE.BoxGeometry(w*METERS_PER_PIXEL,h,d*METERS_PER_PIXEL),mat(materials[type]));walls.position.y=h/2;walls.castShadow=true;walls.receiveShadow=true;grp.add(walls);
- if(roofStyle==='gable'){const rise=Math.min(5,d*.22);const geom=new THREE.BufferGeometry(),pos=[-w*.54,h,-d*.54,w*.54,h,-d*.54,0,h+rise,-d*.54,-w*.54,h,d*.54,w*.54,h,d*.54,0,h+rise,d*.54];geom.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geom.setIndex([0,1,2,3,5,4,0,2,5,0,5,3,1,4,5,1,5,2]);geom.computeVertexNormals();let r=new THREE.Mesh(geom,roofLight);r.material.side=THREE.DoubleSide;r.castShadow=true;grp.add(r)}
- else{let top=new THREE.Mesh(new THREE.BoxGeometry(w*METERS_PER_PIXEL+.8,.8,d*METERS_PER_PIXEL+.8),roof);top.position.y=h+.4;grp.add(top)}
- grp.userData={name,type,buildable:true,dimensions:'約 '+Math.round(w*METERS_PER_PIXEL)+' × '+Math.round(d*METERS_PER_PIXEL)+' × '+h+'（模型示意值）',detail:'位置依衛星截圖人工套繪；實際尺寸、高度待校正',h};root.add(grp);clickable.push(grp);buildingObjects.set(name,{group:grp,record:[name,x,z,w,d,h,angle,type,roofStyle]});
-}
-layout.forEach(addBuilding);
-function tank(name,x,z,r=5,h=13){let group=new THREE.Group();group.position.set(px(x),0,py(z));let cyl=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,20),mat(0xbccacc));cyl.position.y=h/2;cyl.castShadow=true;group.add(cyl);let top=new THREE.Mesh(new THREE.CylinderGeometry(r,r,.5,20),roofLight);top.position.y=h+.2;group.add(top);group.userData={name,type:'utility',dimensions:'直徑 '+2*r+' × 高 '+h+' m（示意）',detail:'儲槽位置依影像人工判讀，非實測',h};clickable.push(group);root.add(group)}
-// Discrete tank footprints are checked before placement; tanks never occupy a building.
-let num=1,skippedTanks=0;
-function safeTank(name,xOld,zOld,r,h){const [x,z]=[1.16*xOld+55,1.05*zOld+42];if(!clearOfStructures(x,z,r+2)){skippedTanks++;return;}footprint.push({name,poly:shapePoly(x,z,r*2,r*2,0),pad:0});tank(name,x,z,r*METERS_PER_PIXEL,h)}
-for(let row=0;row<4;row++)for(let col=0;col<5;col++)safeTank('東北儲槽 '+num++,510+col*11,68+row*11,3.5,11);
-num=1;for(let row=0;row<3;row++)for(let col=0;col<3;col++)safeTank('東側儲槽 '+num++,542+col*10,358+row*10,3.1,11);
-for(let i=0;i<3;i++)safeTank('南側附屬槽 '+(i+1),478+i*9,462,2.9,7);
-// V0.8 visitor-zone objects: add-only; legacy 19 industrial building volumes & tanks remain intact.
-// Approximate location is inferred from user's official visitor schematic, not surveyed coordinates.
-let visitorGeo={type:'FeatureCollection',features:[]};
-try{
- const response=await fetch('./data/visitor-zone.geojson');
- if(!response.ok)throw Error('HTTP '+response.status);
- visitorGeo=await response.json();
-}catch(err){console.error('visitor-zone.geojson:',err);document.getElementById('info').textContent='訪客區圖層未能載入：'+err.message;}
-const visitorColors={pavilion:0xe2d9c8,administration:0xb97565,museum:0xe1cec3};
-const visitorMat=(c)=>new THREE.MeshStandardMaterial({color:c,roughness:.85});
-const waterMat=new THREE.MeshStandardMaterial({color:0x70afbf,roughness:.3,metalness:.1,transparent:true,opacity:.9});
-const pavementMat=visitorMat(0xc8c9bb),parkMat=visitorMat(0xa1bf82),bottleMat=visitorMat(0xe8e4d1);
-function visitorBuilding(f){
- const p=f.properties,[x,z]=osmPixel(...p.center_wgs84),w=p.width_m_estimate,d=p.depth_m_estimate,h=p.height_m_estimate,angle=p.rotation_degrees_estimate||0;
- const grp=new THREE.Group();grp.position.set(px(x),0,py(z));grp.rotation.y=-angle*Math.PI/180;
- const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),visitorMat(visitorColors[p.style]||0xd1bbaa));m.position.y=h/2;m.castShadow=true;m.receiveShadow=true;grp.add(m);
- const top=new THREE.Mesh(new THREE.BoxGeometry(w+.4,.7,d+.4),roofLight);top.position.y=h+.35;top.castShadow=true;grp.add(top);
- grp.userData={name:p.name,h,type:'visitor_building',detail:'官方示意圖相對定位，尺寸與高度為暫定估值',dimensions:w+' × '+d+' × '+h+' m'};
- root.add(grp);clickable.push(grp);visitorObjs.push(grp);
- visitorOccupancy.push({name:p.name,x,z,rx:w/(2*METERS_PER_PIXEL)+3,rz:d/(2*METERS_PER_PIXEL)+3,angle});
-}
-function visitorLandmark(f){
- const p=f.properties,[x,z]=osmPixel(...p.center_wgs84),w=p.width_m_estimate,d=p.depth_m_estimate,h=p.height_m_estimate;
- const grp=new THREE.Group();grp.position.set(px(x),0,py(z));const cylinder=(r,hh,material,y)=>{let m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,hh,48),material);m.position.y=y;grp.add(m);return m};
- if(p.category==='fountain'){
-  const r=w/2;cylinder(r,.24,pavementMat,.14);cylinder(r*.7,.17,waterMat,.31);cylinder(r*.28,.5,pavementMat,.52);
- }else if(p.category==='spring'){
-  cylinder(w*.48,.35,pavementMat,.22);cylinder(w*.36,.13,waterMat,.48);
-  const arc=new THREE.Mesh(new THREE.TorusGeometry(w*.35,.5,7,64,Math.PI),pavementMat);arc.rotation.x=-Math.PI/2;arc.position.y=.7;grp.add(arc);
- }else if(p.category==='bottle_park'){
-  const grass=new THREE.Mesh(new THREE.CylinderGeometry(w*.47,w*.47,1.2,48),parkMat);grass.scale.z=d/w;grass.position.y=.6;grp.add(grass);
- }else if(p.category==='bottle_landmark'){
-  const base=new THREE.Mesh(new THREE.BoxGeometry(w,.6,d),pavementMat);base.position.y=.3;grp.add(base);
-  for(const side of [-1,1]){const bottle=new THREE.Group();bottle.position.x=side*w*.23;
-   for(const [rad,hh,yy] of [[2.2,h*.55,h*.275],[1.4,h*.17,h*.635],[.8,h*.22,h*.83]]){let m=new THREE.Mesh(new THREE.CylinderGeometry(rad,rad,hh,20),bottleMat);m.position.y=yy;bottle.add(m)}
-   const cap=new THREE.Mesh(new THREE.CylinderGeometry(.92,.92,.6,20),mark);cap.position.y=h*.95;bottle.add(cap);grp.add(bottle)}
- }
- grp.userData={name:p.name,h,type:p.category,detail:'官方配置圖景觀點位；實景造型留待下一階段',dimensions:'示意寬 '+w+' m'};
- root.add(grp);clickable.push(grp);visitorObjs.push(grp);
- visitorOccupancy.push({name:p.name,x,z,rx:w/(2*METERS_PER_PIXEL)+4,rz:d/(2*METERS_PER_PIXEL)+4,angle:0});
-}
-for(const feature of visitorGeo.features||[]){
- if(feature.properties?.category==='visitor_building')visitorBuilding(feature);
- else if(feature.geometry?.type==='Point')visitorLandmark(feature);
-}
-function visitorPlantAllowed(x,y){
- if(!clearOfStructures(x,y,7)||nearestRoadDistance(x,y)<6)return false;
- return visitorOccupancy.every(o=>{
-  const dx=x-o.x,dz=y-o.z,rot=-o.angle*Math.PI/180,u=dx*Math.cos(rot)+dz*Math.sin(rot),v=-dx*Math.sin(rot)+dz*Math.cos(rot);
-  return Math.abs(u)>o.rx+4||Math.abs(v)>o.rz+4;
- });
-}
-function plantVisitorTree(x,z,scale=1){
- if(!visitorPlantAllowed(x,z))return;
- const obj=new THREE.Group();obj.position.set(px(x),0,py(z));
- const stem=new THREE.Mesh(new THREE.CylinderGeometry(.28*scale,.45*scale,3*scale,7),mat(0x786453));stem.position.y=1.5*scale;obj.add(stem);
- const leaves=new THREE.Mesh(new THREE.IcosahedronGeometry(2.5*scale,1),visitorMat(0x6c9869));leaves.position.y=5.2*scale;obj.add(leaves);
- root.add(obj);visitorTreeObjs.push(obj);
-}
-function makeVisitorTrees(){
- if(visitorTreeObjs.length)return;
- // Paired promenade rows near the welcome fountain and plaza. Skip roads and landmarks.
- const line=(a,b,n,t=.9)=>{for(let i=0;i<n;i++){const q=(i+.5)/n;plantVisitorTree(a[0]+(b[0]-a[0])*q,a[1]+(b[1]-a[1])*q,t)}};
- line([372,584],[374,657],10);line([458,580],[459,654],10);
- line([332,531],[373,509],7,.85);
- line([471,532],[509,539],6,.85);
- line([375,678],[475,671],12,.8);
- line([684,493],[729,515],7,.8);
-}
-// Smooth continuous ribbon mesh replaces the original row of box geometries.
-// Curve sampling uses Catmull–Rom interpolation and a normal-based continuous ribbon.
-// Adjacent roads can meet at intersections; anti-z-fighting via consistent elevation.
-const roadClearance=.75;
-function ribbonRoad(entry,index){
- const curve=new THREE.CatmullRomCurve3(entry.pts.map(([x,y])=>new THREE.Vector3(px(x),0,py(y))),false,'centripetal',.3);
- const steps=Math.max(12,entry.pts.length*5);
- const vertices=[],indices=[],uv=[],samplePositions=[];
- for(let i=0;i<=steps;i++){
-  const t=i/steps,p=curve.getPoint(t),tan=curve.getTangent(t).normalize(),nx=-tan.z,nz=tan.x;
-  const half=entry.width*.5;
-  vertices.push(p.x+nx*half,.085+index*.001,p.z+nz*half,p.x-nx*half,.085+index*.001,p.z-nz*half);
-  uv.push(0,t*18,1,t*18);samplePositions.push(p);
- }
- for(let i=0;i<steps;i++){
-  const a=i*2,b=(i+1)*2,p=samplePositions[i].clone().add(samplePositions[i+1]).multiplyScalar(.5);
-  const xx=p.x/METERS_PER_PIXEL+442,yy=p.z/METERS_PER_PIXEL+386;
-  // Keep georeferenced OSM roads continuous; detect potential overlaps instead of clipping real data.
-  indices.push(a,b,a+1,b,b+1,a+1);
- }
- const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geo.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));geo.setIndex(indices);geo.computeVertexNormals();
- const mesh=new THREE.Mesh(geo,roadMat);mesh.receiveShadow=true;mesh.userData.roadName=entry.name;root.add(mesh);roadObjs.push(mesh);
-}
-// The source file is derived from the user's Overpass Turbo export, with OSM attribution.
-async function loadOsmRoads(){
+:root{color-scheme:light;font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;color:#24343b;background:#f2f5f3}*{box-sizing:border-box}body{margin:0}header{padding:22px max(18px,calc((100vw - 1500px)/2));background:#fff;border-bottom:1px solid #dfe6e2}header h1{margin:4px 0;font-size:clamp(22px,2.3vw,31px)}header p{margin:4px 0;color:#60716b;font-size:13px}.kicker{font-size:11px;letter-spacing:2px;font-weight:800;color:#277566}main{max-width:1530px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 288px;gap:14px;padding:16px}.panel{background:white;border:1px solid #dce6e1;border-radius:14px;overflow:hidden}.toolbar{padding:10px;display:flex;flex-wrap:wrap;align-items:center;gap:7px;border-bottom:1px solid #e7ece9}button,.link{font:inherit;font-size:13px;cursor:pointer;border:1px solid #d7e1db;border-radius:8px;background:#fff;padding:8px 11px;color:#294139;text-decoration:none}button:hover,.link:hover{background:#ecf6ee}button.primary{background:#26715f;color:white}#view{height:min(74vh,840px);min-height:470px;background:#fff;position:relative;overflow:hidden;cursor:grab;touch-action:none}#view.dragging{cursor:grabbing}#view svg{width:100%;height:100%;display:block;user-select:none}#notice{position:absolute;left:12px;bottom:11px;background:#fffffff0;border:1px solid #e1e9e3;border-radius:9px;padding:9px;color:#4e6157;font-size:12px;pointer-events:none;max-width:80%}aside{padding:18px}h2{font-size:17px;margin:0 0 15px}h3{font-size:13px;margin:22px 0 9px}.toggle{display:flex;gap:8px;align-items:center;padding:6px 0;font-size:14px;cursor:pointer}.toggle input{accent-color:#287663}.legend{display:flex;gap:9px;align-items:center;margin:9px 0;font-size:13px}.swatch{width:18px;height:16px;border:1px solid #d0ddd1;border-radius:3px;flex-shrink:0}.status{font-size:13px;line-height:1.8;padding:12px;background:#f1f6f2;border-radius:9px}.caution{font-size:12px;line-height:1.8;color:#705928;background:#fff8e8;padding:12px;border-radius:8px}footer{max-width:1530px;margin:auto;padding:4px 18px 28px;font-size:12px;color:#81918a}
+@media(max-width:850px){main{display:flex;flex-direction:column;padding:8px}#view{height:60vh;min-height:350px}aside{padding:14px}.toolbar button{font-size:12px;padding:7px}.legend{display:inline-flex;margin-right:12px}}
+</style></head><body>
+<header><div class="kicker">KKL BIOENERGY · 2D SITE MASTER PLAN</div><h1>金門酒廠・金寧廠｜平面配置重建</h1><p>V0.8-R · 以最新官方示意圖重新繪製 · 本版不使用既有 3D 量體位置</p></header>
+<main><section class="panel"><div class="toolbar"><button id="fit" class="primary">完整配置</button><button id="zoomIn">＋ 放大</button><button id="zoomOut">－ 縮小</button><button id="north">北向朝上</button><a class="link" href="./plan/kinmen-jinning-2d.svg" download="KKL-Jinning-2D-plan.svg">下載 SVG</a></div><div id="view"><div id="notice">正在載入 2D 平面配置圖…</div></div></section>
+<aside class="panel"><h2>配置圖層</h2>
+<label class="toggle"><input type="checkbox" data-layer="roads" checked>道路</label>
+<label class="toggle"><input type="checkbox" data-layer="buildings" checked>建築</label>
+<label class="toggle"><input type="checkbox" data-layer="tanks" checked>桶槽</label>
+<label class="toggle"><input type="checkbox" data-layer="trees" checked>路樹</label>
+<label class="toggle"><input type="checkbox" data-layer="annotations">景點文字標籤</label>
+<h3>指定圖例</h3>
+<div class="legend"><span class="swatch" style="background:#FFFFFE"></span>白色方形建築</div>
+<div class="legend"><span class="swatch" style="background:#BA908C"></span>棕色方形建築</div>
+<div class="legend"><span class="swatch" style="background:#FFFFFE;border-radius:50%"></span>白色圓形桶槽</div>
+<div class="legend"><span class="swatch" style="background:#9DBA8A;border-radius:50%"></span>圓形路樹</div>
+<div class="legend"><span class="swatch" style="background:#EDF2EE"></span>道路</div>
+<h3>物件資訊</h3><div id="selected" class="status">點選建築或桶槽可查看物件編號與名稱。</div>
+<h3>目前繪圖範圍</h3><div class="status">建築 18 個矩形區塊<br>桶槽 33 個圓形符號<br>道路與步道 21 條<br>路樹約 479 株（示意）</div>
+<h3>比例資訊</h3><div class="caution">參考範圍：約 282,716.95 m²，周長約 2.41 km（來自先前地圖量測）。本圖依示意圖外形與相對位置重繪，未做地理配準，因此不提供可靠工程距離與單棟尺寸；基地示意範圍亦不應視為法定地籍線。</div></aside></main>
+<footer>KKL_bioenergy · 2D SVG vector plan · 顏色依使用者指定 · 舊 3D 原型保留於 GitHub Commit History</footer>
+<script>
+(async function(){
+ const view=document.getElementById('view'),notice=document.getElementById('notice'),selected=document.getElementById('selected');
  try{
-  const res=await fetch('./data/roads-osm.geojson');
-  if(!res.ok)throw Error('HTTP '+res.status);
-  const json=await res.json();
-  let n=0, skipped=0;
-  for(const f of json.features){
-   if(f.geometry?.type!=='LineString')continue;
-   const points=f.geometry.coordinates.map(([lon,lat])=>osmPixel(lon,lat));
-   // Skip far-away geometry, and exclude pedestrian paths from asphalt rendering.
-   const type=f.properties.highway;
-   if(!ROAD_TYPES[type] || type==='footway' || type==='path')continue;
-   if(!points.some(([x,y])=>x>20&&x<890&&y>-60&&y<810))continue;
-   const entry={name:f.properties.name||('OSM '+type),width:ROAD_TYPES[type],pts:points,id:f.properties.id};
-   roadsData.push(entry);
-   ribbonRoad(entry,n++);
-  }
-  makeTrees();
-  makeVisitorTrees();
-  showSpatialDiagnostics();
-  if(!document.getElementById('roads').checked)roadObjs.forEach(o=>o.visible=false);
-  document.getElementById('info').textContent='OSM 道路圖層已載入：'+n+' 條道路線段（以原始 GPS 座標轉換）。建築位置仍待精確配準。';
- }catch(error){
-  console.error('OSM GeoJSON loading failed:',error);
-  document.getElementById('info').textContent='道路圖層載入失敗：'+error.message+'。請確認網站資料檔與網路連線。';
-  makeTrees();
-  showSpatialDiagnostics();
- }
-}
-void loadOsmRoads();
-// Spatial QA checks full line segments, not only OSM vertices.
-function intersectsSegments(a,b,c,d){
- const cross=(p,q,r)=>(q[0]-p[0])*(r[1]-p[1])-(q[1]-p[1])*(r[0]-p[0]);
- const A=cross(a,b,c),B=cross(a,b,d),C=cross(c,d,a),D=cross(c,d,b);
- return A*B<0&&C*D<0;
-}
-function pointToSegment(x,y,a,b){
- const dx=b[0]-a[0],dy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(y-a[1])*dy)/(dx*dx+dy*dy||1)));
- return Math.hypot(x-a[0]-t*dx,y-a[1]-t*dy);
-}
-function segmentPolyDistance(a,b,poly){
- if(pointPolyDistance(...a,poly)===0||pointPolyDistance(...b,poly)===0)return 0;
- let best=Math.min(pointPolyDistance(...a,poly),pointPolyDistance(...b,poly));
- for(let j=0;j<poly.length;j++){
-  const c=poly[j],d=poly[(j+1)%poly.length];
-  if(intersectsSegments(a,b,c,d))return 0;
-  best=Math.min(best,pointToSegment(...c,a,b),pointToSegment(...d,a,b),pointToSegment(...a,c,d),pointToSegment(...b,c,d));
- }
- return best;
-}
-let latestFlags=new Set();
-function showSpatialDiagnostics(){
- const flagged=new Set();
- for(const [name,obj] of buildingObjects){
-  const a=obj.record, poly=shapePoly(a[1],a[2],a[3],a[4],a[6]);
-  for(const road of roadsData){
-   const limit=road.width/(2*METERS_PER_PIXEL)+2;
-   let found=false;
-   for(let i=1;i<road.pts.length;i++){
-    if(segmentPolyDistance(road.pts[i-1],road.pts[i],poly)<limit){found=true;break}
-   }
-   if(found){flagged.add(name);break}
-  }
- }
- latestFlags=flagged;
- const status=document.getElementById('spatialQa');
- if(status)status.textContent='建物 '+buildingObjects.size+' 棟｜OSM 道路 '+roadsData.length+' 段｜疑似重疊 '+flagged.size+' 棟（僅供校正，非實際違規判定）';
- for(const [name,obj] of buildingObjects){const mesh=obj.group.children[0];if(mesh.material?.emissive)mesh.material.emissive.setHex(flagged.has(name)?0x9d2e21:0x000000);}
- console.info('Buildings flagged for review:',[...flagged]);
-}
-function nearestRoadDistance(x,z){let d=Infinity;for(const road of roadsData){for(let k=1;k<road.pts.length;k++){let a=road.pts[k-1],b=road.pts[k],vx=b[0]-a[0],vy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*vx+(z-a[1])*vy)/(vx*vx+vy*vy||1)));d=Math.min(d,Math.hypot(x-a[0]-t*vx,z-a[1]-t*vy)-road.width/(2*METERS_PER_PIXEL))}}return d}
-function tree(x,z,size=1){
- if(!clearOfStructures(x,z,5)||nearestRoadDistance(x,z)<7)return;
- const g=new THREE.Group();g.position.set(px(x),0,py(z));
- const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.3*size,.45*size,2*size,5),mat(0x6a7659));trunk.position.y=size;g.add(trunk);
- const crown=new THREE.Mesh(new THREE.IcosahedronGeometry(2.3*size,1),forest);crown.position.y=4.1*size;g.add(crown);root.add(g);treeObjs.push(g);
-}
-function makeTrees(){if(treeObjs.length)return;
- for(let i=0;i<52;i++){let t=i/51;tree(95+230*t,475+3*Math.sin(t*Math.PI),.75);tree(30+340*t,683+10*Math.sin(t*Math.PI),.75)}
- for(let i=0;i<48;i++){let t=i/47;tree(730+64*t,70+430*t,.68)}
- for(let i=0;i<42;i++){let t=i/41;tree(365+290*t,48+18*Math.sin(t*Math.PI),.66)}
-}
-function makeLandmark(name,x,z){let grp=new THREE.Group();grp.position.set(px(x),0,py(z));let cone=new THREE.Mesh(new THREE.CylinderGeometry(1.2,3.3,13,16),mark);cone.position.y=6.5;grp.add(cone);grp.userData={name,type:'landmark',dimensions:'示意地標',detail:'僅作為方位辨識，外觀尚待補充',h:13};root.add(grp);clickable.push(grp)}
-// Entry and intersection are represented by roads only; no solid objects are placed on carriageways.
-const legend=[['production','主要廠房'],['storage','儲酒／倉儲（待核對）'],['admin','入口與行政'],['utility','槽體及公用設施'],['landmark','方位地標']];
-document.getElementById('legend').innerHTML=legend.map(([k,t])=>'<div class="legend"><span class="swatch" style="background:#'+materials[k].toString(16)+'"></span>'+t+'</div>').join('');
-if(rejected.length)console.warn('Rejected overlapping buildings:',rejected);if(skippedTanks)console.info('Skipped tanks overlapping structures:',skippedTanks);
-const labelBox=document.getElementById('labels'),nodes=clickable.map(o=>{const n=document.createElement('div');n.className='pin';n.textContent=o.userData.name;labelBox.append(n);return n});let showLabels=false;
-function updateLabels(){let rect=renderer.domElement.getBoundingClientRect();clickable.forEach((o,i)=>{const p=o.position.clone();p.y=o.userData.h+7;p.project(camera);const e=nodes[i];e.style.left=((p.x+1)/2*rect.width)+'px';e.style.top=((1-p.y)/2*rect.height)+'px';e.style.display=showLabels&&p.z<1?'block':'none'})}
-function setCamera(top){camera.position.set(top?0:800,top?1250:930,top?.01:850);controls.target.set(0,0,0);controls.update();document.getElementById('iso').classList.toggle('on',!top);document.getElementById('top').classList.toggle('on',top)}
-setCamera(false);
-document.getElementById('iso').onclick=()=>setCamera(false);document.getElementById('top').onclick=()=>setCamera(true);document.getElementById('reset').onclick=()=>setCamera(false);
-document.getElementById('labelsBtn').classList.remove('on');document.getElementById('labelsBtn').onclick=e=>{showLabels=!showLabels;e.currentTarget.classList.toggle('on',showLabels)};
-document.getElementById('roads').onchange=e=>roadObjs.forEach(o=>o.visible=e.target.checked);document.getElementById('trees').onchange=e=>treeObjs.forEach(o=>o.visible=e.target.checked);
-document.getElementById('visitor').onchange=e=>visitorObjs.forEach(o=>o.visible=e.target.checked);
-document.getElementById('visitorTrees').onchange=e=>visitorTreeObjs.forEach(o=>o.visible=e.target.checked);
-// In-browser footprint adjustment, provenance kept separate from authoritative OSM roads.
-const picker=document.getElementById('buildingPicker');
-for(const name of buildingObjects.keys()){const opt=document.createElement('option');opt.value=name;opt.textContent=name;picker.add(opt)}
-const east=document.getElementById('shiftEast'),north=document.getElementById('shiftNorth'),angle=document.getElementById('shiftAngle'),editStatus=document.getElementById('editStatus');
-const history=[];
-function pickBuilding(name){
- if(!buildingObjects.has(name))return;
- picker.value=name;
- const obj=buildingObjects.get(name).record;
- document.getElementById('info').textContent=name+'：目前暫定中心位置 '+obj[1].toFixed(1)+', '+obj[2].toFixed(1)+'（內部像素座標）；可在右側輸入相對位移。';
-}
-picker.addEventListener('change',()=>pickBuilding(picker.value));
-if(buildings.length){picker.value=buildings[0][0];pickBuilding(picker.value);}else{picker.disabled=true;editStatus.textContent='尚未載入任何建築；請確認資料檔部署成功。';}
-function syncGeometry(name){
- const b=buildingObjects.get(name);if(!b)return;
- const rec=b.record;b.group.position.set(px(rec[1]),0,py(rec[2]));b.group.rotation.y=-rec[6]*Math.PI/180;
- const prop=buildingsGeo.features.find(f=>f.properties.name===name)?.properties;
- if(!prop)return;
- const x=rec[1],y=rec[2],w=rec[3],d=rec[4],rotation=rec[6];
- const poly=shapePoly(x,y,w,d,rotation);
- const toGps=([xx,yy])=>[+(OSM_ANCHOR.lon+(xx-OSM_ANCHOR.x)*METERS_PER_PIXEL/OSM_METER_X).toFixed(8),+(OSM_ANCHOR.lat-(yy-OSM_ANCHOR.y)*METERS_PER_PIXEL/OSM_METER_Y).toFixed(8)];
- const feat=buildingsGeo.features.find(f=>f.properties.name===name);
- feat.geometry.coordinates=[[...poly.map(toGps),toGps(poly[0])]];
- feat.properties.center_wgs84=toGps([x,y]);
- feat.properties.rotation_degrees_estimate=rotation;
- feat.properties.adjusted_in_browser=true;
- feat.properties.accuracy='user_adjusted_unverified';
-}
-document.getElementById('applyAdjustment').onclick=()=>{
- const name=picker.value,b=buildingObjects.get(name),dx=Number(east.value),dy=Number(north.value),da=Number(angle.value);
- if(!b||![dx,dy,da].every(Number.isFinite)){editStatus.textContent='請輸入有效的數字。';return}
- if(Math.abs(dx)>200||Math.abs(dy)>200||Math.abs(da)>180){editStatus.textContent='單次位移不得超過 ±200 m、旋轉不得超過 ±180°。';return}
- history.push({name,record:b.record.slice()});
- b.record[1]+=dx/METERS_PER_PIXEL;b.record[2]-=dy/METERS_PER_PIXEL;b.record[6]+=da;
- syncGeometry(name);showSpatialDiagnostics();east.value='0';north.value='0';angle.value='0';
- editStatus.textContent=name+' 已在目前頁面調整；請檢查紅色重疊提示，完成後匯出 GeoJSON。';
-};
-document.getElementById('undoAdjustment').onclick=()=>{
- const last=history.pop();if(!last){editStatus.textContent='目前沒有可復原的調整。';return}
- buildingObjects.get(last.name).record=last.record;syncGeometry(last.name);showSpatialDiagnostics();pickBuilding(last.name);editStatus.textContent='已復原 '+last.name+' 的上一步調整。';
-};
-document.getElementById('exportBuildings').onclick=()=>{
- const json=JSON.parse(JSON.stringify(buildingsGeo));
- json.metadata={...json.metadata,edited_in_browser:true,accuracy_notice:'Manual approximate position edits, not certified survey',exported_from:'KKL Bioenergy V0.7'};
- const blob=new Blob([JSON.stringify(json,null,2)],{type:'application/geo+json'});
- const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='existing-buildings-v0.7-reviewed.geojson';a.click();
- setTimeout(()=>URL.revokeObjectURL(url),1000);
-};
-const raycaster=new THREE.Raycaster(),mouse=new THREE.Vector2();
-renderer.domElement.addEventListener('click',e=>{let r=renderer.domElement.getBoundingClientRect();mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);raycaster.setFromCamera(mouse,camera);let hit=raycaster.intersectObjects(clickable,true)[0];if(!hit)return;let p=hit.object;while(p.parent&&!p.userData.name)p=p.parent;if(p.userData.name){document.getElementById('info').textContent=p.userData.name+'｜'+p.userData.dimensions+'｜'+p.userData.detail;if(p.userData.buildable)pickBuilding(p.userData.name)}});
-document.getElementById('screenshot').onclick=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.href=renderer.domElement.toDataURL('image/png');a.download='KKL-Jinning-V0.8-visitor-zone.png';a.click()};
-function resize(){const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h)}window.addEventListener('resize',resize);resize();
-function render(){requestAnimationFrame(render);controls.update();renderer.render(scene,camera);updateLabels()}render();
+  const resp=await fetch('./plan/kinmen-jinning-2d.svg',{cache:'no-cache'});if(!resp.ok)throw new Error('SVG HTTP '+resp.status);
+  const raw=await resp.text();const parsed=new DOMParser().parseFromString(raw,'image/svg+xml');
+  if(parsed.querySelector('parsererror'))throw new Error('SVG 格式錯誤');
+  const svg=document.importNode(parsed.documentElement,true);svg.setAttribute('id','planSvg');svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+  view.prepend(svg);
+  let vb={x:0,y:0,w:887,h:475};
+  function apply(){svg.setAttribute('viewBox',[vb.x,vb.y,vb.w,vb.h].join(' '))}
+  function fit(){vb={x:0,y:0,w:887,h:475};apply()}
+  function zoom(factor){let cx=vb.x+vb.w/2,cy=vb.y+vb.h/2;vb.w=Math.max(90,Math.min(1400,vb.w*factor));vb.h=vb.w*475/887;vb.x=cx-vb.w/2;vb.y=cy-vb.h/2;apply()}
+  document.getElementById('fit').onclick=fit;document.getElementById('north').onclick=fit;document.getElementById('zoomIn').onclick=()=>zoom(.8);document.getElementById('zoomOut').onclick=()=>zoom(1.25);
+  document.querySelectorAll('input[data-layer]').forEach(input=>input.onchange=()=>{const layer=svg.querySelector('#'+input.dataset.layer);if(layer)layer.style.display=input.checked?'':'none'});
+  let down=null;
+  view.addEventListener('pointerdown',e=>{if(e.button!==0)return;down={x:e.clientX,y:e.clientY,start:{...vb}};view.classList.add('dragging');view.setPointerCapture(e.pointerId)});
+  view.addEventListener('pointermove',e=>{if(!down)return;const r=svg.getBoundingClientRect();const scale=Math.min(r.width/887,r.height/475);vb.x=down.start.x-(e.clientX-down.x)*vb.w/(887*scale);vb.y=down.start.y-(e.clientY-down.y)*vb.h/(475*scale);apply()});
+  function done(){down=null;view.classList.remove('dragging')}view.addEventListener('pointerup',done);view.addEventListener('pointercancel',done);
+  view.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.1:1/1.1)},{passive:false});
+  svg.addEventListener('click',e=>{let element=e.target.closest('[data-name]');if(!element||!svg.contains(element))return;selected.textContent=(element.id||'')+'｜'+element.getAttribute('data-name')+'（圖面位置及尺寸僅示意）'});
+  notice.textContent='拖曳平移 · 滾輪縮放 · 可開關圖層 · 向量 SVG 可編輯';
+ }catch(error){notice.textContent='圖面載入失敗：'+error.message;console.error(error);}
+})();
 </script></body></html>
