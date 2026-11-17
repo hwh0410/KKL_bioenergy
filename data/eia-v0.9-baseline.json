@@ -1,0 +1,199 @@
+{
+  "schemaVersion": "0.9.0",
+  "site": "金門酒廠金寧廠",
+  "source": {
+    "document": "金寧三廠整廠系統新建工程環境影響說明書 第四章 開發行為之目的及其內容",
+    "file": "C04.PDF",
+    "historical": "約民國95–97年規劃時點，非2026現況竣工圖",
+    "pageReferences": {
+      "existingSitePlan": "PDF p.7 / 圖4.2.2-1",
+      "developmentPlan": "PDF p.8 / 圖4.2.2-2",
+      "landUseTable": "PDF p.11 / 表4.2.2-1",
+      "roads": "PDF p.14 / 4.2.2道路工程",
+      "drainage": "PDF p.15 / 圖4.2.2-7"
+    }
+  },
+  "area": {
+    "siteTotalM2": 204820,
+    "expansionM2_approx": 87000,
+    "insideExistingSiteM2_approx": 33000,
+    "newNorthernLandM2_approx": 54000,
+    "measuredGoogleMapsAreaExcludedM2": 282716.95,
+    "warning": "GIS 量測範圍可能與環評基地範圍不同，不能用以校準本版本。"
+  },
+  "zones": [
+    {
+      "code": "A",
+      "name": "新增廠區用地",
+      "color": "green",
+      "basis": "圖4.2.2-2"
+    },
+    {
+      "code": "B",
+      "name": "既有廠區用地",
+      "color": "gray",
+      "basis": "圖4.2.2-2"
+    },
+    {
+      "code": "C",
+      "name": "廠內擴建用地",
+      "color": "red_hatch",
+      "basis": "圖4.2.2-2"
+    }
+  ],
+  "roads": {
+    "ringRoadWidthM": 5,
+    "eastWestNewRoadWidthM": 10,
+    "northSouthNewRoadWidthM": 8.5,
+    "northeastGate": "盤果路側，貨物及物料車輛",
+    "southGate": "桃園路側，員工與行政人員"
+  },
+  "landUse": {
+    "unit": "m2",
+    "meaning": "土地使用分區面積，不等於實際建築footprint",
+    "entries": [
+      {
+        "id": "L01",
+        "name": "製麴一廠",
+        "areaM2": 1770,
+        "phase": "existing"
+      },
+      {
+        "id": "L02",
+        "name": "製麴二廠",
+        "areaM2": 2660,
+        "phase": "existing"
+      },
+      {
+        "id": "L03",
+        "name": "製麴三廠",
+        "areaM2": 2760,
+        "phase": "planned-expansion"
+      },
+      {
+        "id": "L04",
+        "name": "製酒一廠",
+        "areaM2": 6860,
+        "phase": "existing"
+      },
+      {
+        "id": "L05",
+        "name": "製酒二廠",
+        "areaM2": 6780,
+        "phase": "existing"
+      },
+      {
+        "id": "L06",
+        "name": "製酒三廠",
+        "areaM2": 7200,
+        "phase": "planned-expansion"
+      },
+      {
+        "id": "L07",
+        "name": "行政大樓",
+        "areaM2": 1000,
+        "phase": "existing"
+      },
+      {
+        "id": "L08",
+        "name": "福利大樓及員工活動中心",
+        "areaM2": 850,
+        "phase": "existing"
+      },
+      {
+        "id": "L09",
+        "name": "綜合大樓",
+        "areaM2": 3200,
+        "phase": "existing"
+      },
+      {
+        "id": "L10",
+        "name": "金寧廠辦公室",
+        "areaM2": 2880,
+        "phase": "existing"
+      },
+      {
+        "id": "L11",
+        "name": "鍋爐室",
+        "areaM2": 450,
+        "phase": "existing"
+      },
+      {
+        "id": "L12",
+        "name": "酒瓶廠及研發中心",
+        "areaM2": 2850,
+        "phase": "existing"
+      },
+      {
+        "id": "L13",
+        "name": "儲酒大樓",
+        "areaM2": 5660,
+        "phase": "planned-expansion"
+      },
+      {
+        "id": "L14",
+        "name": "研發中心",
+        "areaM2": 7110,
+        "phase": "existing-or-undetermined"
+      },
+      {
+        "id": "L15",
+        "name": "包裝工廠",
+        "areaM2": 3600,
+        "phase": "planned-relocation"
+      },
+      {
+        "id": "L16",
+        "name": "成品倉儲區",
+        "areaM2": 4680,
+        "phase": "planned-expansion"
+      },
+      {
+        "id": "L17",
+        "name": "廢水處理一、二廠",
+        "areaM2": 890,
+        "phase": "existing"
+      },
+      {
+        "id": "L18",
+        "name": "廢水處理三廠",
+        "areaM2": 2400,
+        "phase": "planned-expansion"
+      },
+      {
+        "id": "L19",
+        "name": "高粱筒倉儲運區",
+        "areaM2": 4980,
+        "phase": "planned-expansion"
+      },
+      {
+        "id": "L20",
+        "name": "酒糟貯存場",
+        "areaM2": 2500,
+        "phase": "planned-expansion"
+      },
+      {
+        "id": "L21",
+        "name": "其他設施、綠地及道路",
+        "areaM2": 133740,
+        "phase": "mixed"
+      }
+    ],
+    "sumM2": 204820
+  },
+  "geometryStatus": {
+    "coordinates": null,
+    "footprintsDigitized": false,
+    "roadCenterlinesDigitized": false,
+    "parcelBoundaryDigitized": false,
+    "controlPoints": [],
+    "engineeringAccuracy": false
+  },
+  "nextActions": [
+    "以PDF頁7圖4.2.2-1數位化既有廠區底圖",
+    "以PDF頁8圖4.2.2-2數位化A/B/C區界",
+    "依圖內標尺校正尺寸，且標記圖像經掃描縮放導致之尺度誤差",
+    "由PDF表4.2.2-1將設施名稱與土地使用分區相互關聯",
+    "以現況衛星圖獨立核對竣工與變動後才建立2026現況圖層"
+  ]
+}
