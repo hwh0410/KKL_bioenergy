@@ -28,12 +28,16 @@ jobs:
           mkdir -p _site
           cp index.html _site/index.html
           test -s plan/kinmen-jinning-2d.svg
+          test -s plan/eia-existing-v0.9.svg
+          test -s plan/eia-expansion-v0.9.svg
           mkdir -p _site/plan
-          cp plan/kinmen-jinning-2d.svg _site/plan/kinmen-jinning-2d.svg
+          cp plan/*.svg _site/plan/
           python3 - <<'PY'
           import xml.etree.ElementTree as ET
-          ET.parse('_site/plan/kinmen-jinning-2d.svg')
-          print('SVG XML validated')
+          from pathlib import Path
+          for p in sorted(Path('_site/plan').glob('*.svg')):
+              ET.parse(p)
+              print('Validated SVG:',p.name)
           PY
           test -s data/existing-buildings.geojson
           test -s data/roads-osm.geojson
