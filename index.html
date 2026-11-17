@@ -32,7 +32,8 @@ const sun=new THREE.DirectionalLight(0xffffff,2.5);sun.position.set(-150,400,240
 const materials={production:0x91abb5,storage:0xc2b3a0,admin:0xe4d3b4,utility:0x9fbbce,landmark:0xc7b773};
 const mat=(c)=>new THREE.MeshStandardMaterial({color:c,roughness:.82,metalness:.03});
 const roof=mat(0x7f9397),roofLight=mat(0xbfcacd),roadMat=mat(0xaeb8b5),forest=mat(0x82a985),lawn=mat(0xb5caa6),mark=mat(0xe8d6a0);
-const root=new THREE.Group();scene.add(root),clickable=[],roadObjs=[],treeObjs=[];
+const root=new THREE.Group();scene.add(root);
+const clickable=[], roadObjs=[], treeObjs=[];
 const px=(x)=>(x-343)*1.08, py=(y)=>(y-354)*1.08;
 function groundPolygon(coords,m,y=0){let s=new THREE.Shape();coords.forEach(([x,z],i)=>i?s.lineTo(px(x),-py(z)):s.moveTo(px(x),-py(z)));s.closePath();let mesh=new THREE.Mesh(new THREE.ShapeGeometry(s),m);mesh.rotation.x=-Math.PI/2;mesh.position.y=y;root.add(mesh);return mesh}
 let ground=new THREE.Mesh(new THREE.PlaneGeometry(880,870),forest);ground.rotation.x=-Math.PI/2;ground.position.y=-.25;ground.receiveShadow=true;root.add(ground);
