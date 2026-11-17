@@ -27,6 +27,14 @@ jobs:
           grep -q '<html' index.html
           mkdir -p _site
           cp index.html _site/index.html
+          test -s plan/kinmen-jinning-2d.svg
+          mkdir -p _site/plan
+          cp plan/kinmen-jinning-2d.svg _site/plan/kinmen-jinning-2d.svg
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          ET.parse('_site/plan/kinmen-jinning-2d.svg')
+          print('SVG XML validated')
+          PY
           test -s data/existing-buildings.geojson
           test -s data/roads-osm.geojson
           test -s data/visitor-zone.geojson
