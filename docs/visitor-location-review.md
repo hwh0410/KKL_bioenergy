@@ -18,4 +18,4 @@ python analysis/visitor_position_review.py \
 
 `DISPLAY_X DISPLAY_Y` must be independently reviewed in the rotated page-display coordinate system. Do not use the photographs or historic EIA site area to derive scale. The current page scale and source-control evidence are documented in the private QA report.
 
-The user identified the S-shaped feature as the 曲水流觴 walkway. Keep it classified as pedestrian circulation; do not trace it as a water contour. Facility photo labels are a semantic crosswalk only and do not prove footprint boundaries. In particular, one supplied facade image says 福利大樓 while the user labeled it 廠史館; resolve that identity against the user before promoting a semantic label.
+The user identified the S-shaped feature as the 曲水流觴 walkway. Keep it classified as pedestrian circulation; do not trace it as a water contour. Facility photo labels are a semantic crosswalk only and do not prove footprint boundaries. The user confirmed that the official site's 廠史館 marker and the plan's 酒史館 label refer to the same location. Use that image only for semantic and topological correspondence, not metric scale or a coordinate transform.

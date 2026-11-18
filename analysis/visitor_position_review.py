@@ -197,7 +197,7 @@ def main() -> None:
                          outline=(*rgb, 245), width=4)
         else:
             center = feature_center(geo)
-        display_label = name
+        display_label = "廠史館／酒史館" if name == "酒史館" else name
         x, y = round(center[0] * scale), round(center[1] * scale)
         draw.rounded_rectangle((x+8, y-26, x+220, y+2), radius=4,
                                fill=(255, 255, 255, 225))
@@ -320,7 +320,7 @@ def main() -> None:
                 {"photo_order": 2, "user_label": "寶月新泉", "plan_match": "lower circular axial endpoint", "status": "candidate; snapped control still required"},
                 {"photo_order": 3, "user_label": "酒瓶公園", "plan_match": "landscape zone southeast of visitor axis near administration", "status": "candidate"},
                 {"photo_order": 4, "user_label": "金酒生活館", "plan_match": "not explicitly named on figure 4.2.2-1", "status": "unmatched; footprint not assigned"},
-                {"photo_order": 5, "user_label": "廠史館", "plan_match": "PDF labels a small separate 酒史館 pavilion; attached facade photo visibly says 福利大樓", "status": "identity conflict; needs review"},
+                {"photo_order": 5, "user_label": "廠史館", "plan_match": "the small pavilion labeled 酒史館 on figure 4.2.2-1", "status": "user-confirmed same location; name variant"},
                 {"photo_order": 6, "user_label": "行政大樓", "plan_match": "行政大樓 label and footprint on page 7", "status": "strong semantic match; candidate outline"},
                 {"photo_order": 7, "user_label": "酒瓶地標", "plan_match": "near the south gate / bottle display candidate zone", "status": "candidate; exact symbol not confirmed on plan"},
             ],
@@ -329,6 +329,7 @@ def main() -> None:
                 "S_shaped_feature": "walkway / 曲水流觴 per user clarification; do not classify as water contour",
                 "source_status": "No candidate promoted to verified engineering geometry.",
                 "S_walkway_note": "The S-shaped feature is labeled as 曲水流觴步道 by the user; the PDF and this pass do not prove a closed water contour.",
+                "official_location_map": "User-supplied official site map confirms 廠史館 and 酒史館 refer to the same mapped location. Used for semantic/topological correspondence only; not used as a metric scale or coordinate transform.",
                 "photo_method": "Photographs are used for feature identity and adjacency, not scale or footprint measurement.",
                 "publication": "Private only; contains a source-page overlay.",
             },
