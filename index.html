@@ -1,5 +1,5 @@
 <!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>金寧廠｜C04 設計配置 3D 量體圖 V1.1</title>
+<title>金寧廠｜C04 設計配置 3D 量體圖 V1.2</title>
 <style>
 :root{font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;color:#263c42;background:#f1f5f2}*{box-sizing:border-box}body{margin:0}
 header{background:#fff;border-bottom:1px solid #dce7e0;padding:23px max(16px,calc((100vw - 1440px)/2))}
@@ -21,11 +21,11 @@ aside{padding:18px}h2{font-size:16px;margin:0 0 12px}h3{font-size:13px;margin:19
 footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b8b85}
 @media(max-width:850px){main{display:flex;flex-direction:column;padding:8px}#viewport{height:61vh;min-height:340px}aside{padding:14px}}
 </style></head><body>
-<header><div class="kicker">KKL BIOENERGY · HISTORICAL EIA PLANS</div><h1>金門酒廠金寧廠｜C04 設計配置 3D 量體圖</h1><p>以 C04 第 7 頁歷史配置圖重建場區相對位置 · V1.1 概念量體，不代表竣工現況</p></header>
+<header><div class="kicker">KKL BIOENERGY · HISTORICAL EIA PLANS</div><h1>金門酒廠金寧廠｜C04 設計配置 3D 量體圖</h1><p>以 C04 第 7 頁歷史配置圖重建場區相對位置 · V1.2 環境示意，不代表竣工現況</p></header>
 <main><section class="panel"><div class="toolbar">
-<select id="mapMode" aria-label="配置圖版本"><option value="c04massing">C04 第 7 頁：3D 設計配置量體 V1.1</option><option value="qa098">V0.9.8：水景原始向量誤差審查</option><option value="integrated097">V0.9.7：全廠＋景觀整合圖</option><option value="fountain096">V0.9.6：迎賓水池與景觀主軸</option><option value="roads095">V0.9.5：道路雙側邊線檢查</option><option value="snap">V0.9.4：PDF 向量校正（六處）</option><option value="semantic">V0.9.3：分類候選輪廓（需核對）</option><option value="existing">環評圖 4.2.2-1：既有廠區</option><option value="expansion">環評圖 4.2.2-2：擴建範圍</option><option value="legacy">早期彩色示意圖（僅供比較）</option></select>
+<select id="mapMode" aria-label="配置圖版本"><option value="c04massing">C04 第 7 頁：3D 設計量體與環境 V1.2</option><option value="qa098">V0.9.8：水景原始向量誤差審查</option><option value="integrated097">V0.9.7：全廠＋景觀整合圖</option><option value="fountain096">V0.9.6：迎賓水池與景觀主軸</option><option value="roads095">V0.9.5：道路雙側邊線檢查</option><option value="snap">V0.9.4：PDF 向量校正（六處）</option><option value="semantic">V0.9.3：分類候選輪廓（需核對）</option><option value="existing">環評圖 4.2.2-1：既有廠區</option><option value="expansion">環評圖 4.2.2-2：擴建範圍</option><option value="legacy">早期彩色示意圖（僅供比較）</option></select>
 <button id="fit" class="primary">完整圖面</button><button id="zi">＋</button><button id="zo">－</button>
-<a id="download" class="download" href="./models/c04-massing-v1.1/KKL_Jinning_C04_p07_massing_v1.1.glb" download>下載 3D 量體 GLB</a></div>
+<a id="download" class="download" href="./models/c04-massing-v1.2/KKL_Jinning_C04_p07_massing_v1.2.glb" download>下載 3D 量體 GLB</a></div>
 <div id="viewport"><div id="hint">正在讀取 C04 3D 量體…</div></div></section>
 <aside class="panel"><h2>圖面資訊與圖層</h2><div id="source" class="note">載入中…</div><div id="layerList"></div>
 <h3>設施資訊</h3><div id="selection" class="note">點選建築、規劃區或道路，檢視標示名稱。</div>
@@ -33,6 +33,7 @@ footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b
 <div class="legend"><span class="swatch" style="background:#45b968"></span>A 新增廠區用地</div><div class="legend"><span class="swatch" style="background:#a9b7bc"></span>B 既有廠區用地</div><div class="legend"><span class="swatch" style="background:#de9c86"></span>C 廠內擴建用地</div>
 <div class="warn">本圖依歷史設計配置建模，並非竣工現況或測量成果。建築高度為示意值；平面位置依圖面比例尺換算，不能用於施工、淨距或地籍認定。規劃設施不等於已完工建物。</div>
 <h3>建模規格</h3><a class="download" href="https://github.com/hwh0410/KKL_bioenergy/blob/main/docs/V0.9-EIA-modeling-baseline.md" target="_blank" rel="noopener">開啟 V0.9 建模規格</a>
+<h3>周邊環境渲染</h3><p class="note">外圍道路、綠地與樹列為氣氛示意，並非現況測繪成果。</p><a class="download" href="./models/c04-massing-v1.2/render-context-isometric.jpg" target="_blank" rel="noopener">全場鳥瞰渲染</a> <a class="download" href="./models/c04-massing-v1.2/render-visitor-landscape.jpg" target="_blank" rel="noopener">水景近景渲染</a>
 </aside></main><footer>資料依據：C04.PDF 第 7 頁歷史廠區配置圖｜本頁預設展示概念量體，未嵌入 PDF 原圖。</footer>
 <script>
 (async()=>{
@@ -54,10 +55,10 @@ footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b
  async function load(key){
   modeKey=key;viewer=null;el('layerList').replaceChildren();viewport.querySelector('svg')?.remove();viewport.querySelector('model-viewer')?.remove();viewport.querySelector('#modelPreviewFallback')?.remove();svg=null;
   if(key==='c04massing'){
-   const model='./models/c04-massing-v1.1/KKL_Jinning_C04_p07_massing_v1.1.glb.gz';
-   const poster='./models/c04-massing-v1.1/preview.jpg';
-   el('source').textContent='3D 概念量體 V1.1：沿用 C04 第 7 頁的場區位置，參考金酒實體模型照片加入低坡屋頂、弧形屋頂、槽體群與綠化。S 型水道依你的確認連接迎賓水池與寶月新泉。建築高度及設備細節均為視覺化估值。';
-   el('download').removeAttribute('href');el('download').download='KKL_Jinning_C04_p07_massing_v1.1.glb';
+   const model='./models/c04-massing-v1.2/KKL_Jinning_C04_p07_massing_v1.2.glb.gz';
+   const poster='./models/c04-massing-v1.2/preview.jpg';
+   el('source').textContent='3D 概念量體 V1.2：沿用 C04 第 7 頁的場區位置，參考金酒實體模型照片調整廠房屋頂、槽體群與綠化，並以自然日光渲染。S 型水道依你的確認連接迎賓水池與寶月新泉。外圍道路、綠地與樹列僅作環境示意；建築高度及設備細節均為估值。';
+   el('download').removeAttribute('href');el('download').download='KKL_Jinning_C04_p07_massing_v1.2.glb';
    hint.textContent='拖曳旋轉 · 滾輪縮放 · 右鍵平移 · 位置依歷史設計圖，非現況測量';
    try{
     if(!customElements.get('model-viewer')){
@@ -69,7 +70,7 @@ footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b
     const glb=await new Response(zipped.body.pipeThrough(new DecompressionStream('gzip'))).blob();
     const modelUrl=URL.createObjectURL(new Blob([glb],{type:'model/gltf-binary'}));
     el('download').href=modelUrl;
-    viewer=document.createElement('model-viewer');viewer.setAttribute('src',modelUrl);viewer.setAttribute('poster',poster);viewer.setAttribute('alt','依 C04 第 7 頁設計配置重建的金門酒廠金寧廠 3D 量體模型');viewer.setAttribute('camera-controls','');viewer.setAttribute('camera-orbit','35deg 62deg 70%');viewer.setAttribute('touch-action','pan-y');viewer.setAttribute('interaction-prompt','auto');viewer.setAttribute('shadow-intensity','0.8');viewer.setAttribute('exposure','1');viewer.setAttribute('environment-image','neutral');viewer.style.cssText='position:absolute;inset:0;width:100%;height:100%;background:#eef3f0;--poster-color:#eef3f0;z-index:1';
+    viewer=document.createElement('model-viewer');viewer.setAttribute('src',modelUrl);viewer.setAttribute('poster',poster);viewer.setAttribute('alt','依 C04 第 7 頁設計配置重建的金門酒廠金寧廠 3D 量體模型');viewer.setAttribute('camera-controls','');viewer.setAttribute('camera-orbit','35deg 62deg 70%');viewer.setAttribute('touch-action','pan-y');viewer.setAttribute('interaction-prompt','auto');viewer.setAttribute('shadow-intensity','0.8');viewer.setAttribute('exposure','0.8');viewer.setAttribute('environment-image','neutral');viewer.style.cssText='position:absolute;inset:0;width:100%;height:100%;background:#eef3f0;--poster-color:#eef3f0;z-index:1';
     viewer.addEventListener('load',()=>{fallback.hidden=true;hint.textContent='拖曳旋轉 · 滾輪縮放 · 右鍵平移 · 位置依歷史設計圖，非現況測量'});
     viewer.addEventListener('error',()=>{hint.textContent='互動 3D 無法載入；目前顯示同版靜態預覽。可下載 GLB 檢視。'});
     viewport.prepend(viewer);
