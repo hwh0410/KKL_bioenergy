@@ -21,7 +21,7 @@ aside{padding:18px}h2{font-size:16px;margin:0 0 12px}h3{font-size:13px;margin:19
 footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b8b85}
 @media(max-width:850px){main{display:flex;flex-direction:column;padding:8px}#viewport{height:61vh;min-height:340px}aside{padding:14px}}
 </style></head><body>
-<header><div class="kicker">KKL BIOENERGY · HISTORICAL EIA PLANS</div><h1>金門酒廠金寧廠｜工程配置圖數位化</h1><p>V0.9.8 · 依《金寧三廠整廠系統新建工程環境影響說明書》第四章 · 歷史設計參考圖，不是竣工現況</p></header>
+<header><div class="kicker">KKL BIOENERGY · HISTORICAL EIA PLANS</div><h1>金門酒廠金寧廠｜工程配置圖數位化</h1><p>2D 歷史圖面 QA · 3D 概念量體 v0.1 · 歷史設計參考圖及位置檢視模型，不是竣工現況</p></header>
 <main><section class="panel"><div class="toolbar">
 <select id="mapMode" aria-label="配置圖版本"><option value="qa098">V0.9.8：水景原始向量誤差審查</option><option value="integrated097">V0.9.7：全廠＋景觀整合圖</option><option value="fountain096">V0.9.6：迎賓水池與景觀主軸</option><option value="roads095">V0.9.5：道路雙側邊線檢查</option><option value="snap">V0.9.4：PDF 向量校正（六處）</option><option value="semantic">V0.9.3：分類候選輪廓（需核對）</option><option value="existing">環評圖 4.2.2-1：既有廠區</option><option value="expansion">環評圖 4.2.2-2：擴建範圍</option><option value="legacy">早期彩色示意圖（僅供比較）</option><option value="blockout3d">3D 概念量體模型 v0.1（位置檢視）</option></select>
 <button id="fit" class="primary">完整圖面</button><button id="zi">＋</button><button id="zo">－</button>
@@ -50,7 +50,7 @@ footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b
  const el=id=>document.getElementById(id),viewport=el('viewport'),hint=el('hint');
  let svg,box,start,src,viewer,modeKey;
  function setView(){svg.setAttribute('viewBox',[box.x,box.y,box.w,box.h].join(' '))}
- function zoom(k){if(!svg)return;const cx=box.x+box.w/2,cy=box.y+box.h/2;box.w=Math.max(100,Math.min(1800,box.w*k));box.h=box.w*src.view[3]/src.view[2];box.x=cx-box.w/2;box.y=cy-box.h/2;setView()}
+ function zoom(k){if(viewer){const orbit=viewer.getCameraOrbit();viewer.cameraOrbit=`${orbit.theta}rad ${orbit.phi}rad ${Math.max(1,Math.min(1500,orbit.radius*k))}m`;return}if(!svg)return;const cx=box.x+box.w/2,cy=box.y+box.h/2;box.w=Math.max(100,Math.min(1800,box.w*k));box.h=box.w*src.view[3]/src.view[2];box.x=cx-box.w/2;box.y=cy-box.h/2;setView()}
  async function load(key){
   modeKey=key;viewer=null;el('layerList').replaceChildren();viewport.querySelector('svg')?.remove();viewport.querySelector('model-viewer')?.remove();svg=null;
   if(key==='blockout3d'){
