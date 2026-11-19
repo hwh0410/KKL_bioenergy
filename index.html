@@ -23,7 +23,7 @@ footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b
 </style></head><body>
 <header><div class="kicker">KKL BIOENERGY · HISTORICAL EIA PLANS</div><h1>金門酒廠金寧廠｜工程配置圖數位化</h1><p>V0.9.8 · 依《金寧三廠整廠系統新建工程環境影響說明書》第四章 · 歷史設計參考圖，不是竣工現況</p></header>
 <main><section class="panel"><div class="toolbar">
-<select id="mapMode" aria-label="配置圖版本"><option value="qa098">V0.9.8：水景原始向量誤差審查</option><option value="integrated097">V0.9.7：全廠＋景觀整合圖</option><option value="fountain096">V0.9.6：迎賓水池與景觀主軸</option><option value="roads095">V0.9.5：道路雙側邊線檢查</option><option value="snap">V0.9.4：PDF 向量校正（六處）</option><option value="semantic">V0.9.3：分類候選輪廓（需核對）</option><option value="existing">環評圖 4.2.2-1：既有廠區</option><option value="expansion">環評圖 4.2.2-2：擴建範圍</option><option value="legacy">早期彩色示意圖（僅供比較）</option></select>
+<select id="mapMode" aria-label="配置圖版本"><option value="qa098">V0.9.8：水景原始向量誤差審查</option><option value="integrated097">V0.9.7：全廠＋景觀整合圖</option><option value="fountain096">V0.9.6：迎賓水池與景觀主軸</option><option value="roads095">V0.9.5：道路雙側邊線檢查</option><option value="snap">V0.9.4：PDF 向量校正（六處）</option><option value="semantic">V0.9.3：分類候選輪廓（需核對）</option><option value="existing">環評圖 4.2.2-1：既有廠區</option><option value="expansion">環評圖 4.2.2-2：擴建範圍</option><option value="legacy">早期彩色示意圖（僅供比較）</option><option value="blockout3d">3D 概念量體模型 v0.1（位置檢視）</option></select>
 <button id="fit" class="primary">完整圖面</button><button id="zi">＋</button><button id="zo">－</button>
 <a id="download" class="download" href="./plan/eia-existing-v0.9.svg" download>下載本圖 SVG</a></div>
 <div id="viewport"><div id="hint">正在讀取向量圖…</div></div></section>
@@ -48,13 +48,27 @@ footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b
  legacy:{src:'./plan/kinmen-jinning-2d.svg',view:[0,0,887,475],description:'早期依彩色導覽圖描繪的相對配置，僅供比較，不作 V0.9 校正基準。',layers:[['site','基地'],['roads','道路'],['buildings','建築'],['tanks','桶槽'],['trees','路樹'],['annotations','景點標示']]}
  };
  const el=id=>document.getElementById(id),viewport=el('viewport'),hint=el('hint');
- let svg,box,start,src;
+ let svg,box,start,src,viewer,modeKey;
  function setView(){svg.setAttribute('viewBox',[box.x,box.y,box.w,box.h].join(' '))}
  function zoom(k){if(!svg)return;const cx=box.x+box.w/2,cy=box.y+box.h/2;box.w=Math.max(100,Math.min(1800,box.w*k));box.h=box.w*src.view[3]/src.view[2];box.x=cx-box.w/2;box.y=cy-box.h/2;setView()}
  async function load(key){
-  src=modes[key];el('source').textContent=src.description;
-  el('download').href=src.src;el('layerList').replaceChildren();viewport.querySelector('svg')?.remove();
-  hint.textContent='讀取 '+src.src+' 中…';svg=null;
+  modeKey=key;viewer=null;el('layerList').replaceChildren();viewport.querySelector('svg')?.remove();viewport.querySelector('model-viewer')?.remove();svg=null;
+  if(key==='blockout3d'){
+   const model='./models/site-blockout-v0.1/KKL_Jinning_site_blockout_v0.1.glb';
+   el('source').textContent='3D 概念量體 v0.1：整合既有建築、遊客設施、道路、水池、曲線步道與酒瓶地標，供建築位置與場區關係檢視。模型座標以公尺表示，但建築尺寸、高度、地形和部分設施位置仍為近似值；不是測量成果或竣工模型。';
+   el('download').href=model;el('download').download='KKL_Jinning_site_blockout_v0.1.glb';
+   hint.textContent='拖曳旋轉 · 滾輪縮放 · 右鍵平移 · 本模型為位置檢視用概念量體';
+   try{
+    if(!customElements.get('model-viewer')){
+     await new Promise((resolve,reject)=>{const script=document.createElement('script');script.type='module';script.src='https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';script.onload=resolve;script.onerror=()=>reject(Error('3D 檢視元件載入失敗，請確認網路連線'));document.head.append(script)});
+    }
+    viewer=document.createElement('model-viewer');viewer.setAttribute('src',model);viewer.setAttribute('poster','./models/site-blockout-v0.1/preview.jpg');viewer.setAttribute('alt','金門酒廠金寧廠 3D 概念量體模型');viewer.setAttribute('camera-controls','');viewer.setAttribute('touch-action','pan-y');viewer.setAttribute('interaction-prompt','auto');viewer.setAttribute('shadow-intensity','0.8');viewer.setAttribute('exposure','1');viewer.setAttribute('environment-image','neutral');viewer.style.cssText='width:100%;height:100%;background:#eef3f0;--poster-color:#eef3f0';viewport.prepend(viewer);
+    el('selection').textContent='3D 模型：以滑鼠或觸控拖曳旋轉，滾輪縮放。建築位置仍可依你的現場判讀調整。';
+   }catch(e){hint.textContent='3D 模型載入失敗：'+e.message;console.error(e)}
+   return;
+  }
+  src=modes[key];el('source').textContent=src.description;el('download').href=src.src;el('download').removeAttribute('download');
+  hint.textContent='讀取 '+src.src+' 中…';
   try{
    const resp=await fetch(src.src+'?cache=20261117b');if(!resp.ok)throw Error('HTTP '+resp.status);
    const doc=new DOMParser().parseFromString(await resp.text(),'image/svg+xml');if(doc.querySelector('parsererror'))throw Error('SVG XML 格式錯誤');
@@ -70,13 +84,13 @@ footer{max-width:1450px;padding:0 17px 24px;margin:auto;font-size:12px;color:#7b
   }catch(e){hint.textContent='圖面載入失敗：'+e.message;console.error(e)}
  }
  el('mapMode').addEventListener('change',e=>load(e.target.value));
- el('fit').onclick=()=>svg&&(box={x:src.view[0],y:src.view[1],w:src.view[2],h:src.view[3]},setView());
+ el('fit').onclick=()=>{if(modeKey==='blockout3d'&&viewer)viewer.resetCameraOrbit();else if(svg){box={x:src.view[0],y:src.view[1],w:src.view[2],h:src.view[3]};setView()}};
  el('zi').onclick=()=>zoom(.8);el('zo').onclick=()=>zoom(1.25);
  viewport.addEventListener('pointerdown',e=>{if(!svg||e.button!==0)return;start={x:e.clientX,y:e.clientY,box:{...box}};viewport.setPointerCapture(e.pointerId);viewport.classList.add('drag')});
  viewport.addEventListener('pointermove',e=>{if(!start||!svg)return;const r=svg.getBoundingClientRect(),sc=Math.min(r.width/src.view[2],r.height/src.view[3]);box.x=start.box.x-(e.clientX-start.x)*box.w/(src.view[2]*sc);box.y=start.box.y-(e.clientY-start.y)*box.h/(src.view[3]*sc);setView()});
  viewport.addEventListener('pointerup',()=>{start=null;viewport.classList.remove('drag')});
  viewport.addEventListener('pointercancel',()=>{start=null;viewport.classList.remove('drag')});
- viewport.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.08:.925)},{passive:false});
+ viewport.addEventListener('wheel',e=>{if(svg){e.preventDefault();zoom(e.deltaY>0?1.08:.925)}},{passive:false});
  el('mapMode').value='qa098';await load('qa098');
 })();
 </script>
