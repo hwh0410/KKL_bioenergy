@@ -53,6 +53,18 @@ jobs:
           test -s data/existing-buildings.geojson
           test -s data/roads-osm.geojson
           test -s data/visitor-zone.geojson
+          test -s models/site-blockout-v0.1/KKL_Jinning_site_blockout_v0.1.glb
+          test -s models/site-blockout-v0.1/preview.jpg
+          mkdir -p _site/models/site-blockout-v0.1
+          cp models/site-blockout-v0.1/KKL_Jinning_site_blockout_v0.1.glb _site/models/site-blockout-v0.1/
+          cp models/site-blockout-v0.1/preview.jpg models/site-blockout-v0.1/metadata.json models/site-blockout-v0.1/README.md _site/models/site-blockout-v0.1/
+          python3 - <<'PY'
+          from pathlib import Path
+          glb=Path('_site/models/site-blockout-v0.1/KKL_Jinning_site_blockout_v0.1.glb').read_bytes()
+          assert glb[:4] == b'glTF', 'Invalid GLB magic header'
+          assert len(glb) >= 20, 'GLB is unexpectedly short'
+          print('Validated GLB:', len(glb), 'bytes')
+          PY
           cp -R data _site/data
           python3 -m json.tool _site/data/existing-buildings.geojson > /dev/null
           python3 -m json.tool _site/data/roads-osm.geojson > /dev/null

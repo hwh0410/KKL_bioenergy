@@ -1,0 +1,49 @@
+{
+  "schema": "kkl-eia-v1.0-preflight-qa",
+  "status": "INCOMPLETE_NOT_APPROVED",
+  "source": "Historical EIA C04.PDF, page 7 Figure 4.2.2-1 and page 8 Figure 4.2.2-2",
+  "source_release": "No original PDF or raw extracted vectors included",
+  "pages": [
+    {
+      "page": 7,
+      "rotation_degrees": 90,
+      "drawing_groups": 295,
+      "drawing_items": 53977,
+      "item_types": {
+        "l": 51913,
+        "c": 1617,
+        "qu": 418,
+        "re": 29
+      },
+      "explicit_closepath_true_groups": 0
+    },
+    {
+      "page": 8,
+      "rotation_degrees": 90,
+      "drawing_groups": 2227,
+      "drawing_items": 35114,
+      "item_types": {
+        "l": 29795,
+        "c": 4914,
+        "qu": 364,
+        "re": 41
+      },
+      "explicit_closepath_true_groups": 0
+    }
+  ],
+  "known_historical_area_m2": 204820,
+  "scale": {
+    "status": "unverified",
+    "provisional_m_per_rendered_pixel": 0.51724,
+    "used_for_authoritative_geometry": false
+  },
+  "geometries": {
+    "verified_source": 0,
+    "candidate": "Existing v0.9 hand tracing kept unchanged",
+    "unknown": "Unclassified PDF vector groups and water contours"
+  },
+  "v099_water_closed_verified": 0,
+  "page7_page8_registration": "pending shared control points and residuals",
+  "release_gate": "blocked",
+  "notes": "No new pools, buildings, roads, tanks, A/B/C boundaries promoted to verified. The absent closePath flag does not prove shapes are open; topology must be reconstructed from individual source commands."
+}

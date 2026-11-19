@@ -9,3 +9,16 @@ source/C04.PDF
 C04.PDF
 C04-p07-CAD-vector-reference.svg
 C04-p07-source-geometry-unclassified.dxf
+
+# Historical EIA originals and full PDF vector derivatives must never enter public history
+C04.PDF
+**/C04.PDF
+KKL_Work_Handoff_PRIVATE*
+private/
+private-*/
+_private/
+source-private/
+*PRIVATE.svg
+*PRIVATE.png
+*.dxf
+outputs/private/
