@@ -53,17 +53,23 @@ jobs:
           test -s data/existing-buildings.geojson
           test -s data/roads-osm.geojson
           test -s data/visitor-zone.geojson
-          test -s models/site-blockout-v0.1/KKL_Jinning_site_blockout_v0.1.glb
-          test -s models/site-blockout-v0.1/preview.jpg
-          mkdir -p _site/models/site-blockout-v0.1
-          cp models/site-blockout-v0.1/KKL_Jinning_site_blockout_v0.1.glb _site/models/site-blockout-v0.1/
-          cp models/site-blockout-v0.1/preview.jpg models/site-blockout-v0.1/metadata.json models/site-blockout-v0.1/README.md _site/models/site-blockout-v0.1/
+          test -s models/c04-massing-v1.0/KKL_Jinning_C04_p07_massing_v1.0.glb.gz
+          test -s models/c04-massing-v1.0/preview.jpg
+          test -s models/c04-massing-v1.0/metadata.json
+          mkdir -p _site/models/c04-massing-v1.0
+          cp models/c04-massing-v1.0/KKL_Jinning_C04_p07_massing_v1.0.glb.gz _site/models/c04-massing-v1.0/
+          cp models/c04-massing-v1.0/preview.jpg models/c04-massing-v1.0/metadata.json models/c04-massing-v1.0/README.md _site/models/c04-massing-v1.0/
           python3 - <<'PY'
+          import gzip, json, struct
           from pathlib import Path
-          glb=Path('_site/models/site-blockout-v0.1/KKL_Jinning_site_blockout_v0.1.glb').read_bytes()
-          assert glb[:4] == b'glTF', 'Invalid GLB magic header'
-          assert len(glb) >= 20, 'GLB is unexpectedly short'
-          print('Validated GLB:', len(glb), 'bytes')
+          model=gzip.decompress(Path('_site/models/c04-massing-v1.0/KKL_Jinning_C04_p07_massing_v1.0.glb.gz').read_bytes())
+          assert model[:4] == b'glTF' and struct.unpack_from('<I', model, 8)[0] == len(model), 'Invalid GLB container'
+          json_length, chunk_type = struct.unpack_from('<II', model, 12)
+          assert chunk_type == 0x4E4F534A, 'Missing glTF JSON chunk'
+          gltf=json.loads(model[20:20+json_length].decode('utf-8').rstrip(' \x00'))
+          assert len(gltf.get('nodes', [])) >= 40, 'GLB has too few model elements'
+          json.loads(Path('_site/models/c04-massing-v1.0/metadata.json').read_text(encoding='utf-8'))
+          print('Validated compressed C04 GLB:', len(model), 'bytes;', len(gltf.get('nodes', [])), 'nodes')
           PY
           cp -R data _site/data
           python3 -m json.tool _site/data/existing-buildings.geojson > /dev/null
