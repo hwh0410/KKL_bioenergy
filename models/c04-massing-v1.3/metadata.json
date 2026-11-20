@@ -1,0 +1,178 @@
+{
+  "title": "金門酒廠金寧廠 C04 第7頁設計量體圖 V1.3",
+  "status": "historical EIA plan-based conceptual massing; not an as-built survey or construction drawing",
+  "source": "User-provided C04.PDF, page 7, Figure 4.2.2-1",
+  "coordinate_transform": {
+    "frame": "displayed page-7 plot frame, manually digitized from the source drawing",
+    "render_size_px": [
+      1006.0,
+      697.0
+    ],
+    "scale_bar_endpoints_display_pt": [
+      [
+        156.351,
+        121.98
+      ],
+      [
+        214.491,
+        121.98
+      ]
+    ],
+    "scale_bar_length_m": 60.0,
+    "metres_per_display_point": 1.0319917440660475,
+    "metres_per_render_pixel": 0.6879944960440316,
+    "endpoint_uncertainty_pt_each": 0.1,
+    "scale_uncertainty_percent": 0.24324278678587807,
+    "georeferenced": false
+  },
+  "building_count": 21,
+  "buildings": [
+    {
+      "name": "Warehouse | 倉庫",
+      "height_m_estimate": 9,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Distillery 2 | 製酒二場",
+      "height_m_estimate": 13,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Koji factory 2 | 製麴二場",
+      "height_m_estimate": 9,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Koji factory 1 | 製麴一場",
+      "height_m_estimate": 9,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Wheat warehouse | 小麥筒倉",
+      "height_m_estimate": 7,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Water treatment | 淨水處理場",
+      "height_m_estimate": 7,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Cooling water treatment | 冷卻水處理場",
+      "height_m_estimate": 6,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Small grain storage | 小麥臨時倉庫",
+      "height_m_estimate": 7,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Oil tank area | 地下油槽區",
+      "height_m_estimate": 2.5,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Jinning office and training center | 金寧廠辦公區",
+      "height_m_estimate": 10,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Welfare building | 福利大樓",
+      "height_m_estimate": 11,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Administration building | 行政大樓",
+      "height_m_estimate": 10,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Distillery 1 | 製酒一場",
+      "height_m_estimate": 13,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Site office | 金寧廠辦公室",
+      "height_m_estimate": 8,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Maintenance room | 修繕間",
+      "height_m_estimate": 5.5,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Generator room | 發電室",
+      "height_m_estimate": 6,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Annex building | 附屬大樓",
+      "height_m_estimate": 9,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Sorghum silo store | 高粱筒倉區",
+      "height_m_estimate": 7,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Boiler room | 鍋爐房",
+      "height_m_estimate": 7,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Fuel station | 加油站",
+      "height_m_estimate": 4,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    },
+    {
+      "name": "Visitor support building | 景觀區服務設施",
+      "height_m_estimate": 5,
+      "footprint_source": "C04 p.7 plan outline; digitized as a simplified polygon"
+    }
+  ],
+  "visitor_features": [
+    "迎賓圓形噴水池",
+    "S 型水道，連接迎賓水池與寶月新泉",
+    "寶月新泉圓池",
+    "標誌牌位置示意"
+  ],
+  "appearance_reference": "User-provided photos of physical Kinmen distillery site models; used to add low-pitch/barrel roof forms, metal tank groups, planted trees and a more finished public-realm palette.",
+  "counts": {
+    "building_masses": 21,
+    "storage_and_process_tanks": 10,
+    "visitor_area_trees": 35,
+    "context_trees": 112
+  },
+  "geometry_status": {
+    "building_positions": "Simplified manual digitization from C04 p.7; V1.3 adjusted following source-plan coordinate-grid overlay and road-corridor intersection check; not georeferenced or individually matched to all source-vector IDs.",
+    "waterway": "continuous smooth ribbon inferred from S-shaped source feature and user confirmation; connects fountain to Baoyue Xinquan",
+    "roads": "Illustrative road ribbons aligned to C04 p.7 corridors; V1.3 collision-checked against simplified building footprints, but exact source-vector road edges not certified.",
+    "heights": "illustrative estimates informed by user photos; no elevation drawing supplied"
+  },
+  "limitations": [
+    "Footprints are simplified from the historical drawing and are for site composition review.",
+    "Heights, exterior materials, roofs, industrial tank count, and landscaping are illustrative; drawings/photos do not provide verified dimensions.",
+    "The planned 製酒三廠 parcel remains a low ground area, not a completed building.",
+    "The surrounding terrain, perimeter roads, and trees are generic context for rendering; they are not georeferenced or confirmed as-built features.",
+    "C04 depicts historical planning, not verified as-built status.",
+    "No PDF raster, full extracted vector set, overlay, cadastral coordinates, or terrain data is included."
+  ],
+  "building_road_clearance_qa": {
+    "building_count": 21,
+    "road_ribbon_count": 9,
+    "v1_2_building_road_intersection_count": 3,
+    "v1_3_building_road_intersection_count": 0,
+    "tested_building_margin_px": 1.2,
+    "minimum_clearance_m_at_graphic_scale": 2.116,
+    "qa_report": "road-clearance-QA.md",
+    "method": "Shapely plan-coordinate polygon intersection against each modeled road ribbon, including 1.2 px footprint margin for roof overhang."
+  },
+  "revision_notes": [
+    "V1.2 found 3 intersections: Distillery 1 × south internal road; Sorghum silo store × middle east-west road; Visitor support × middle east-west road.",
+    "Moved/shrank the affected footprints, trimmed the annex/fuel station edges for clearance, and adjusted the illustrative east access route to follow the page-7 coordinate-grid corridor.",
+    "V1.3 checks 21 footprints against 9 road ribbons and finds 0 intersections. Minimum clearance including roof margin: 2.116 m at the plan graphic scale."
+  ]
+}
